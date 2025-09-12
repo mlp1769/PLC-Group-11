@@ -31,6 +31,7 @@ public class JottTokenizer {
 			while ((character = reader.read()) != -1) {
 				char c = (char) character;
 				if(c != '\n'){
+			        //Single charater tokens
 					if(c == ','){
 						tokens.add(new Token(Character.toString(c), filename, line, TokenType.COMMA));
 					}else if(c == ']'){
@@ -41,6 +42,7 @@ public class JottTokenizer {
 						tokens.add(new Token(Character.toString(c), filename, line, TokenType.R_BRACE));
 					}else if(c == '{'){
 						tokens.add(new Token(Character.toString(c), filename, line, TokenType.L_BRACE));
+					//assignments 
 					}else if(c == '='){
 						if(previousCharacter == '=' || previousCharacter == '<' || previousCharacter == '>' || previousCharacter == '!'){
 							tokens.remove(tokens.size()-1);
@@ -63,23 +65,28 @@ public class JottTokenizer {
 						}
 					}else if(c == '!'){
 						tokens.add(new Token(Character.toString(c), filename, line, TokenType.REL_OP));
-					}else if(Character.isDigit(c)){
-						if(isString){
+					//Numbers 
+					}else if(Character.isDigit(c) || c == '.'){
+						//If a number is in a string
+						if(isString && c!='.'){
 							result.append(c);
-						}else {
-							if (Character.isDigit(previousCharacter)) {
+						}else if(isString && c=='.'){
+							System.err.println("String cannot have punctuation");
+						}else{
+							if (Character.isDigit(previousCharacter) || previousCharacter == '.') {
 								tokens.remove(tokens.size() - 1);
+								result.append(c);
 								tokens.add(new Token(result.toString(), filename, line, TokenType.NUMBER));
 							} else {
 								result.setLength(0);
+								result.append(c);
+								tokens.add(new Token(Character.toString(c), filename, line, TokenType.NUMBER));
 							}
-							result.append(c);
-							tokens.add(new Token(Character.toString(c), filename, line, TokenType.NUMBER));
 						}
+					//Strings
 					}else if(Character.isAlphabetic(c)){
 						if(isString){
 							result.append(c);
-
 						}
 					}else if(c == '"'){
 						if(isString){
