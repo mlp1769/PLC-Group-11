@@ -32,10 +32,7 @@ public class JottTokenizer {
 			while ((character = reader.read()) != -1) {
 				char c = (char) character;
 				if(c != '\n'){
-					if(c == ' '){
-						continue;
-					}else if(c == '!'){
-						reader.mark(1);
+					if(c == '!'){
 						int next = reader.read();
 						if (next == '='){
 							tokens.add(new Token("!=", filename, line, TokenType.REL_OP));
@@ -46,9 +43,7 @@ public class JottTokenizer {
 							return null;
 
 						}
-						if(next != -1){
-							reader.reset();
-						}
+
 					}
 					
 					else if( c == '#'){
@@ -132,12 +127,12 @@ public class JottTokenizer {
 				}
 				previousCharacter = c;
 			}
-			if( previousCharacter == '!'){
-				System.err.println("Error");
-				reader.close();
-				return null;
+			// if( previousCharacter == '!'){
+			// 	System.err.println("hello");
+			// 	reader.close();
+			// 	return null;
 
-			}
+			// }
 
 
 			reader.close();
