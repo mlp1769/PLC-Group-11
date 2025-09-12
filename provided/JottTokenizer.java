@@ -27,6 +27,7 @@ public class JottTokenizer {
 			StringBuilder result = new StringBuilder();
 			boolean isString = false;
 			boolean decimal = false;
+			boolean incompleteToken = false;
 
 			int line = 1;
 			while ((character = reader.read()) != -1) {
@@ -69,18 +70,18 @@ public class JottTokenizer {
 					//Numbers 
 					}else if(Character.isDigit(c) || c == '.'){
 						//If a number is in a string
-						if(isString && c!='.'){
+						if(isString){
 							result.append(c);
-						}else if(isString && c=='.'){
-							System.err.println("String cannot have punctuation");
 						}else{
-							if(decimal){
-								System.err.println(String.format("Syntax Error Invalid \n token \"%c\" \"%c\" cannot follow \"%c\" in same token %s", c,c,c, filename));			
+							if(decimal && c == '.'){
+								System.err.println(String.format("Syntax Error Invalid \n token \"%c\" \"%c\" cannot follow \"%c\" in same token %s",c,c,c,filename));
+								return null;			
 							}
 							if (Character.isDigit(previousCharacter) || previousCharacter == '.') {
 								tokens.remove(tokens.size() - 1);
 								result.append(c);
 								tokens.add(new Token(result.toString(), filename, line, TokenType.NUMBER));
+								incompleteToken = false;
 							} else {
 								result.setLength(0);
 								result.append(c);
@@ -88,6 +89,9 @@ public class JottTokenizer {
 							}
 							if(c == '.'){
 								decimal = true;
+							}
+							if(c == '.' && !Character.isDigit(previousCharacter)){
+								incompleteToken = true;
 							}
 						}
 					//Strings
@@ -107,8 +111,12 @@ public class JottTokenizer {
 							isString = true;
 						}
 					}else if(c == ' '){
+						decimal = false;
 						if(isString){
 							result.append(c);
+						}else if(incompleteToken){
+							System.err.println(String.format("Syntax Error Invalid \n token \"%s\" \"%s\" is incomplete %s",result,result,filename));
+							return null;
 						}
 					}
 				}else{
@@ -118,6 +126,10 @@ public class JottTokenizer {
 			}
 
 			reader.close();
+			if(incompleteToken){
+				System.err.println(String.format("Syntax Error Invalid \n token \"%s\" \"%s\" is incomplete %s",result,result,filename));
+				return null;
+			}
 			return tokens;
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
