@@ -26,6 +26,7 @@ public class JottTokenizer {
 			char previousCharacter = 0;
 			StringBuilder result = new StringBuilder();
 			boolean isString = false;
+			boolean decimal = false;
 
 			int line = 1;
 			while ((character = reader.read()) != -1) {
@@ -73,6 +74,9 @@ public class JottTokenizer {
 						}else if(isString && c=='.'){
 							System.err.println("String cannot have punctuation");
 						}else{
+							if(decimal){
+								System.err.println(String.format("Syntax Error Invalid \n token \"%c\" \"%c\" cannot follow \"%c\" in same token %s", c,c,c, filename));			
+							}
 							if (Character.isDigit(previousCharacter) || previousCharacter == '.') {
 								tokens.remove(tokens.size() - 1);
 								result.append(c);
@@ -81,6 +85,9 @@ public class JottTokenizer {
 								result.setLength(0);
 								result.append(c);
 								tokens.add(new Token(Character.toString(c), filename, line, TokenType.NUMBER));
+							}
+							if(c == '.'){
+								decimal = true;
 							}
 						}
 					//Strings
