@@ -26,12 +26,41 @@ public class JottTokenizer {
 			char previousCharacter = 0;
 			StringBuilder result = new StringBuilder();
 			boolean isString = false;
+			boolean comment = false;
 
 			int line = 1;
 			while ((character = reader.read()) != -1) {
 				char c = (char) character;
 				if(c != '\n'){
-					if(c == ','){
+					if(c == ' '){
+						continue;
+					}else if(c == '!'){
+						reader.mark(1);
+						int next = reader.read();
+						if (next == '='){
+							tokens.add(new Token("!=", filename, line, TokenType.REL_OP));
+
+						}else{
+							System.err.println("Error: '!' must be followed by '=' on line" + line);
+							reader.close();
+							return null;
+
+						}
+						if(next != -1){
+							reader.reset();
+						}
+					}
+					
+					else if( c == '#'){
+						while((character = reader.read()) != -1){
+						if((char)character == '\n'){
+							line++;
+							break;
+						}
+					}
+						continue;
+					}
+					else if(c == ','){
 						tokens.add(new Token(Character.toString(c), filename, line, TokenType.COMMA));
 					}else if(c == ']'){
 						tokens.add(new Token(Character.toString(c), filename, line, TokenType.R_BRACKET));
@@ -41,6 +70,8 @@ public class JottTokenizer {
 						tokens.add(new Token(Character.toString(c), filename, line, TokenType.R_BRACE));
 					}else if(c == '{'){
 						tokens.add(new Token(Character.toString(c), filename, line, TokenType.L_BRACE));
+					}else if(c == '<' || c == '>'){
+						tokens.add(new Token(Character.toString(c), filename, line, TokenType.REL_OP));
 					}else if(c == '='){
 						if(previousCharacter == '=' || previousCharacter == '<' || previousCharacter == '>' || previousCharacter == '!'){
 							tokens.remove(tokens.size()-1);
@@ -48,8 +79,6 @@ public class JottTokenizer {
 						}else{
 							tokens.add(new Token(Character.toString(c), filename, line, TokenType.ASSIGN));
 						}
-					}else if(c == '<' || c == '>'){
-						tokens.add(new Token(Character.toString(c), filename, line, TokenType.REL_OP));
 					}else if(c == '/' || c == '*' || c == '+' || c == '-'){
 						tokens.add(new Token(Character.toString(c), filename, line, TokenType.MATH_OP));
 					}else if(c == ';'){
@@ -61,8 +90,8 @@ public class JottTokenizer {
 						}else{
 							tokens.add(new Token(Character.toString(c), filename, line, TokenType.COLON));
 						}
-					}else if(c == '!'){
-						tokens.add(new Token(Character.toString(c), filename, line, TokenType.REL_OP));
+					// }else if(c == '!'){
+					// 	tokens.add(new Token(Character.toString(c), filename, line, TokenType.REL_OP));
 					}else if(Character.isDigit(c)){
 						if(isString){
 							result.append(c);
@@ -99,11 +128,20 @@ public class JottTokenizer {
 					}
 				}else{
 					line++;
+					comment = false;
 				}
 				previousCharacter = c;
 			}
+			if( previousCharacter == '!'){
+				System.err.println("Error");
+				reader.close();
+				return null;
+
+			}
+
 
 			reader.close();
+			System.out.println(tokens);
 			return tokens;
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
