@@ -121,6 +121,7 @@ public class JottTokenizer {
 					}
 				}else{
 					line++;
+					result.setLength(0);
 				}
 				previousCharacter = c;
 			}
