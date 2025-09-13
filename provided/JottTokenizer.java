@@ -84,7 +84,6 @@ public class JottTokenizer {
 					}else if(c == '"'){
 						if(isString){
 							result.append(c);
-							tokens.remove(tokens.size()-1);
 							tokens.add(new Token(result.toString(), filename, line, TokenType.STRING));
 							isString = false;
 							result.setLength(0);
@@ -101,6 +100,13 @@ public class JottTokenizer {
 					line++;
 				}
 				previousCharacter = c;
+			}
+
+			if(isString){
+				System.err.println("Syntax Error");
+				System.err.println("Missing double quotes");
+				System.err.println("file."+filename+":"+line);
+				return null;
 			}
 
 			reader.close();
