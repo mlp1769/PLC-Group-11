@@ -97,6 +97,12 @@ public class JottTokenizer {
 						}
 					}
 				}else{
+					if(isString){
+						System.err.println("Syntax Error");
+						System.err.println("Missing double quotes");
+						System.err.println("file."+filename+":"+line);
+						return null;
+					}
 					line++;
 				}
 				previousCharacter = c;
