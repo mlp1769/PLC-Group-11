@@ -85,8 +85,6 @@ public class JottTokenizer {
 						}else{
 							tokens.add(new Token(Character.toString(c), filename, line, TokenType.COLON));
 						}
-					// }else if(c == '!'){
-					// 	tokens.add(new Token(Character.toString(c), filename, line, TokenType.REL_OP));
 					}else if(Character.isDigit(c)){
 						if(isString){
 							result.append(c);
@@ -127,13 +125,6 @@ public class JottTokenizer {
 				}
 				previousCharacter = c;
 			}
-			// if( previousCharacter == '!'){
-			// 	System.err.println("hello");
-			// 	reader.close();
-			// 	return null;
-
-			// }
-
 
 			reader.close();
 			System.out.println(tokens);
