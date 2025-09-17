@@ -27,6 +27,7 @@ public class JottTokenizer {
 			StringBuilder result = new StringBuilder();
 			boolean isString = false;
 			boolean decimal = false;
+			boolean comment = false;
 			boolean incompleteToken = false;
 
 			int line = 1;
@@ -66,7 +67,30 @@ public class JottTokenizer {
 							tokens.add(new Token(Character.toString(c), filename, line, TokenType.COLON));
 						}
 					}else if(c == '!'){
-						tokens.add(new Token(Character.toString(c), filename, line, TokenType.REL_OP));
+						int next = reader.read();
+						if (next == '='){
+							tokens.add(new Token("!=", filename, line, TokenType.REL_OP));
+
+						}else{
+							System.err.println("Error: '!' must be followed by '=' on line" + line);
+							reader.close();
+							return null;
+
+						}
+
+					}
+					
+					else if( c == '#'){
+						while((character = reader.read()) != -1){
+						if((char)character == '\n'){
+							line++;
+							break;
+						}
+					}
+						continue;
+					}
+					else if(c == ','){
+						tokens.add(new Token(Character.toString(c), filename, line, TokenType.COMMA));
 					//Numbers 
 					}else if(Character.isDigit(c) || c == '.'){
 						//If a number is in a string
@@ -121,11 +145,11 @@ public class JottTokenizer {
 					}
 				}else{
 					line++;
+					comment = false;
 					result.setLength(0);
 				}
 				previousCharacter = c;
 			}
-
 			reader.close();
 			if(incompleteToken){
 				System.err.println(String.format("Syntax Error Invalid \n token \"%s\" \"%s\" is incomplete %s",result,result,filename));
