@@ -26,11 +26,14 @@ public class JottTokenizer {
 			char previousCharacter = 0;
 			StringBuilder result = new StringBuilder();
 			boolean isString = false;
+			boolean decimal = false;
+			boolean incompleteToken = false;
 
 			int line = 1;
 			while ((character = reader.read()) != -1) {
 				char c = (char) character;
 				if(c != '\n'){
+			        //Single charater tokens
 					if(c == ','){
 						tokens.add(new Token(Character.toString(c), filename, line, TokenType.COMMA));
 					}else if(c == ']'){
@@ -41,6 +44,7 @@ public class JottTokenizer {
 						tokens.add(new Token(Character.toString(c), filename, line, TokenType.R_BRACE));
 					}else if(c == '{'){
 						tokens.add(new Token(Character.toString(c), filename, line, TokenType.L_BRACE));
+					//assignments 
 					}else if(c == '='){
 						if(previousCharacter == '=' || previousCharacter == '<' || previousCharacter == '>' || previousCharacter == '!'){
 							tokens.remove(tokens.size()-1);
@@ -63,23 +67,37 @@ public class JottTokenizer {
 						}
 					}else if(c == '!'){
 						tokens.add(new Token(Character.toString(c), filename, line, TokenType.REL_OP));
-					}else if(Character.isDigit(c)){
+					//Numbers 
+					}else if(Character.isDigit(c) || c == '.'){
+						//If a number is in a string
 						if(isString){
 							result.append(c);
-						}else {
-							if (Character.isDigit(previousCharacter)) {
+						}else{
+							if(decimal && c == '.'){
+								System.err.println(String.format("Syntax Error Invalid \n token \"%c\" \"%c\" cannot follow \"%c\" in same token %s",c,c,c,filename));
+								return null;			
+							}
+							if (Character.isDigit(previousCharacter) || previousCharacter == '.') {
 								tokens.remove(tokens.size() - 1);
+								result.append(c);
 								tokens.add(new Token(result.toString(), filename, line, TokenType.NUMBER));
+								incompleteToken = false;
 							} else {
 								result.setLength(0);
+								result.append(c);
+								tokens.add(new Token(Character.toString(c), filename, line, TokenType.NUMBER));
 							}
-							result.append(c);
-							tokens.add(new Token(Character.toString(c), filename, line, TokenType.NUMBER));
+							if(c == '.'){
+								decimal = true;
+							}
+							if(c == '.' && !Character.isDigit(previousCharacter)){
+								incompleteToken = true;
+							}
 						}
+					//Strings
 					}else if(Character.isAlphabetic(c)){
 						if(isString){
 							result.append(c);
-
 						}
 					}else if(c == '"'){
 						if(isString){
@@ -92,8 +110,12 @@ public class JottTokenizer {
 							isString = true;
 						}
 					}else if(c == ' '){
+						decimal = false;
 						if(isString){
 							result.append(c);
+						}else if(incompleteToken){
+							System.err.println(String.format("Syntax Error Invalid \n token \"%s\" \"%s\" is incomplete %s",result,result,filename));
+							return null;
 						}
 					}
 				}else{
@@ -104,6 +126,7 @@ public class JottTokenizer {
 						return null;
 					}
 					line++;
+					result.setLength(0);
 				}
 				previousCharacter = c;
 			}
@@ -116,6 +139,10 @@ public class JottTokenizer {
 			}
 
 			reader.close();
+			if(incompleteToken){
+				System.err.println(String.format("Syntax Error Invalid \n token \"%s\" \"%s\" is incomplete %s",result,result,filename));
+				return null;
+			}
 			return tokens;
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
