@@ -27,7 +27,6 @@ public class JottTokenizer {
 			StringBuilder result = new StringBuilder();
 			boolean isString = false;
 			boolean decimal = false;
-			boolean comment = false;
 			boolean incompleteToken = false;
 
 			int line = 1;
@@ -88,9 +87,6 @@ public class JottTokenizer {
 						}
 					}
 						continue;
-					}
-					else if(c == ','){
-						tokens.add(new Token(Character.toString(c), filename, line, TokenType.COMMA));
 					//Numbers 
 					}else if(Character.isDigit(c) || c == '.'){
 						//If a number is in a string
@@ -150,7 +146,6 @@ public class JottTokenizer {
 						return null;
 					}
 					line++;
-					comment = false;
 					result.setLength(0);
 				}
 				previousCharacter = c;
