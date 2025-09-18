@@ -28,10 +28,22 @@ public class JottTokenizer {
 			boolean isString = false;
 			boolean decimal = false;
 			boolean incompleteToken = false;
+			boolean isKeyword = false;
+			String keywordBeingGenerated = "";
 
 			int line = 1;
 			while ((character = reader.read()) != -1) {
 				char c = (char) character;
+				if(isKeyword){
+					if(Character.isDigit(c) || Character.isAlphabetic(c)){
+						keywordBeingGenerated = (keywordBeingGenerated+c);
+					} else{
+						//turn keyword into token and make isKeyword false
+						tokens.add(new Token(keywordBeingGenerated, filename, line, TokenType.ID_KEYWORD));
+						keywordBeingGenerated="";
+						isKeyword = false;
+					}
+				}
 				if(c != '\n'){
 			        //Single charater tokens
 					if(c == ','){
@@ -81,21 +93,20 @@ public class JottTokenizer {
 					
 					else if( c == '#'){
 						while((character = reader.read()) != -1){
-						if((char)character == '\n'){
-							line++;
-							break;
-						}
-					}
-						continue;
+							if((char)character == '\n'){
+								line++;
+								break;
+							}
+						}	
 					//Numbers 
 					}else if(Character.isDigit(c) || c == '.'){
 						//If a number is in a string
 						if(isString){
 							result.append(c);
-						}else{
+						}else if(!isKeyword){
 							if(decimal && c == '.'){
 								System.err.println(String.format("Syntax Error Invalid \n token \"%c\" \"%c\" cannot follow \"%c\" in same token %s",c,c,c,filename));
-								return null;			
+								return null;
 							}
 							if (Character.isDigit(previousCharacter) || previousCharacter == '.') {
 								tokens.remove(tokens.size() - 1);
@@ -119,6 +130,12 @@ public class JottTokenizer {
 						if(isString){
 							result.append(c);
 						}
+						else if(!isKeyword){
+							//if(previousCharacter==0 || Character.isWhitespace(previousCharacter)){
+							isKeyword = true;
+							keywordBeingGenerated = ""+c;
+						}
+
 					}else if(c == '"'){
 						if(isString){
 							result.append(c);
@@ -151,6 +168,13 @@ public class JottTokenizer {
 				previousCharacter = c;
 			}
 			reader.close();
+			if(isKeyword){
+				//turn keyword into token and make isKeyword false
+				tokens.add(new Token(keywordBeingGenerated, filename, line, TokenType.ID_KEYWORD));
+				keywordBeingGenerated="";
+				isKeyword = false;
+
+			}
 			if(incompleteToken){
 				System.err.println(String.format("Syntax Error Invalid \n token \"%s\" \"%s\" is incomplete %s",result,result,filename));
 				return null;
