@@ -47,8 +47,6 @@ public class JottTokenizer {
 				if(isKeyword){
 					if(Character.isDigit(c) || Character.isAlphabetic(c)){
 						keywordBeingGenerated = (keywordBeingGenerated+c);
-					}else{
-						//TODO throw an error
 					}
 				}
 
