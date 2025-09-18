@@ -35,18 +35,15 @@ public class JottTokenizer {
 			int line = 1;
 			while ((character = reader.read()) != -1) {
 				char c = (char) character;
-				if(Character.isWhitespace(c) || c==',' || c==']' || c=='[' || c=='}' || c=='{' || c=='}' || c=='=' || c=='<' || c=='>' || c=='/' || c=='+' || c=='-' || c=='*' || c==';' || c=='.' || c==':' || c=='!' || c=='"'){
-					if(isKeyword){
+
+				if(isKeyword){
+					if(Character.isDigit(c) || Character.isAlphabetic(c)){
+						keywordBeingGenerated = (keywordBeingGenerated+c);
+					} else{
 						//turn keyword into token and make isKeyword false
 						tokens.add(new Token(keywordBeingGenerated, filename, line, TokenType.ID_KEYWORD));
 						keywordBeingGenerated="";
 						isKeyword = false;
-					}
-
-				}
-				if(isKeyword){
-					if(Character.isDigit(c) || Character.isAlphabetic(c)){
-						keywordBeingGenerated = (keywordBeingGenerated+c);
 					}
 				}
 
