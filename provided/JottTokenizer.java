@@ -45,6 +45,10 @@ public class JottTokenizer {
 					}
 				}
 				if(c != '\n'){
+					if(decimal && !Character.isDigit(c) && !Character.isWhitespace(c)){
+						System.err.println(String.format("Syntax Error %n Invalid token \"%c\". \"%c\" cannot follow . in same token %n %s:%d",c,c,filename,line));
+						return null;
+					}
 			        //Single charater tokens
 					if(c == ','){
 						tokens.add(new Token(Character.toString(c), filename, line, TokenType.COMMA));
@@ -83,7 +87,7 @@ public class JottTokenizer {
 							tokens.add(new Token("!=", filename, line, TokenType.REL_OP));
 
 						}else{
-							System.err.println("Error: '!' must be followed by '=' on line" + line);
+							System.err.println(String.format("Syntax Error %n Invalid token \"!\". \"!\" must be followed by \"=\" %n  %s:%d", filename, line));
 							reader.close();
 							return null;
 
@@ -105,7 +109,7 @@ public class JottTokenizer {
 							result.append(c);
 						}else if(!isKeyword){
 							if(decimal && c == '.'){
-								System.err.println(String.format("Syntax Error Invalid \n token \"%c\" \"%c\" cannot follow \"%c\" in same token %s",c,c,c,filename));
+								System.err.println(String.format("Syntax Error %n Invalid token \"%c\". \"%c\" cannot follow \"%c\" in same token %n %s:%d",c,c,c,filename,line));
 								return null;
 							}
 							if (Character.isDigit(previousCharacter) || previousCharacter == '.') {
@@ -131,7 +135,6 @@ public class JottTokenizer {
 							result.append(c);
 						}
 						else if(!isKeyword){
-							//if(previousCharacter==0 || Character.isWhitespace(previousCharacter)){
 							isKeyword = true;
 							keywordBeingGenerated = ""+c;
 						}
@@ -146,19 +149,20 @@ public class JottTokenizer {
 							result.append(c);
 							isString = true;
 						}
-					}else if(c == ' '){
+					}else if(Character.isWhitespace(c)){
 						decimal = false;
 						if(isString){
 							result.append(c);
-						}else if(incompleteToken){
-							System.err.println(String.format("Syntax Error Invalid \n token \"%s\" \"%s\" is incomplete %s",result,result,filename));
-							return null;
 						}
+					}
+					if(incompleteToken && !Character.isDigit(c) && c!='.'){
+							System.err.println(String.format("Syntax Error %n Invalid token \"%s\". \"%s\" is incomplete %n %s:%d",result,result,filename,line));
+							return null;
 					}
 				}else{
 					if(isString){
 						System.err.println("Syntax Error");
-						System.err.println("Missing double quotes");
+						System.err.println(String.format("Invalid Token \"%c\"Missing double quotes",result));
 						System.err.println("file."+filename+":"+line);
 						return null;
 					}
@@ -175,14 +179,14 @@ public class JottTokenizer {
 				isKeyword = false;
 
 			}
-			if(incompleteToken){
-				System.err.println(String.format("Syntax Error Invalid \n token \"%s\" \"%s\" is incomplete %s",result,result,filename));
-				return null;
-			}
 			if(isString){
 				System.err.println("Syntax Error");
-				System.err.println("Missing double quotes");
+				System.err.println(String.format("Invalid Token \"%c\". Missing double quotes",result));
 				System.err.println("file."+filename+":"+line);
+				return null;
+			}
+			if(incompleteToken){
+				System.err.println(String.format("Syntax Error %n Invalid token \"%s\". \"%s\" is incomplete %n %s:%d",result,result,filename,line));
 				return null;
 			}
 			return tokens;
