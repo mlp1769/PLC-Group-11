@@ -1,0 +1,19 @@
+package parserclasses;
+import package provided JottTree;
+
+
+public interface OperandNode{
+
+    static Node parseOperand{
+
+        if isIDNode(Node){
+            return Node.type;
+        }
+        if isNumberNode(Node){
+            return Node.type;
+        }
+        if isFunctionCallNode(Node){
+            return Node.type;
+        }
+    }
+}
