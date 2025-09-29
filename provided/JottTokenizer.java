@@ -3,7 +3,7 @@ package provided;
 /**
  * This class is responsible for tokenizing Jott code.
  * 
- * @author 
+ * Om Malkan, Mathew Prokuda, Kashyap Bendapudi, Gonzalo Estrella, Matthew Saddick
  **/
 
 import java.io.FileReader;
