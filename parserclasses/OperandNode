@@ -1,12 +1,28 @@
 package parserclasses;
+import java.util.ArrayList;
 import package provided JottTree;
 import package provided Token;
+import provided.TokenType;
 
 
 public interface OperandNode{
 
     static Node parseOperand{
 
-        
+        if (currToken.getTokenType() == TokenType.ID_KEYWORD){
+            Node id = new IDNode(currToken);
+            return id;
+        }
+        if (currToken.getTokenType() == TokenType.NUMBER){
+            Node number = new NumberNode(currToken);
+            return number;
+        }
+        if (currToken.getTokenType() == TokenType.FC_HEADER){
+            Node func = new FunctioncallNode(currToken);
+            return func;
+        }
+        else{
+            return "Invalid token"
+        }
     }
 }
