@@ -18,7 +18,7 @@ public class FunctionReturnNode implements JottTree {
             this.empty = tokens.remove(0);
             return this;
         }
-        this.type = this.type.parseTypeNode(tokens);
+        this.type.parseTypeNode(tokens);
         return this;
     }
 
