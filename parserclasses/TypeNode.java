@@ -12,8 +12,8 @@ public class TypeNode implements JottTree {
 
     public TypeNode parseTypeNode(ArrayList<Token> tokens){
         this.type = tokens.remove(0);
-        if(this.type.getToken() != "Double" || this.type.getToken() != "Integer" || this.type.getToken() != "String" || this.type.getToken() != "Boolean"){
-            System.err.println(String.format("Syntax Error %n Unknown Type %n %s:%d",this.head.getFilename,this.head.getLineNum));
+        if(!this.type.getToken().equals("Double") || !this.type.getToken().equals("Integer") || !this.type.getToken().equals("String") || !this.type.getToken().equals("Boolean")){
+            System.err.println(String.format("Syntax Error %n Unknown Type %n %s:%d",this.type.getFilename(),this.type.getLineNum()));
 
         }
         return this;
@@ -21,8 +21,7 @@ public class TypeNode implements JottTree {
 
     @Override
     public String convertToJott() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJott'");
+        return this.type.getToken();
     }
 
     @Override

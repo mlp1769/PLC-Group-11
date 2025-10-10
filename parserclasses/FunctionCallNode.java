@@ -3,6 +3,8 @@ package parserclasses;
 import provided.JottTree;
 import provided.Token;
 import provided.TokenType;
+import java.util.ArrayList;
+
 
 public class FunctionCallNode implements JottTree {
     
@@ -12,24 +14,24 @@ public class FunctionCallNode implements JottTree {
     private ParamsNode params;
     private Token RB;
     public FunctionCallNode(){
-        this.id = new IDNode;
-        this.param = new ParamsNode;
+        this.id = new IDNode();
+        this.params = new ParamsNode();
     }
 
-    public parseFunctionCallNode (ArrayList<Token> tokens) throws Exception{
+    public FunctionCallNode parseFunctionCallNode (ArrayList<Token> tokens) throws Exception{
         this.head = tokens.remove(0);
         if(head.getTokenType() != TokenType.FC_HEADER){
-			System.err.println(String.format("Syntax Error %n No Function Header %n %s:%d",this.head.getFilename,this.head.getLineNum));
+			System.err.println(String.format("Syntax Error %n No Function Header %n %s:%d",this.head.getFilename(),this.head.getLineNum()));
         }
         this.id = this.id.parseIDNode(tokens);
         this.LB = tokens.remove(0);
         if(head.getTokenType() != TokenType.L_BRACE){
-            System.err.println(String.format("Syntax Error %n No Left Brace %n %s:%d",this.LB.getFilename,this.LB.getLineNum)); 
+            System.err.println(String.format("Syntax Error %n No Left Brace %n %s:%d",this.LB.getFilename(),this.LB.getLineNum())); 
         }
         this.params = this.params.parseParamsNode(tokens);
         this.RB = tokens.remove(0);
         if(head.getTokenType() != TokenType.R_BRACE){
-            System.err.println(String.format("Syntax Error %n No Right Brace %n %s:%d",this.RB.getFilename,this.RB.getLineNum)); 
+            System.err.println(String.format("Syntax Error %n No Right Brace %n %s:%d",this.RB.getFilename(),this.RB.getLineNum())); 
         }
         return this;
 
@@ -37,7 +39,7 @@ public class FunctionCallNode implements JottTree {
 
     @Override
     public String convertToJott() {
-        return this.head.getToken() + this.id.convertToJott + this.LB.getToken() + this.params.convertToJott + this.RB.getToken();
+        return this.head.getToken() + this.id.convertToJott() + this.LB.getToken() + this.params.convertToJott() + this.RB.getToken();
     }
     @Override
     public boolean validateTree() {
