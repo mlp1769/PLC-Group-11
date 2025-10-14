@@ -1,24 +1,22 @@
 package parserclasses;
+
 import java.util.ArrayList;
 
-import provided.JottTree;
 import provided.Token;
 import provided.TokenType;
-import parserclasses.*;
 
-public class IDNode implements OperandNode{
-    private Token id;
+public class StringLiteralNode implements ExprNode{
+    private Token literal;
+    public StringLiteralNode(Token literal){
+        this.literal = literal;
 
-    public IDNode(Token id){
-        this.id = id;
 
     }
 
     @Override
     public String convertToJott() {
-        return this.id.getToken();
+        return this.literal.getToken();
     }
-
 
     @Override
     public boolean validateTree() {
@@ -26,17 +24,17 @@ public class IDNode implements OperandNode{
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
 
-    public IDNode parseIDNode(ArrayList<Token> tokens) throws Exception{
+    public StringLiteralNode parseStringLiteralNode(ArrayList<Token> tokens) throws Exception{
         Token currToken = tokens.get(0);
-        
-        if (currToken.getTokenType() == TokenType.ID_KEYWORD){
-            this.id = currToken;
+        if(currToken.getTokenType() == TokenType.STRING){
+            this.literal = currToken;
             return this;
 
         }
         else{
-            throw new Exception("Token is not an ID");
+            throw new Exception("Invalid Token");
         }
+         
     }
     
 }
