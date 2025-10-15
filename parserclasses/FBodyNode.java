@@ -18,7 +18,7 @@ public class FBodyNode implements JottTree {
     public static FBodyNode parseFBodyNode(ArrayList<Token> tokens){
         ArrayList<VardecNode> vars;
         while(tokens.get(0).getToken().equals("Double") || !tokens.get(0).getToken().equals("Integer") || tokens.get(0).getToken().equals("String") || tokens.get(0).getToken().equals("Boolean")){
-            VardecNode var = new Var_decNode();
+            VardecNode var = new VardecNode();
             vars.add(var.parseVar_decNode(tokens));
         }
         return new FBodyNode(vars, BodyNode.parseBodyNode(tokens));
