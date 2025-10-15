@@ -15,13 +15,20 @@ public class F_BodyNode implements JottTree {
         this.body = new BodyNode();
     }
 
-    public F_bodyNode parseF_bodyNode(ArrayList<Token> tokens){
-        
+    public F_BodyNode parseF_bodyNode(ArrayList<Token> tokens){
+        while(tokens.get(0).getToken().equals("Double") || !tokens.get(0).getToken().equals("Integer") || tokens.get(0).getToken().equals("String") || tokens.get(0).getToken().equals("Boolean")){
+            Var_decNode var = new Var_decNode();
+            this.vars.add(var.parseVar_decNode(tokens));
+        }
+        this.body.parseBodyNode(tokens);
     }
     @Override
     public String convertToJott() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJott'");
+        String text = "";
+        for (Var_decNode var : this.vars) {
+            text = text + var.convertToJott();
+        }
+        return text + this.body.convertToJott();
     }
 
     @Override
