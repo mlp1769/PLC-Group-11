@@ -10,22 +10,24 @@ public class BodyNode implements JottTree{
     private ArrayList<Body_stmtNode> body;
     private Return_stmtNode rtn;
     
-    public BodyNode(){
-        this.body = new ArrayList<Body_stmtNode>();
-        this.rtn = new Return_stmtNode();
+    public BodyNode(ArrayList<Body_stmtNode> body, Return_stmtNode rtn){
+        this.body = body;
+        this.rtn = rtn;
     }
 
-    public BodyNode parseBodyNode(ArrayList<Token> tokens){
+    public static BodyNode parseBodyNode(ArrayList<Token> tokens){
+        ArrayList<Body_stmtNode> body = new ArrayList<Body_stmtNode>();
+        Return_stmtNode rtn;
         while(!tokens.isEmpty()){
             if(tokens.get(0).getToken().equals("Return")){
-                this.rtn.parseReturn_stmtNode(tokens);
+                rtn = Return_stmtNode.parseReturn_stmtNode(tokens);
                 break;
             }else{
                 Body_stmtNode line = new Body_stmtNode();
-                this.body.add(line.parseBody_stmtNode(tokens));
+                body.add(line.parseBody_stmtNode(tokens));
             }
         }
-        return this;
+        return new BodyNode(body, rtn);
     }
     @Override
     public String convertToJott() {
