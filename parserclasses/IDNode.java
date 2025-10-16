@@ -26,12 +26,10 @@ public class IDNode implements OperandNode{
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
 
-    public IDNode parseIDNode(ArrayList<Token> tokens) throws Exception{
-        Token currToken = tokens.get(0);
-        
+    public static IDNode parseIDNode(ArrayList<Token> tokens) throws Exception{
+        Token currToken = tokens.remove(0);
         if (currToken.getTokenType() == TokenType.ID_KEYWORD){
-            this.id = currToken;
-            return this;
+            return new IDNode(currToken);
 
         }
         else{

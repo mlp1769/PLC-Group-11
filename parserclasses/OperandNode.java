@@ -12,31 +12,28 @@ public interface OperandNode extends JottTree{
     static OperandNode parseOperandNode(ArrayList<Token> tokens) throws Exception{
         Token currToken = tokens.get(0);
         if (currToken.getTokenType() == TokenType.ID_KEYWORD){
-            IDNode id = new IDNode(currToken);
-            id.parseIDNode(tokens);
-            return id;
+            return IDNode.parseIDNode(tokens);
 
         }
         else if (currToken.getTokenType() == TokenType.NUMBER){
-            //Check if negative 
-            //Put flag in number node
-            double num = Integer.parseInt(currToken.getToken());
-            NumberNode number;
-            if(num < 0){
-                number = new NumberNode(currToken, true);
-            }
-            else{
-                number = new NumberNode(currToken, false);
-            }
-            number.parseNumberNode(tokens);
-            return number;
+            return NumberNode.parseNumberNode(tokens);
 
         }
         else if (currToken.getTokenType() == TokenType.FC_HEADER){
-            FunctionCallNode func = new FunctionCallNode();
-            func.parseFunctionCallNode(tokens);
-            return func;
+            return FunctionCallNode.parseFunctionCallNode(tokens);
 
+        }
+        else if(currToken.getTokenType() == TokenType.MATH_OP){
+            String mathop = currToken.getToken();
+            if(mathop == '-'){
+                if(tokens.get(1) == TokenType.NUMBER){
+                    tokens.remove(1);
+                    Token newToken = new Token(currToken.getToken() + tokens.get(1), currToken.getFilename(), currToken.getLineNum(), TokenType.NUMBER);
+                    tokens.add(0, newToken)
+                    return NumberNode.parseNumberNode(tokens)
+                }
+            }
+            
         }
         else{
             throw new Exception("Invalid Node");

@@ -24,11 +24,10 @@ public class BoolNode implements ExprNode{
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
 
-    public BoolNode parseBoolNode(ArrayList<Token> tokens) throws Exception{
-        Token currToken = tokens.get(0);
+    public static BoolNode parseBoolNode(ArrayList<Token> tokens) throws Exception{
+        Token currToken = tokens.remove(0);
         if(currToken.getToken() == "True" || currToken.getToken() == "False"){
-            this.bool = currToken;
-            return this;
+            return new BoolNode(currToken);
 
         }
         else{

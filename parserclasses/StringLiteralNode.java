@@ -7,10 +7,9 @@ import provided.TokenType;
 
 public class StringLiteralNode implements ExprNode{
     private Token literal;
+    
     public StringLiteralNode(Token literal){
         this.literal = literal;
-
-
     }
 
     @Override
@@ -24,11 +23,10 @@ public class StringLiteralNode implements ExprNode{
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
 
-    public StringLiteralNode parseStringLiteralNode(ArrayList<Token> tokens) throws Exception{
-        Token currToken = tokens.get(0);
+    public static StringLiteralNode parseStringLiteralNode(ArrayList<Token> tokens) throws Exception{
+        Token currToken = tokens.remove(0);
         if(currToken.getTokenType() == TokenType.STRING){
-            this.literal = currToken;
-            return this;
+            return new StringLiteralNode(currToken);
 
         }
         else{
