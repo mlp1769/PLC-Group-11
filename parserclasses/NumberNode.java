@@ -31,7 +31,7 @@ public class NumberNode implements JottTree {
         return false;
     }
 
-    static NumberNode parseFunctionCallNode(ArrayList<Token> tokens) throws Exception {
+    static NumberNode parseFunctionNumberNode(ArrayList<Token> tokens) throws Exception {
         Token currToken = tokens.get(0);
         if(currToken.getTokenType() == TokenType.NUMBER){
             tokens.remove(0);
