@@ -18,8 +18,8 @@ public class Asmt implements BodyStmt {
         this.lineNum = lineNum;
     }
 
-    public static Asmt parse(Parser p) {
-        Token idTok = p.expect(TokenType.ID_KEYWORD, "identifier");
+    public static Asmt parse(ArrayList<Token> p) {
+        Token idTok = p.remove(TokenType.ID_KEYWORD, "identifier");
         int line = idTok.getLineNum();
 
         p.expect(TokenType.ASSIGN, "'='");

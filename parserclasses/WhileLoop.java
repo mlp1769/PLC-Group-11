@@ -8,7 +8,6 @@ public class WhileLoop implements BodyStmt {
 
     private final JottTree condition;
     private final ArrayList<BodyStmt> body;
-    private final int lineNum;
 
     public WhileLoop(JottTree condition, ArrayList<BodyStmt> body, int lineNum) {
         this.condition = condition;
@@ -16,7 +15,7 @@ public class WhileLoop implements BodyStmt {
         this.lineNum = lineNum;
     }
 
-    public static WhileLoop parse(Parser p) {
+    public static WhileLoop parse(ArrayList<Token> p) {
         Token whileTok = p.expect(TokenType.ID_KEYWORD, "While");
         int line = whileTok.getLineNum();
 

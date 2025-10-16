@@ -19,7 +19,7 @@ public class IfStmt implements BodyStmt {
         this.lineNum = lineNum;
     }
 
-    public static IfStmt parse(Parser p) {
+    public static IfStmt parse(ArrayList<Token p) {
         Token ifTok = p.expect(TokenType.ID_KEYWORD, "If");
         int line = ifTok.getLineNum();
 
