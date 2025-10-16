@@ -25,13 +25,13 @@ public class ElseifNode implements JottTree {
 
         //todo check if first token is 'elseif'
         if(!(tokens.get(0).getToken().toLowerCase().equals("elseif"))){
-            throw new Exception("'elseif' statement format: Elseif [ < expr >]{ < body >}");
+            throw new Exception("Syntax Error\nMissing 'elseif' keyword in else-statement\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
         }
         tokens.remove(0);
 
         //todo check if first token is '['
         if(!(tokens.get(0).getTokenType()==TokenType.L_BRACE)){
-            throw new Exception("'elseif' statement format: Elseif [ < expr >]{ < body >}");
+            throw new Exception("Syntax Error\nMissing left brace in else-statement\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
         }
         tokens.remove(0);
 
@@ -40,7 +40,7 @@ public class ElseifNode implements JottTree {
 
         //todo check if first token is ']'
         if(!(tokens.get(0).getTokenType()==TokenType.R_BRACE)){
-            throw new Exception("'elseif' statement format: Elseif [ < expr >]{ < body >}");
+            throw new Exception("Syntax Error\nMissing right brace in else-statement\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
         }
         tokens.remove(0);
 
@@ -50,7 +50,7 @@ public class ElseifNode implements JottTree {
 
         //todo check if first token is '{'
         if(!(tokens.get(0).getTokenType()==TokenType.L_BRACKET)){
-            throw new Exception("'elseif' statement format: Elseif [ < expr >]{ < body >}");
+            throw new Exception("Syntax Error\nMissing left bracket in else-statement\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
         }
         tokens.remove(0);
 
@@ -59,7 +59,7 @@ public class ElseifNode implements JottTree {
 
         //todo check if first token is '}'
         if(!(tokens.get(0).getTokenType()==TokenType.R_BRACKET)){
-            throw new Exception("'elseif' statement format: Elseif [ < expr >]{ < body >}");
+            throw new Exception("Syntax Error\nMissing right bracket in else-statement\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
         }
         tokens.remove(0);
 

@@ -29,7 +29,7 @@ public class VarDecNode implements JottTree {
 
         //todo check if first token is ';'
         if(!(tokens.get(0).getTokenType()== TokenType.SEMICOLON)){
-            throw new Exception("'var_dec' statement format: < type > < id >;");
+            throw new Exception("Syntax Error\nMissing semicolon\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
         }
         tokens.remove(0);
 
