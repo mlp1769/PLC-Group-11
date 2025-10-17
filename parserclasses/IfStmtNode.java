@@ -5,7 +5,7 @@ import provided.Token;
 import provided.TokenType;
 import java.util.ArrayList;
 
-public class IfStmtNode implements BodyStmtNode, JottTree {
+public class IfStmtNode implements BodyStmtNode {
 
     private final Token kwIf;                       // "If"
     private final Token lb;                         // '['
@@ -52,7 +52,7 @@ public class IfStmtNode implements BodyStmtNode, JottTree {
             throw new Exception();
         }
 
-        JottTree cond = ExprParser.parseExpr(tokens);
+        JottTree cond = ExprNode.parseExprNode(tokens);
 
         // ']'
         Token RB = tokens.remove(0);

@@ -5,8 +5,7 @@ import provided.Token;
 import provided.TokenType;
 import java.util.ArrayList;
 
-/** <while_loop> -> While [ <expr> ] { <body_stmt_list> } */
-public class WhileLoopNode implements BodyStmtNode, JottTree {
+public class WhileLoopNode implements BodyStmtNode{
 
     private final Token kwWhile;                 // "While"
     private final Token lb;                      // '['
@@ -44,7 +43,7 @@ public class WhileLoopNode implements BodyStmtNode, JottTree {
             throw new Exception();
         }
 
-        JottTree cond = ExprParser.parseExpr(tokens);
+        JottTree cond = ExprNode.parseExprNode(tokens);
 
         // ']'
         Token RB = tokens.remove(0);
@@ -62,7 +61,6 @@ public class WhileLoopNode implements BodyStmtNode, JottTree {
             throw new Exception();
         }
 
-        // <body_stmt_list>  (centralized router)
         ArrayList<BodyStmtNode> bodyList = BodyStmtNode.parseBody(tokens);
 
         // '}'
