@@ -19,7 +19,7 @@ public class ParamsTNode implements JottTree {
         ExprNode exprToPass;
 
         //todo check if first token is ','
-        if(tokens.get(0).getTokenType()== TokenType.COMMA){
+        if(tokens.get(0).getTokenType() != TokenType.COMMA){
             System.err.println("Syntax Error\nMissing comma before a parameter\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
             throw new Exception();
         }

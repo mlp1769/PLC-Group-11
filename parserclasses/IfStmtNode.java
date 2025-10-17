@@ -83,6 +83,21 @@ public class IfStmtNode implements BodyStmtNode, JottTree {
         Token elseTok = null, LBE = null, RBE = null;
         BodyNode elseBody = null;
 
+        // Handle elseif clauses first
+        while (!tokens.isEmpty()
+                && tokens.get(0).getTokenType() == TokenType.ID_KEYWORD
+                && "Elseif".equals(tokens.get(0).getToken())) {
+            // Parse elseif clause (this will be handled by the grammar, but for now we'll skip it)
+            // TODO: Implement proper elseif handling
+            tokens.remove(0); // Remove "Elseif"
+            // Skip the rest of the elseif clause for now
+            while (!tokens.isEmpty() && !(tokens.get(0).getTokenType() == TokenType.ID_KEYWORD && 
+                   ("Else".equals(tokens.get(0).getToken()) || "If".equals(tokens.get(0).getToken()) || 
+                    "While".equals(tokens.get(0).getToken()) || "Return".equals(tokens.get(0).getToken())))) {
+                tokens.remove(0);
+            }
+        }
+
         if (!tokens.isEmpty()
                 && tokens.get(0).getTokenType() == TokenType.ID_KEYWORD
                 && "Else".equals(tokens.get(0).getToken())) {

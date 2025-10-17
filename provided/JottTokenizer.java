@@ -45,10 +45,6 @@ public class JottTokenizer {
 					}
 				}
 				if(c != '\n'){
-					if(decimal && !Character.isDigit(c) && !Character.isWhitespace(c)){
-						System.err.println(String.format("Syntax Error %n Invalid token \"%c\". \"%c\" cannot follow . in same token %n %s:%d",c,c,filename,line));
-						return null;
-					}
 			        //Single charater tokens
 					if(c == ','){
 						tokens.add(new Token(Character.toString(c), filename, line, TokenType.COMMA));
@@ -102,7 +98,11 @@ public class JottTokenizer {
 								break;
 							}
 						}	
-					//Numbers 
+					//Numbers
+					if(decimal && !Character.isDigit(c) && !Character.isWhitespace(c)){
+						System.err.println(String.format("Syntax Error %n Invalid token \"%c\". \"%c\" cannot follow . in same token %n %s:%d",c,c,filename,line));
+						return null;
+					}
 					}else if(Character.isDigit(c) || c == '.'){
 						//If a number is in a string
 						if(isString){

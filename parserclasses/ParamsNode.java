@@ -20,7 +20,8 @@ public class ParamsNode implements JottTree {
     }
 
     public ParamsNode(){
-
+        this.expr = null;
+        this.paramsT = new ArrayList<>();
     }
 
 
@@ -30,10 +31,8 @@ public class ParamsNode implements JottTree {
         ExprNode exprToPass;
         ArrayList<ParamsTNode> paramsToPass = new ArrayList<>();
 
-
-
         //todo check if the first token is ']'
-        if(tokens.get(0).getTokenType()==TokenType.R_BRACE){
+        if(tokens.get(0).getTokenType()==TokenType.R_BRACKET){
             return new ParamsNode();
         }
 
@@ -41,17 +40,12 @@ public class ParamsNode implements JottTree {
         //todo else parse expr then parse params_t
         exprToPass = ExprNode.parseExprNode(tokens);
 
-        //todo check if the first char in the token is ',' to see if its params_t
-        boolean keepCheckingForParamsT = true;
-        while(keepCheckingForParamsT){
-            if(tokens.get(0).getToken().charAt(0)==','){
-                ParamsTNode tokenIndexParamsT = ParamsTNode.parseParamsTNode(tokens);
-                paramsToPass.add(tokenIndexParamsT);
-                tokens.remove(0);
-            }else{
-                keepCheckingForParamsT=false;
-            }
+        //todo check if the first token is ',' to see if its params_t
+        while(!tokens.isEmpty() && tokens.get(0).getTokenType() == TokenType.COMMA){
+            ParamsTNode tokenIndexParamsT = ParamsTNode.parseParamsTNode(tokens);
+            paramsToPass.add(tokenIndexParamsT);
         }
+        
         return new ParamsNode(exprToPass, paramsToPass);
 
 
@@ -60,10 +54,10 @@ public class ParamsNode implements JottTree {
     @Override
     public String convertToJott() {
         String text = "";
-        if(paramsT.size()>0){
+        if(expr != null){
             text += expr.convertToJott();
             for(int i=0; i<paramsT.size(); i++){
-                text += " " + paramsT.get(i).convertToJott();
+                text += paramsT.get(i).convertToJott();
             }
         }
 
