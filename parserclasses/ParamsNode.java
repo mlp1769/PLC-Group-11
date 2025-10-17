@@ -27,7 +27,7 @@ public class ParamsNode implements JottTree {
 
     public static ParamsNode parseParamsNode (ArrayList<Token> tokens) throws Exception{
 
-        ExprNode exprToPass;
+        ExprNode exprToPass = null;
         ArrayList<ParamsTNode> paramsToPass = new ArrayList<>();
 
 
@@ -60,8 +60,10 @@ public class ParamsNode implements JottTree {
     @Override
     public String convertToJott() {
         String text = "";
-        if(paramsT.size()>0){
+        if(this.expr != null){
             text += expr.convertToJott();
+        }
+        if(paramsT.size()>0){
             for(int i=0; i<paramsT.size(); i++){
                 text += " " + paramsT.get(i).convertToJott();
             }

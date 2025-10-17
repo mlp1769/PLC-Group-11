@@ -1,1 +1,1 @@
-Def main[]:Void{::print[];}
+Def main[]:Void{::print["Hello World"];}
