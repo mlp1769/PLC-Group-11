@@ -7,33 +7,34 @@ import java.util.ArrayList;
 
 public class BodyNode implements JottTree{
 
-    private ArrayList<Body_stmtNode> body;
-    private Return_stmtNode rtn;
+    private ArrayList<BodyStmtNode> body;
+    private ReturnStmtNode rtn;
     
-    public BodyNode(){
-        this.body = new ArrayList<Body_stmtNode>();
-        this.rtn = new Return_stmtNode();
+    public BodyNode(ArrayList<BodyStmtNode> body, ReturnStmtNode rtn) throws Exception{
+        this.body = body;
+        this.rtn = rtn;
     }
 
-    public BodyNode parseBodyNode(ArrayList<Token> tokens){
+    public static BodyNode parseBodyNode(ArrayList<Token> tokens){
+        ArrayList<BodyStmtNode> body = new ArrayList<BodyStmtNode>();
+        ReturnStmtNode rtn;
         while(!tokens.isEmpty()){
             if(tokens.get(0).getToken().equals("Return")){
-                this.rtn.parseReturn_stmtNode(tokens);
+                rtn = ReturnStmtNode.parseReturnStmtNode(tokens);
                 break;
             }else{
-                Body_stmtNode line = new Body_stmtNode();
-                this.body.add(line.parseBody_stmtNode(tokens));
+                body.add(BodyStmtNode.parseBodyStmtNode(tokens));
             }
         }
-        return this;
+        return new BodyNode(body, rtn);
     }
     @Override
     public String convertToJott() {
         String text = "";
-        for (Body_stmtNode stmt : this.body) {
-            text = text + stmt.convertToJott;
+        for (BodyStmtNode stmt : this.body) {
+            text = text + stmt.convertToJott();
         }
-        return text + this.rtn.convertToJott;
+        return text + this.rtn.convertToJott();
     }
 
     @Override
