@@ -11,10 +11,6 @@ public interface BodyStmtNode extends JottTree{
      * @return true if the node matches one of the specified types, false otherwise.
      */
 
-    /**
-     * Parse exactly one <body_stmt> from the front of the token list.
-     * Dispatches to the correct node parser based on the next token(s).
-     */
     static BodyStmtNode parseBodyStmtNode(ArrayList<Token> tokens) throws Exception {
         if (tokens.isEmpty()) {
             System.err.printf("Syntax Error %n Unexpected end of file in block %n <unknown>:1%n");
