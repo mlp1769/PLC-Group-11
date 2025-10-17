@@ -34,7 +34,10 @@ public class BodyNode implements JottTree{
         for (BodyStmtNode stmt : this.body) {
             text = text + stmt.convertToJott();
         }
-        return text + this.rtn.convertToJott();
+        //if(this.rtn != null){
+            return text + this.rtn.convertToJott();
+        //}
+        //return text;
     }
 
     @Override

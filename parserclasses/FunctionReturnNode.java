@@ -7,25 +7,25 @@ import java.util.ArrayList;
 
 public class FunctionReturnNode implements JottTree {
     private TypeNode type;
-    private Token empty;
-    public FunctionReturnNode(TypeNode type, Token empty){
+    private boolean empty;
+    public FunctionReturnNode(TypeNode type){
         this.type = type;
-        this.empty = empty;
+        this.empty = (type == null);
     }
 
     public static FunctionReturnNode parseFunctionReturnNode(ArrayList<Token> tokens) throws Exception{
         Token n = tokens.get(0);
         if(n.getToken().equals("Void")){
             n = tokens.remove(0);
-            return new FunctionReturnNode(null, null);
+            return new FunctionReturnNode(null);
         }
         TypeNode type = TypeNode.parseTypeNode(tokens);
-        return new FunctionReturnNode(type, n);
+        return new FunctionReturnNode(type);
     }
 
     @Override
     public String convertToJott() {
-        if(this.empty == null) {
+        if(this.empty) {
             return "Void";
         }
         return this.type.convertToJott();

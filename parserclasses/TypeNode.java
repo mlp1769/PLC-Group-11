@@ -14,7 +14,7 @@ public class TypeNode implements JottTree {
 
     public static TypeNode parseTypeNode(ArrayList<Token> tokens) throws Exception{
         Token type = tokens.remove(0);
-        if(!type.getToken().equals("Double") && !type.getToken().equals("Integer") && !type.getToken().equals("String") && !type.getToken().equals("Boolean") && !type.getToken().equals("Void")){
+        if(!type.getToken().equals("Double") && !type.getToken().equals("Integer") && !type.getToken().equals("String") && !type.getToken().equals("Boolean")){
             System.err.println(String.format("Syntax Error %n Unknown Type %s %n %s:%d",type.getToken(),type.getFilename(),type.getLineNum()));
             throw new Exception();
         }

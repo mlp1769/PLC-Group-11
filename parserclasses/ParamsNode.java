@@ -21,14 +21,14 @@ public class ParamsNode implements JottTree {
 
     public ParamsNode(){
         this.expr = null;
-        this.paramsT = new ArrayList<>();
+        this.paramsT = null;
     }
 
 
 
     public static ParamsNode parseParamsNode (ArrayList<Token> tokens) throws Exception{
 
-        ExprNode exprToPass;
+        ExprNode exprToPass = null;
         ArrayList<ParamsTNode> paramsToPass = new ArrayList<>();
 
         //todo check if the first token is ']'
@@ -54,8 +54,10 @@ public class ParamsNode implements JottTree {
     @Override
     public String convertToJott() {
         String text = "";
-        if(expr != null){
+        if(this.expr != null){
             text += expr.convertToJott();
+        }
+        if(paramsT.size()>0){
             for(int i=0; i<paramsT.size(); i++){
                 text += paramsT.get(i).convertToJott();
             }
