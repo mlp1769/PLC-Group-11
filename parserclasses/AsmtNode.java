@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class AsmtNode implements BodyStmtNode{
 
-    private final IDNode id;     // LHS identifier
+    private final IDNode id;
     private final Token assign;  // '='
     private final JottTree exp;  // <expr>
     private final Token semi;    // ';'
@@ -64,6 +64,6 @@ public class AsmtNode implements BodyStmtNode{
     }
 
     @Override public boolean validateTree() {
-         return true; 
+         return false; 
         }
 }
