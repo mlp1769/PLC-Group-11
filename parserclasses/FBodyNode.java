@@ -7,25 +7,25 @@ import java.util.ArrayList;
 
 public class FBodyNode implements JottTree {
 
-    private ArrayList<VardecNode> vars;
+    private ArrayList<VarDecNode> vars;
     private BodyNode body;
 
-    public FBodyNode(ArrayList<VardecNode> vars,BodyNode body){
+    public FBodyNode(ArrayList<VarDecNode> vars,BodyNode body){
         this.vars = vars;
         this.body = body;
     }
 
     public static FBodyNode parseFBodyNode(ArrayList<Token> tokens) throws Exception{
-        ArrayList<VardecNode> vars;
+        ArrayList<VarDecNode> vars = new ArrayList<VarDecNode>();
         while(tokens.get(0).getToken().equals("Double") || tokens.get(0).getToken().equals("Integer") || tokens.get(0).getToken().equals("String") || tokens.get(0).getToken().equals("Boolean")){
-            vars.add(VardecNode.parseVardecNode(tokens));
+            vars.add(VarDecNode.parseVarDecNode(tokens));
         }
         return new FBodyNode(vars, BodyNode.parseBodyNode(tokens));
     }
     @Override
     public String convertToJott() {
         String text = "";
-        for (VardecNode var : this.vars) {
+        for (VarDecNode var : this.vars) {
             text = text + var.convertToJott();
         }
         return text + this.body.convertToJott();

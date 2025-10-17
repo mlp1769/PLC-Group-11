@@ -22,7 +22,7 @@ public interface ExprNode extends JottTree{
         else if (currToken.getTokenType() == TokenType.ID_KEYWORD || currToken.getTokenType() == TokenType.NUMBER || currToken.getTokenType() == TokenType.FC_HEADER){
             OperandNode.parseOperandNode(tokens);
             Token nextToken = tokens.get(0);
-            if (nextToken.getToken() == TokenType.MATH_OP){
+            if (nextToken.getTokenType().equals(TokenType.MATH_OP)){
                 MathopNode.parseMathOpNode(tokens);
                 Token thirdToken = tokens.get(0);
                 if (thirdToken.getTokenType() == TokenType.ID_KEYWORD || thirdToken.getTokenType() == TokenType.NUMBER || thirdToken.getTokenType() == TokenType.FC_HEADER){
