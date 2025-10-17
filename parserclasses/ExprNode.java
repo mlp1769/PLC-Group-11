@@ -11,48 +11,38 @@ public interface ExprNode extends JottTree{
     static ExprNode parseExprNode(ArrayList<Token> tokens) throws Exception{
         
         Token currToken = tokens.get(0);
-        ArrayList<ExprNode> list = new ArrayList<>();
         if (currToken.getToken().equals("True") || currToken.getToken().equals("False")){
-            return BoolNode.parseBoolNode(tokens);
+            return new ExprNodeclass(BoolNode.parseBoolNode(tokens));
             
         }
         else if (currToken.getTokenType() == TokenType.STRING){
-            return StringLiteralNode.parseStringLiteralNode(tokens);
+            return new ExprNodeclass(StringLiteralNode.parseStringLiteralNode(tokens));
 
         }
         else if (currToken.getTokenType() == TokenType.ID_KEYWORD || currToken.getTokenType() == TokenType.NUMBER || currToken.getTokenType() == TokenType.FC_HEADER){
-            list.add(OperandNode.parseOperandNode(tokens));
-            Token nextToken = tokens.get(0);
-            if (nextToken.getToken() == TokenType.MATH_OP){
-                list.add(MathopNode.parseMathOpNode(tokens));
-                Token thirdToken = tokens.get(0);
-                if (thirdToken.getTokenType() == TokenType.ID_KEYWORD || thirdToken.getTokenType() == TokenType.NUMBER || thirdToken.getTokenType() == TokenType.FC_HEADER){
-                    list.add(OperandNode.parseOperandNode(tokens));
-                }
-                else{
-                    throw new Exception("Invalid Node");
-                }
-            }
-            else if (nextToken.getToken() == TokenType.REL_OP){
-                list.add(RelopNode.parseRelopNode(tokens));
-                Token thirdToken = tokens.get(0);
-                if (thirdToken.getTokenType() == TokenType.ID_KEYWORD || thirdToken.getTokenType() == TokenType.NUMBER || thirdToken.getTokenType() == TokenType.FC_HEADER){
-                    list.add(OperandNode.parseOperandNode(tokens));
-                }
-                else{
-                    throw new Exception("Invalid Node");
-                }
+            OperandNode leftOp = OperandNode.parseOperandNode(tokens);
 
+            if(tokens.isEmpty()){
+                return leftOp;
             }
-            else{
-                throw new Exception("Invalid Node");
-            }   
+            Token nextToken = tokens.get(0);
+
+            if(nextToken.getTokenType() == TokenType.REL_OP){
+                RelopNode relop = RelopNode.parseRelopNode(tokens);
+                OperandNode rightOp = OperandNode.parseOperandNode(tokens);
+                return new BinaryExprNode(leftOp, relop, rightOp);
+            }
+            else if{
+                MathopNode mathop = Mathop.parseMathOpNode(tokens);
+                OperandNode rightOp = OperandNode.parseOperandNode(tokens);
+                return new BinaryExprNode(leftOp, mathop, rightOp);
+            }
+            return leftOp;
 
         }
         else{
             throw new Exception("Invalid Node");
         }
-        return list;
     }
 
     
