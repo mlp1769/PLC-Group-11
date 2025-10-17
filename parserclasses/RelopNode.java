@@ -11,8 +11,7 @@ public class RelopNode implements ExprNode {
 
     @Override
     public String convertToJott() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJott'");
+        return this.relop.getToken();
     }
 
     @Override
