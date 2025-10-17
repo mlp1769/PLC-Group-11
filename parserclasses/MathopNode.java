@@ -29,7 +29,9 @@ public class MathopNode implements ExprNode{
             return new MathopNode(currToken);
         }
         else{
-            throw new Exception("Invalid Node");
+            System.err.printf("Syntax Error %n Expected Math OP got %s %n %s:%d%n",
+                    currToken.getToken(), currToken.getFilename(), currToken.getLineNum());
+            throw new Exception();
         }
     }
     

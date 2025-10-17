@@ -41,7 +41,9 @@ public interface ExprNode extends JottTree{
 
         }
         else{
-            throw new Exception("Invalid Node");
+            System.err.printf("Syntax Error %n Expected Expertion got %s %n %s:%d%n",
+                    currToken.getToken(), currToken.getFilename(), currToken.getLineNum());
+            throw new Exception();
         }
     }
 

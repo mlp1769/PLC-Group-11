@@ -31,7 +31,9 @@ public class BoolNode implements ExprNode{
 
         }
         else{
-            throw new Exception("Invalid Node");
+            System.err.printf("Syntax Error %n Expected Bool got %s %n %s:%d%n",
+                    currToken.getToken(), currToken.getFilename(), currToken.getLineNum());
+            throw new Exception();
         }
        
     }

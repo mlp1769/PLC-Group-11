@@ -39,7 +39,9 @@ public class NumberNode implements OperandNode {
         if(currToken.getTokenType() == TokenType.NUMBER){
             return new NumberNode(currToken);
         }else{
-            throw new Exception("Token is not a number");
+            System.err.printf("Syntax Error %n Expected Number got %s %n %s:%d%n",
+                    currToken.getToken(), currToken.getFilename(), currToken.getLineNum());
+            throw new Exception();
         }
     }
 }

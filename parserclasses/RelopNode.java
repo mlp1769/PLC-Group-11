@@ -29,7 +29,9 @@ public class RelopNode implements ExprNode {
             return new RelopNode(currToken);
         }
         else{
-            throw new Exception("Invalid node");
+            System.err.printf("Syntax Error %n Real OP String got %s %n %s:%d%n",
+                    currToken.getToken(), currToken.getFilename(), currToken.getLineNum());
+            throw new Exception()
         }
 
     }

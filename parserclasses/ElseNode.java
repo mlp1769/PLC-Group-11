@@ -31,7 +31,8 @@ public class ElseNode implements JottTree {
 
         //todo check if first token is '{'
         if(!(tokens.get(0).getTokenType()==TokenType.L_BRACKET)){
-            throw new Exception("Syntax Error\nMissing left bracket in else-statement\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
+            System.err.println("Syntax Error\nMissing left bracket in else-statement\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
+            throw new Exception();
         }
         tokens.remove(0);
 
@@ -40,7 +41,8 @@ public class ElseNode implements JottTree {
 
         //todo check if first token is '}'
         if(!(tokens.get(0).getTokenType()==TokenType.R_BRACKET)){
-            throw new Exception("Syntax Error\nMissing right bracket in else-statement\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
+            System.err.println("Syntax Error\nMissing right bracket in else-statement\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
+            throw new Exception();
         }
         tokens.remove(0);
 

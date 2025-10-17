@@ -30,7 +30,9 @@ public class StringLiteralNode implements ExprNode{
 
         }
         else{
-            throw new Exception("Invalid Token");
+            System.err.printf("Syntax Error %n Expected String got %s %n %s:%d%n",
+                    currToken.getToken(), currToken.getFilename(), currToken.getLineNum());
+            throw new Exception();
         }
          
     }

@@ -35,6 +35,8 @@ public interface OperandNode extends ExprNode{
             }
             
         }
-        throw new Exception("Invalid Node");
+        System.err.printf("Syntax Error %n Invalid Operand %s %n %s:%d%n",
+                    currToken.getToken(), currToken.getFilename(), currToken.getLineNum());
+            throw new Exception();
     }
 }

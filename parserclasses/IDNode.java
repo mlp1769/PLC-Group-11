@@ -33,7 +33,9 @@ public class IDNode implements OperandNode{
 
         }
         else{
-            throw new Exception("Token is not an ID");
+            System.err.printf("Syntax Error %n Expected ID got %s %n %s:%d%n",
+                    currToken.getToken(), currToken.getFilename(), currToken.getLineNum());
+            throw new Exception();
         }
     }
     
