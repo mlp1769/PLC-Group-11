@@ -36,7 +36,7 @@ public class ElseifNode implements JottTree {
         tokens.remove(0);
 
         //todo parse expr
-        exprToPass = parseExprNode(tokens);
+        exprToPass = ExprNode.parseExprNode(tokens);
 
         //todo check if first token is ']'
         if(!(tokens.get(0).getTokenType()==TokenType.R_BRACE)){
@@ -55,7 +55,7 @@ public class ElseifNode implements JottTree {
         tokens.remove(0);
 
         //todo parse body
-        bodyToPass = parseBodyNode(tokens);
+        bodyToPass = BodyNode.parseBodyNode(tokens);
 
         //todo check if first token is '}'
         if(!(tokens.get(0).getTokenType()==TokenType.R_BRACKET)){

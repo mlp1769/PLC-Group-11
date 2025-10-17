@@ -13,7 +13,7 @@ public interface ExprNode extends JottTree{
         Token currToken = tokens.get(0);
         ArrayList<ExprNode> list = new ArrayList<>();
         if (currToken.getToken().equals("True") || currToken.getToken().equals("False")){
-            return BoolNode.parseBoolNode(tokens)
+            return BoolNode.parseBoolNode(tokens);
             
         }
         else if (currToken.getTokenType() == TokenType.STRING){

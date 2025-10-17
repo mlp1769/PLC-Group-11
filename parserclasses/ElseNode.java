@@ -36,7 +36,7 @@ public class ElseNode implements JottTree {
         tokens.remove(0);
 
         //todo parse body
-        bodyToPass = parseBodyNode(tokens);
+        bodyToPass = BodyNode.parseBodyNode(tokens);
 
         //todo check if first token is '}'
         if(!(tokens.get(0).getTokenType()==TokenType.R_BRACKET)){

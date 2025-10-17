@@ -8,19 +8,19 @@ import java.util.ArrayList;
 public class BodyNode implements JottTree{
 
     private ArrayList<BodyStmtNode> body;
-    private ReturnStmtNode rtn;
+    private ReturnStatementNode rtn;
     
-    public BodyNode(ArrayList<BodyStmtNode> body, ReturnStmtNode rtn) throws Exception{
+    public BodyNode(ArrayList<BodyStmtNode> body, ReturnStatementNode rtn){
         this.body = body;
         this.rtn = rtn;
     }
 
-    public static BodyNode parseBodyNode(ArrayList<Token> tokens){
+    public static BodyNode parseBodyNode(ArrayList<Token> tokens) throws Exception{
         ArrayList<BodyStmtNode> body = new ArrayList<BodyStmtNode>();
-        ReturnStmtNode rtn;
+        ReturnStatementNode rtn = null;
         while(!tokens.isEmpty()){
             if(tokens.get(0).getToken().equals("Return")){
-                rtn = ReturnStmtNode.parseReturnStmtNode(tokens);
+                rtn = ReturnStatementNode.parseReturnStatementNode(tokens);
                 break;
             }else{
                 body.add(BodyStmtNode.parseBodyStmtNode(tokens));
