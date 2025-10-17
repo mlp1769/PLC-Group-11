@@ -7,6 +7,8 @@ package provided;
  * @author
  */
 
+import parserclasses.ProgramNode;
+
 import java.util.ArrayList;
 
 public class JottParser {
@@ -18,6 +20,14 @@ public class JottParser {
      *         or null upon an error in parsing.
      */
     public static JottTree parse(ArrayList<Token> tokens){
-		return null;
+        JottTree possible = null;
+
+        try{
+             possible = ProgramNode.parseProgramNodeProgram(tokens);
+        } catch (Exception e) {
+            return null;
+        }
+
+		return possible;
     }
 }
