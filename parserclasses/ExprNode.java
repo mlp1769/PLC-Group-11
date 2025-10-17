@@ -12,11 +12,11 @@ public interface ExprNode extends JottTree{
         
         Token currToken = tokens.get(0);
         if (currToken.getToken().equals("True") || currToken.getToken().equals("False")){
-            return new ExprNodeclass(BoolNode.parseBoolNode(tokens));
+            return BoolNode.parseBoolNode(tokens);
             
         }
         else if (currToken.getTokenType() == TokenType.STRING){
-            return new ExprNodeclass(StringLiteralNode.parseStringLiteralNode(tokens));
+            return StringLiteralNode.parseStringLiteralNode(tokens);
 
         }
         else if (currToken.getTokenType() == TokenType.ID_KEYWORD || currToken.getTokenType() == TokenType.NUMBER || currToken.getTokenType() == TokenType.FC_HEADER){
