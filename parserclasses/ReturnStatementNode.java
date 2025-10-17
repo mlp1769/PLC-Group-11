@@ -18,10 +18,7 @@ public class ReturnStatementNode implements JottTree {
         Token returnToken = tokens.remove(0);
 
         if(!(returnToken.getTokenType().equals(TokenType.ID_KEYWORD) && returnToken.getToken().equals("Return"))) {
-            System.err.println("Syntax Error:");
-            System.err.println("Expected keyword 'Return' but got '"+returnToken.getTokenType().toString().toLowerCase()+"' for return statement.");
-            System.err.println(returnToken.getFilename()+":"+returnToken.getLineNum());
-            throw new Exception();
+            return new ReturnStatementNode(null);
         }
 
         ExprNode expressionNode = ExprNode.parseExprNode(tokens);
@@ -39,6 +36,9 @@ public class ReturnStatementNode implements JottTree {
 
     @Override
     public String convertToJott() {
+        if (this.expressionNode == null) {
+            return "";
+        }
         return "Return " + this.expressionNode.convertToJott()+";" ;
     }
 

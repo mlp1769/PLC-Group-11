@@ -12,12 +12,14 @@ public class FunctionCallNode implements OperandNode, BodyStmtNode, JottTree {
     private Token LB;
     private ParamsNode params;
     private Token RB;
-    public FunctionCallNode(Token head, IDNode id, Token LB, ParamsNode params, Token RB){
+    private Token semi;
+    public FunctionCallNode(Token head, IDNode id, Token LB, ParamsNode params, Token RB, Token semi){
         this.head = head;
         this.id = id;
         this.LB = LB;
         this.params = params;
         this.RB = RB;
+        this.semi = semi;
     }
 
     public static FunctionCallNode parseFunctionCallNode (ArrayList<Token> tokens) throws Exception{
@@ -28,23 +30,28 @@ public class FunctionCallNode implements OperandNode, BodyStmtNode, JottTree {
         }
         IDNode id = IDNode.parseIDNode(tokens);
         Token LB = tokens.remove(0);
-        if(LB.getTokenType() != TokenType.L_BRACE){
+        if(LB.getTokenType() != TokenType.L_BRACKET){
             System.err.println(String.format("Syntax Error %n Expected Left Brace got %s %n %s:%d",LB.getToken(),LB.getFilename(),LB.getLineNum()));
             throw new Exception(); 
         }
         ParamsNode params = ParamsNode.parseParamsNode(tokens);
         Token RB = tokens.remove(0);
-        if(RB.getTokenType() != TokenType.L_BRACE){
+        if(RB.getTokenType() != TokenType.R_BRACKET){
             System.err.println(String.format("Syntax Error %n Expected Right Brace got %s %n %s:%d",RB.getToken(),RB.getFilename(),RB.getLineNum()));
             throw new Exception();
         }
-        return new FunctionCallNode(head, id, LB, params, RB);
+        Token semi = tokens.remove(0);
+        if(semi.getTokenType() != TokenType.SEMICOLON){
+            System.err.println(String.format("Syntax Error %n Expected ; got %s %n %s:%d",semi.getToken(),semi.getFilename(),semi.getLineNum()));
+            throw new Exception();
+        }
+        return new FunctionCallNode(head, id, LB, params, RB, semi);
 
     }
 
     @Override
     public String convertToJott() {
-        return this.head.getToken() + this.id.convertToJott() + this.LB.getToken() + this.params.convertToJott() + this.RB.getToken();
+        return this.head.getToken() + this.id.convertToJott() + this.LB.getToken() + this.params.convertToJott() + this.RB.getToken() + this.semi.getToken();
     }
     @Override
     public boolean validateTree() {
