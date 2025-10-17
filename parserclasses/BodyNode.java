@@ -23,7 +23,16 @@ public class BodyNode implements JottTree{
                 rtn = ReturnStatementNode.parseReturnStatementNode(tokens);
                 break;
             }else{
-                body.add(BodyStmtNode.parseBodyStmtNode(tokens));
+                BodyStmtNode stm = BodyStmtNode.parseBodyStmtNode(tokens);
+                body.add(stm);
+                if(stm instanceof FunctionCallNode){
+                    Token semi = tokens.remove(0);
+                    if(semi.getTokenType() != TokenType.SEMICOLON){
+                        System.err.printf("Syntax Error %n Expected ; got '%s' %n %s:%d%n",
+                            semi.getToken(), semi.getFilename(), semi.getLineNum());
+                        throw new Exception();
+                    }
+                }
             }
         }
         return new BodyNode(body, rtn);
@@ -32,7 +41,11 @@ public class BodyNode implements JottTree{
     public String convertToJott() {
         String text = "";
         for (BodyStmtNode stmt : this.body) {
-            text = text + stmt.convertToJott();
+            if(stmt instanceof FunctionCallNode){
+                text = text + stmt.convertToJott() + ";";
+            }else{
+                text = text + stmt.convertToJott();
+            }
         }
         //if(this.rtn != null){
             return text + this.rtn.convertToJott();

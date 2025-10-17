@@ -44,7 +44,7 @@ public class FunctionCallNode implements OperandNode, BodyStmtNode{
 
     @Override
     public String convertToJott() {
-        return this.head.getToken() + this.id.convertToJott() + this.LB.getToken() + this.params.convertToJott() + this.RB.getToken() + this.semi.getToken();
+        return this.head.getToken() + this.id.convertToJott() + this.LB.getToken() + this.params.convertToJott() + this.RB.getToken();
     }
     @Override
     public boolean validateTree() {
