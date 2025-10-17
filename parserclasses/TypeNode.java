@@ -10,7 +10,7 @@ public class TypeNode implements JottTree {
 
     public TypeNode(){}
 
-    public TypeNode parseTypeNode(ArrayList<Token> tokens){
+    public static TypeNode parseTypeNode(ArrayList<Token> tokens){
         this.type = tokens.remove(0);
         if(!this.type.getToken().equals("Double") || !this.type.getToken().equals("Integer") || !this.type.getToken().equals("String") || !this.type.getToken().equals("Boolean")){
             System.err.println(String.format("Syntax Error %n Unknown Type %n %s:%d",this.type.getFilename(),this.type.getLineNum()));

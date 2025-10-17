@@ -31,9 +31,9 @@ public class BodyNode implements JottTree{
     public String convertToJott() {
         String text = "";
         for (Body_stmtNode stmt : this.body) {
-            text = text + stmt.convertToJott;
+            text = text + stmt.convertToJott();
         }
-        return text + this.rtn.convertToJott;
+        return text + this.rtn.convertToJott();
     }
 
     @Override
