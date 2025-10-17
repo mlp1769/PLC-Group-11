@@ -11,6 +11,7 @@ public interface ExprNode extends JottTree{
     static ExprNode parseExprNode(ArrayList<Token> tokens) throws Exception{
         
         Token currToken = tokens.get(0);
+        ArrayList<ExprNode> list = new ArrayList<>();
         if (currToken.getToken().equals("True") || currToken.getToken().equals("False")){
             return BoolNode.parseBoolNode(tokens)
             
@@ -20,23 +21,23 @@ public interface ExprNode extends JottTree{
 
         }
         else if (currToken.getTokenType() == TokenType.ID_KEYWORD || currToken.getTokenType() == TokenType.NUMBER || currToken.getTokenType() == TokenType.FC_HEADER){
-            OperandNode.parseOperandNode(tokens);
+            list.add(OperandNode.parseOperandNode(tokens));
             Token nextToken = tokens.get(0);
             if (nextToken.getToken() == TokenType.MATH_OP){
-                MathopNode.parseMathOpNode(tokens);
+                list.add(MathopNode.parseMathOpNode(tokens));
                 Token thirdToken = tokens.get(0);
                 if (thirdToken.getTokenType() == TokenType.ID_KEYWORD || thirdToken.getTokenType() == TokenType.NUMBER || thirdToken.getTokenType() == TokenType.FC_HEADER){
-                    OperandNode.parseOperandNode(tokens);
+                    list.add(OperandNode.parseOperandNode(tokens));
                 }
                 else{
                     throw new Exception("Invalid Node");
                 }
             }
             else if (nextToken.getToken() == TokenType.REL_OP){
-                RelopNode.parseRelopNode(tokens);
+                list.add(RelopNode.parseRelopNode(tokens));
                 Token thirdToken = tokens.get(0);
                 if (thirdToken.getTokenType() == TokenType.ID_KEYWORD || thirdToken.getTokenType() == TokenType.NUMBER || thirdToken.getTokenType() == TokenType.FC_HEADER){
-                    OperandNode.parseOperandNode(tokens);
+                    list.add(OperandNode.parseOperandNode(tokens));
                 }
                 else{
                     throw new Exception("Invalid Node");
@@ -51,6 +52,7 @@ public interface ExprNode extends JottTree{
         else{
             throw new Exception("Invalid Node");
         }
+        return list;
     }
 
     
