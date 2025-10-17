@@ -27,8 +27,9 @@ public interface OperandNode extends ExprNode{
             String mathop = currToken.getToken();
             if(mathop.equals("-")){
                 if(tokens.get(1).getTokenType() == TokenType.NUMBER){
-                    tokens.remove(1);
                     Token newToken = new Token(currToken.getToken() + tokens.get(1), currToken.getFilename(), currToken.getLineNum(), TokenType.NUMBER);
+                    tokens.remove(0);
+                    tokens.remove(0);
                     tokens.add(0, newToken);
                     return NumberNode.parseNumberNode(tokens);
                 }

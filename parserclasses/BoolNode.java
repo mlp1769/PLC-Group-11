@@ -26,7 +26,7 @@ public class BoolNode implements ExprNode{
 
     public static BoolNode parseBoolNode(ArrayList<Token> tokens) throws Exception{
         Token currToken = tokens.remove(0);
-        if(currToken.getToken() == "True" || currToken.getToken() == "False"){
+        if(currToken.getToken().equals("True") || currToken.getToken().equals("False")){
             return new BoolNode(currToken);
 
         }
