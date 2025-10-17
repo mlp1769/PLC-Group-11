@@ -26,12 +26,18 @@ public class FunctionDefParamsNode implements JottTree {
     public static FunctionDefParamsNode parseFunctionDefParamsNode(ArrayList<Token> tokens) throws Exception{
         Token idToken = tokens.remove(0);
         if(!idToken.getTokenType().equals(TokenType.ID_KEYWORD)){
-            throw new Exception("Expected id Token");
+            System.err.println("Syntax Error:");
+            System.err.println("Expected id but got '"+idToken.getTokenType().toString().toLowerCase()+"' for function definition parameters");
+            System.err.println(idToken.getFilename()+":"+idToken.getLineNum());
+            throw new Exception();
         }
 
         Token colonToken = tokens.remove(0);
         if(!colonToken.getTokenType().equals(TokenType.COLON)){
-            throw new Exception("Expected colon Token");
+            System.err.println("Syntax Error:");
+            System.err.println("Expected colon but got '"+colonToken.getTokenType().toString().toLowerCase()+"' for function definition parameters");
+            System.err.println(colonToken.getFilename()+":"+colonToken.getLineNum());
+            throw new Exception();
         }
 
         TypeNode typeNode = TypeNode.parseTypeNode(tokens);

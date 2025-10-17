@@ -17,15 +17,21 @@ public class ReturnStatementNode implements JottTree {
     public static ReturnStatementNode parseReturnStatementNode(ArrayList<Token> tokens) throws Exception{
         Token returnToken = tokens.remove(0);
 
-        if(!returnToken.getTokenType().equals(TokenType.ID_KEYWORD) || !returnToken.getToken().equals("Return")) {
-            throw new Exception("Missing return statement");
+        if(!(returnToken.getTokenType().equals(TokenType.ID_KEYWORD) && returnToken.getToken().equals("Return"))) {
+            System.err.println("Syntax Error:");
+            System.err.println("Expected keyword 'Return' but got '"+returnToken.getTokenType().toString().toLowerCase()+"' for return statement.");
+            System.err.println(returnToken.getFilename()+":"+returnToken.getLineNum());
+            throw new Exception();
         }
 
         ExpressionNode expressionNode = ExpressionNode.parseExpressionNode(tokens);
 
         Token semicolonToken = tokens.remove(0);
         if(!semicolonToken.getTokenType().equals(TokenType.SEMICOLON)) {
-            throw new Exception("Missing semicolon");
+            System.err.println("Syntax Error:");
+            System.err.println("Expected semicolon but got '"+semicolonToken.getTokenType().toString().toLowerCase()+"' for return statement.");
+            System.err.println(semicolonToken.getFilename()+":"+semicolonToken.getLineNum());
+            throw new Exception();
         }
 
         return new ReturnStatementNode(expressionNode);
