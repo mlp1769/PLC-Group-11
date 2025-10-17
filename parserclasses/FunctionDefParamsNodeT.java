@@ -19,17 +19,26 @@ public class FunctionDefParamsNodeT implements JottTree {
     public static FunctionDefParamsNodeT parseFunctionDefParamsNodeT(ArrayList<Token> tokens) throws Exception{
         Token commaToken = tokens.remove(0);
         if(!commaToken.getTokenType().equals(TokenType.COMMA)){
-            throw new Exception("Expected comma token");
+            System.err.println("Syntax Error:");
+            System.err.println("Expected comma but got '"+commaToken.getTokenType().toString().toLowerCase()+"' for additional function definition parameters");
+            System.err.println(commaToken.getFilename()+":"+commaToken.getLineNum());
+            throw new Exception();
         }
 
         Token idToken = tokens.remove(0);
         if(!idToken.getTokenType().equals(TokenType.ID_KEYWORD)){
-            throw new Exception("Expected id token");
+            System.err.println("Syntax Error:");
+            System.err.println("Expected id but got '"+idToken.getTokenType().toString().toLowerCase()+"' for additional function definition parameters");
+            System.err.println(idToken.getFilename()+":"+idToken.getLineNum());
+            throw new Exception();
         }
 
         Token colonToken = tokens.remove(0);
         if(!colonToken.getTokenType().equals(TokenType.COLON)){
-            throw new Exception("Expected colon");
+            System.err.println("Syntax Error:");
+            System.err.println("Expected colon but got '"+colonToken.getTokenType().toString().toLowerCase()+"' for additional function definition parameters");
+            System.err.println(colonToken.getFilename()+":"+colonToken.getLineNum());
+            throw new Exception();
         }
 
         TypeNode typeNode = TypeNode.parseTypeNode(tokens);

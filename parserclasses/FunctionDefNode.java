@@ -12,9 +12,9 @@ public class FunctionDefNode implements JottTree {
     private Token idToken;
     private FunctionDefParamsNode params;
     private FunctionReturnNode returnType;
-    private F_BodyNode body;
+    private FBodyNode body;
 
-    public FunctionDefNode(Token defToken, Token idToken, FunctionDefParamsNode params, FunctionReturnNode returnType, F_BodyNode body) {
+    public FunctionDefNode(Token defToken, Token idToken, FunctionDefParamsNode params, FunctionReturnNode returnType, FBodyNode body) {
         this.defToken = defToken;
         this.idToken = idToken;
         this.params = params;
@@ -26,18 +26,27 @@ public class FunctionDefNode implements JottTree {
         Token def = tokens.remove(0);
 
         if(!(def.getTokenType() == TokenType.ID_KEYWORD && def.getToken().equals("Def"))){
-            throw new Exception("Expected 'Def' keyword, found: " + def.getToken());
+            System.err.println("Syntax Error:");
+            System.err.println("Expected keyword 'Def' but got '"+def.getTokenType().toString().toLowerCase()+"' for function definition");
+            System.err.println(def.getFilename()+":"+def.getLineNum());
+            throw new Exception();
         }
 
         Token id = tokens.remove(0);
 
         if (id.getTokenType() != TokenType.ID_KEYWORD) {
-            throw new Exception("Expected function name, found: " + id.getToken());
+            System.err.println("Syntax Error:");
+            System.err.println("Expected id but got '"+id.getTokenType().toString().toLowerCase()+"' for function name");
+            System.err.println(id.getFilename()+":"+id.getLineNum());
+            throw new Exception();
         }
 
         Token lBracket = tokens.remove(0);
         if (lBracket.getTokenType() != TokenType.L_BRACKET) {
-            throw new Exception("Expected '[', found: " + lBracket.getToken());
+            System.err.println("Syntax Error:");
+            System.err.println("Expected left bracket but got '"+lBracket.getTokenType().toString().toLowerCase()+"' for function definition");
+            System.err.println(lBracket.getFilename()+":"+lBracket.getLineNum());
+            throw new Exception();
         }
 
         FunctionDefParamsNode params = null;
@@ -49,26 +58,38 @@ public class FunctionDefNode implements JottTree {
 
         Token rBracket = tokens.remove(0);
         if (rBracket.getTokenType() != TokenType.R_BRACKET) {
-            throw new Exception("Expected ']', found: " + rBracket.getToken());
+            System.err.println("Syntax Error:");
+            System.err.println("Expected right bracket but got '"+rBracket.getTokenType().toString().toLowerCase()+"' for function definition");
+            System.err.println(rBracket.getFilename()+":"+rBracket.getLineNum());
+            throw new Exception();
         }
 
         Token colon = tokens.remove(0);
         if (colon.getTokenType() != TokenType.COLON) {
-            throw new Exception("Expected ':', found: " + colon.getToken());
+            System.err.println("Syntax Error:");
+            System.err.println("Expected colon but got '"+colon.getTokenType().toString().toLowerCase()+"' for function definition");
+            System.err.println(colon.getFilename()+":"+colon.getLineNum());
+            throw new Exception();
         }
 
         FunctionReturnNode returnType = FunctionReturnNode.parseFunctionReturnNode(tokens);
 
         Token lBrace = tokens.remove(0);
         if (lBrace.getTokenType() != TokenType.L_BRACE) {
-            throw new Exception("Expected '{', found: " + lBrace.getToken());
+            System.err.println("Syntax Error:");
+            System.err.println("Expected left brace but got '"+lBrace.getTokenType().toString().toLowerCase()+"' for function definition");
+            System.err.println(lBrace.getFilename()+":"+lBrace.getLineNum());
+            throw new Exception();
         }
 
-        F_BodyNode body = F_BodyNode.parseF_bodyNode(tokens);
+        FBodyNode body = FBodyNode.parseFBodyNode(tokens);
 
         Token rBrace = tokens.remove(0);
         if (rBrace.getTokenType() != TokenType.R_BRACE) {
-            throw new Exception("Expected '}', found: " + rBrace.getToken());
+            System.err.println("Syntax Error:");
+            System.err.println("Expected right brace but got '"+rBrace.getTokenType().toString().toLowerCase()+"' for function definition");
+            System.err.println(rBrace.getFilename()+":"+rBrace.getLineNum());
+            throw new Exception();
         }
 
         return new FunctionDefNode(def, id, params, returnType, body);
@@ -108,11 +129,11 @@ public class FunctionDefNode implements JottTree {
         this.params = params;
     }
 
-    public F_BodyNode getBody() {
+    public FBodyNode getBody() {
         return body;
     }
 
-    public void setBody(F_BodyNode body) {
+    public void setBody(FBodyNode body) {
         this.body = body;
     }
 

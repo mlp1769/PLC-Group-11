@@ -5,34 +5,40 @@ import provided.TokenType;
 import java.util.ArrayList;
 
 
-public class FunctionCallNode implements JottTree {
+public class FunctionCallNode implements OperandNode, BodyStmtNode, JottTree {
     
     private Token head;
     private IDNode id;
     private Token LB;
     private ParamsNode params;
     private Token RB;
-    public FunctionCallNode(){
-        this.id = new IDNode();
-        this.params = new ParamsNode();
+    public FunctionCallNode(Token head, IDNode id, Token LB, ParamsNode params, Token RB){
+        this.head = head;
+        this.id = id;
+        this.LB = LB;
+        this.params = params;
+        this.RB = RB;
     }
 
-    public FunctionCallNode parseFunctionCallNode (ArrayList<Token> tokens) throws Exception{
-        this.head = tokens.remove(0);
+    public static FunctionCallNode parseFunctionCallNode (ArrayList<Token> tokens) throws Exception{
+        Token head = tokens.remove(0);
         if(head.getTokenType() != TokenType.FC_HEADER){
-			System.err.println(String.format("Syntax Error %n No Function Header %n %s:%d",this.head.getFilename(),this.head.getLineNum()));
+            System.err.println(String.format("Syntax Error %n Expected Function Header got %s %n %s:%d",head.getToken(),head.getFilename(),head.getLineNum()));
+			throw new Exception();
         }
-        this.id.parseIDNode(tokens);
-        this.LB = tokens.remove(0);
-        if(head.getTokenType() != TokenType.L_BRACE){
-            System.err.println(String.format("Syntax Error %n No Left Brace %n %s:%d",this.LB.getFilename(),this.LB.getLineNum())); 
+        IDNode id = IDNode.parseIDNode(tokens);
+        Token LB = tokens.remove(0);
+        if(LB.getTokenType() != TokenType.L_BRACE){
+            System.err.println(String.format("Syntax Error %n Expected Left Brace got %s %n %s:%d",LB.getToken(),LB.getFilename(),LB.getLineNum()));
+            throw new Exception(); 
         }
-        this.params.parseParamsNode(tokens);
-        this.RB = tokens.remove(0);
-        if(head.getTokenType() != TokenType.R_BRACE){
-            System.err.println(String.format("Syntax Error %n No Right Brace %n %s:%d",this.RB.getFilename(),this.RB.getLineNum())); 
+        ParamsNode params = ParamsNode.parseParamsNode(tokens);
+        Token RB = tokens.remove(0);
+        if(RB.getTokenType() != TokenType.R_BRACE){
+            System.err.println(String.format("Syntax Error %n Expected Right Brace got %s %n %s:%d",RB.getToken(),RB.getFilename(),RB.getLineNum()));
+            throw new Exception();
         }
-        return this;
+        return new FunctionCallNode(head, id, LB, params, RB);
 
     }
 

@@ -25,7 +25,7 @@ public class JottParser {
         try{
              possible = ProgramNode.parseProgramNodeProgram(tokens);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return null;
         }
 
 		return possible;
