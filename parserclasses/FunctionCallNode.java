@@ -5,21 +5,19 @@ import provided.TokenType;
 import java.util.ArrayList;
 
 
-public class FunctionCallNode implements OperandNode, BodyStmtNode, JottTree {
+public class FunctionCallNode implements OperandNode, BodyStmtNode{
     
     private Token head;
     private IDNode id;
     private Token LB;
     private ParamsNode params;
     private Token RB;
-    private Token semi;
-    public FunctionCallNode(Token head, IDNode id, Token LB, ParamsNode params, Token RB, Token semi){
+    public FunctionCallNode(Token head, IDNode id, Token LB, ParamsNode params, Token RB){
         this.head = head;
         this.id = id;
         this.LB = LB;
         this.params = params;
         this.RB = RB;
-        this.semi = semi;
     }
 
     public static FunctionCallNode parseFunctionCallNode (ArrayList<Token> tokens) throws Exception{
@@ -40,12 +38,7 @@ public class FunctionCallNode implements OperandNode, BodyStmtNode, JottTree {
             System.err.println(String.format("Syntax Error %n Expected Right Brace got %s %n %s:%d",RB.getToken(),RB.getFilename(),RB.getLineNum()));
             throw new Exception();
         }
-        Token semi = tokens.remove(0);
-        if(semi.getTokenType() != TokenType.SEMICOLON){
-            System.err.println(String.format("Syntax Error %n Expected ; got %s %n %s:%d",semi.getToken(),semi.getFilename(),semi.getLineNum()));
-            throw new Exception();
-        }
-        return new FunctionCallNode(head, id, LB, params, RB, semi);
+        return new FunctionCallNode(head, id, LB, params, RB);
 
     }
 
