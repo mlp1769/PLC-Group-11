@@ -16,7 +16,7 @@ public class IfStmtNode implements BodyStmtNode, JottTree {
     private final Token rbr;                 // '}'
     private final Token kwElse;                     // optional "Else"
     private final Token lbre;                 // '{'
-    private final ArrayList<BodyStmtNode> elseBody; // nullable
+    private final ArrayList<BodyStmtNode> elseBody; // optional else body
     private final Token rbre;                 // '}'
 
     public IfStmtNode(Token kwIf, Token lb, JottTree condition, Token rb,

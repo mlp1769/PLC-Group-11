@@ -21,7 +21,7 @@ public class AsmtNode implements BodyStmtNode, JottTree {
     }
 
     public static AsmtNode parseAsmtNode(ArrayList<Token> tokens) throws Exception {
-        // ID (lhs)
+        // ID
         if (tokens.isEmpty() || tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) {
             Token t = tokens.isEmpty() ? null : tokens.get(0);
             String got = (t == null) ? "<eof>" : t.getToken();
