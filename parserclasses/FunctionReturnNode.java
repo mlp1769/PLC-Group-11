@@ -8,18 +8,19 @@ import java.util.ArrayList;
 public class FunctionReturnNode implements JottTree {
     private TypeNode type;
     private Token empty;
-    public FunctionReturnNode(){
-        this.type = New TypeNode();
+    public FunctionReturnNode(TypeNode type, Token empty){
+        this.type = type;
+        this.empty = empty;
     }
 
-    public static FunctionReturnNode parseFunctionReturnNode(ArrayList<Token> tokens){
+    public static FunctionReturnNode parseFunctionReturnNode(ArrayList<Token> tokens) throws Exception{
         Token n = tokens.get(0);
         if(n.getToken().equals("Void")){
-            this.empty = tokens.remove(0);
-            return this;
+            n = tokens.remove(0);
+            return new FunctionReturnNode(null, null);
         }
-        this.type.parseTypeNode(tokens);
-        return this;
+        TypeNode type = TypeNode.parseTypeNode(tokens);
+        return new FunctionReturnNode(type, n);
     }
 
     @Override

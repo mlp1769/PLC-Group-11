@@ -8,15 +8,17 @@ import java.util.ArrayList;
 public class TypeNode implements JottTree {
     private Token type;
 
-    public TypeNode(){}
+    public TypeNode(Token type){
+        this.type = type;
+    }
 
-    public static TypeNode parseTypeNode(ArrayList<Token> tokens){
-        this.type = tokens.remove(0);
-        if(!this.type.getToken().equals("Double") || !this.type.getToken().equals("Integer") || !this.type.getToken().equals("String") || !this.type.getToken().equals("Boolean")){
-            System.err.println(String.format("Syntax Error %n Unknown Type %n %s:%d",this.type.getFilename(),this.type.getLineNum()));
-
+    public static TypeNode parseTypeNode(ArrayList<Token> tokens) throws Exception{
+        Token type = tokens.remove(0);
+        if(!type.getToken().equals("Double") || !type.getToken().equals("Integer") || !type.getToken().equals("String") || !type.getToken().equals("Boolean")){
+            System.err.println(String.format("Syntax Error %n Unknown Type %s %n %s:%d",type.getToken(),type.getFilename(),type.getLineNum()));
+            throw new Exception();
         }
-        return this;
+        return new TypeNode(type);
     }
 
     @Override
