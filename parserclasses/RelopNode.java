@@ -31,7 +31,7 @@ public class RelopNode implements ExprNode {
         else{
             System.err.printf("Syntax Error %n Real OP String got %s %n %s:%d%n",
                     currToken.getToken(), currToken.getFilename(), currToken.getLineNum());
-            throw new Exception()
+            throw new Exception();
         }
 
     }
