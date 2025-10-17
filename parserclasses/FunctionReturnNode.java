@@ -13,13 +13,13 @@ public class FunctionReturnNode implements JottTree {
         this.empty = empty;
     }
 
-    public FunctionReturnNode parseFunctionReturnNode(ArrayList<Token> tokens){
+    public static FunctionReturnNode parseFunctionReturnNode(ArrayList<Token> tokens) throws Exception{
         Token n = tokens.get(0);
         if(n.getToken().equals("Void")){
-            this.empty = tokens.remove(0);
+            n = tokens.remove(0);
             return new FunctionReturnNode(null, null);
         }
-        this.type.parseTypeNode(tokens);
+        TypeNode type = TypeNode.parseTypeNode(tokens);
         return new FunctionReturnNode(type, n);
     }
 

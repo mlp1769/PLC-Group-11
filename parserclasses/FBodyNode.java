@@ -15,11 +15,10 @@ public class FBodyNode implements JottTree {
         this.body = body;
     }
 
-    public static FBodyNode parseFBodyNode(ArrayList<Token> tokens){
+    public static FBodyNode parseFBodyNode(ArrayList<Token> tokens) throws Exception{
         ArrayList<VardecNode> vars;
         while(tokens.get(0).getToken().equals("Double") || tokens.get(0).getToken().equals("Integer") || tokens.get(0).getToken().equals("String") || tokens.get(0).getToken().equals("Boolean")){
-            VardecNode var = new VardecNode();
-            vars.add(var.parseVar_decNode(tokens));
+            vars.add(VardecNode.parseVardecNode(tokens));
         }
         return new FBodyNode(vars, BodyNode.parseBodyNode(tokens));
     }

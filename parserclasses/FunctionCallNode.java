@@ -24,18 +24,21 @@ public class FunctionCallNode implements Operand, BodyStmtNode, JottTree {
     public static FunctionCallNode parseFunctionCallNode (ArrayList<Token> tokens) throws Exception{
         Token head = tokens.remove(0);
         if(head.getTokenType() != TokenType.FC_HEADER){
-			throw new Exception("No Function Header", head);
+            System.err.println(String.format("Syntax Error %n Expected Function Header got %s %n %s:%d",head.getToken(),head.getFilename(),head.getLineNum()));
+			throw new Exception();
         }
         IDNode id = IDNode.parseIDNode(tokens);
         Token LB = tokens.remove(0);
         if(LB.getTokenType() != TokenType.L_BRACE){
-            
-            throw new Exception("No Left Brace", LB); 
+            System.err.println(String.format("Syntax Error %n Expected Left Brace got %s %n %s:%d",LB.getToken(),LB.getFilename(),LB.getLineNum()));
+            throw new Exception(); 
         }
         ParamsNode params = ParamsNode.parseParamsNode(tokens);
         Token RB = tokens.remove(0);
         if(RB.getTokenType() != TokenType.R_BRACE){
-            throw new Exception("No Left Right", LB);        }
+            System.err.println(String.format("Syntax Error %n Expected Right Brace got %s %n %s:%d",RB.getToken(),RB.getFilename(),RB.getLineNum()));
+            throw new Exception();
+        }
         return new FunctionCallNode(head, id, LB, params, RB);
 
     }

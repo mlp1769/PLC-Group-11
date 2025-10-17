@@ -10,7 +10,7 @@ public class BodyNode implements JottTree{
     private ArrayList<BodyStmtNode> body;
     private ReturnStmtNode rtn;
     
-    public BodyNode(ArrayList<BodyStmtNode> body, ReturnStmtNode rtn){
+    public BodyNode(ArrayList<BodyStmtNode> body, ReturnStmtNode rtn) throws Exception{
         this.body = body;
         this.rtn = rtn;
     }
@@ -23,8 +23,7 @@ public class BodyNode implements JottTree{
                 rtn = ReturnStmtNode.parseReturnStmtNode(tokens);
                 break;
             }else{
-                BodyStmtNode line = new BodyStmtNode();
-                body.add(line.parseBodyStmtNode(tokens));
+                body.add(BodyStmtNode.parseBodyStmtNode(tokens));
             }
         }
         return new BodyNode(body, rtn);

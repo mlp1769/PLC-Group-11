@@ -12,11 +12,11 @@ public class TypeNode implements JottTree {
         this.type = type;
     }
 
-    public static TypeNode parseTypeNode(ArrayList<Token> tokens){
+    public static TypeNode parseTypeNode(ArrayList<Token> tokens) throws Exception{
         Token type = tokens.remove(0);
         if(!type.getToken().equals("Double") || !type.getToken().equals("Integer") || !type.getToken().equals("String") || !type.getToken().equals("Boolean")){
-            throw new Exception(String.format("Syntax Error %n Unknown Type %n %s:%d",type.getFilename(),type.getLineNum()));
-
+            System.err.println(String.format("Syntax Error %n Unknown Type %s %n %s:%d",type.getToken(),type.getFilename(),type.getLineNum()));
+            throw new Exception();
         }
         return new TypeNode(type);
     }
