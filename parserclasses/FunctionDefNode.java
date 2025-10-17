@@ -12,9 +12,9 @@ public class FunctionDefNode implements JottTree {
     private Token idToken;
     private FunctionDefParamsNode params;
     private FunctionReturnNode returnType;
-    private F_BodyNode body;
+    private FBodyNode body;
 
-    public FunctionDefNode(Token defToken, Token idToken, FunctionDefParamsNode params, FunctionReturnNode returnType, F_BodyNode body) {
+    public FunctionDefNode(Token defToken, Token idToken, FunctionDefParamsNode params, FunctionReturnNode returnType, FBodyNode body) {
         this.defToken = defToken;
         this.idToken = idToken;
         this.params = params;
@@ -82,7 +82,7 @@ public class FunctionDefNode implements JottTree {
             throw new Exception();
         }
 
-        F_BodyNode body = F_BodyNode.parseF_bodyNode(tokens);
+        FBodyNode body = FBodyNode.parseFBodyNode(tokens);
 
         Token rBrace = tokens.remove(0);
         if (rBrace.getTokenType() != TokenType.R_BRACE) {
@@ -129,11 +129,11 @@ public class FunctionDefNode implements JottTree {
         this.params = params;
     }
 
-    public F_BodyNode getBody() {
+    public FBodyNode getBody() {
         return body;
     }
 
-    public void setBody(F_BodyNode body) {
+    public void setBody(FBodyNode body) {
         this.body = body;
     }
 
