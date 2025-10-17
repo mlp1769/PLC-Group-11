@@ -20,7 +20,8 @@ public class ParamsNode implements JottTree {
     }
 
     public ParamsNode(){
-
+        this.expr = null;
+        this.paramsT = null;
     }
 
 
