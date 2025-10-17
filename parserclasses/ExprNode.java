@@ -11,7 +11,7 @@ public interface ExprNode extends JottTree{
     static ExprNode parseExprNode(ArrayList<Token> tokens) throws Exception{
         
         Token currToken = tokens.get(0);
-        if (currToken.getToken() == 'True' || currToken.getToken() == 'False' ){
+        if (currToken.getToken() == "True" || currToken.getToken() == "False" ){
             return BoolNode.parseBoolNode(tokens)
             
         }
