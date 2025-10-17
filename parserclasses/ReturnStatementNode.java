@@ -15,12 +15,12 @@ public class ReturnStatementNode implements JottTree {
     }
 
     public static ReturnStatementNode parseReturnStatementNode(ArrayList<Token> tokens) throws Exception{
-        Token returnToken = tokens.remove(0);
+        Token returnToken = tokens.get(0);
 
         if(!(returnToken.getTokenType().equals(TokenType.ID_KEYWORD) && returnToken.getToken().equals("Return"))) {
             return new ReturnStatementNode(null);
         }
-
+        tokens.remove(0);
         ExprNode expressionNode = ExprNode.parseExprNode(tokens);
 
         Token semicolonToken = tokens.remove(0);

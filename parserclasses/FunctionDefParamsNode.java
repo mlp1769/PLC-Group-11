@@ -53,7 +53,9 @@ public class FunctionDefParamsNode implements JottTree {
     @Override
     public String convertToJott() {
         StringBuilder sb = new StringBuilder();
-        sb.append(idToken.getToken()).append(":").append(typeNode.convertToJott());
+        if(this.idToken != null){
+            sb.append(idToken.getToken()).append(":").append(typeNode.convertToJott());
+        }
         for(FunctionDefParamsNodeT t : params){
             sb.append(t.convertToJott());
         }

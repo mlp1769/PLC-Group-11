@@ -97,7 +97,7 @@ public class FunctionDefNode implements JottTree {
 
     @Override
     public String convertToJott() {
-        return this.defToken.getToken() + " " + this.idToken.getToken() + "[" + this.params.convertToJott() + "]:" + this.returnType.convertToJott() + " {" + this.body.convertToJott() + "}";
+        return this.defToken.getToken() + " " + this.idToken.getToken() + "[" + this.params.convertToJott() + "]:" + this.returnType.convertToJott() + "{" + this.body.convertToJott() + "}";
     }
 
     @Override
