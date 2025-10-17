@@ -3,14 +3,17 @@ import provided.JottTree;
 import provided.Token;
 import provided.TokenType;
 
+import java.nio.channels.NetworkChannel;
 import java.util.ArrayList;
 
-public class NumberNode implements JottTree {
+public class NumberNode implements OperandNode {
 
     private Token number;
+    private boolean negative;
 
     public NumberNode(Token number){
         this.number = number;
+
     }
 
     public Token getNumber() {
@@ -31,11 +34,10 @@ public class NumberNode implements JottTree {
         return false;
     }
 
-    static NumberNode parseFunctionNumberNode(ArrayList<Token> tokens) throws Exception {
-        Token currToken = tokens.get(0);
+    public static NumberNode parseNumberNode(ArrayList<Token> tokens) throws Exception {
+        Token currToken = tokens.remove(0);
         if(currToken.getTokenType() == TokenType.NUMBER){
-            tokens.remove(0);
-            return new NumberNode(currToken);
+            return new NumberNode(currToken)
         }else{
             throw new Exception("Token is not a number");
         }
