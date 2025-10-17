@@ -32,8 +32,8 @@ public interface ExprNode extends JottTree{
                 OperandNode rightOp = OperandNode.parseOperandNode(tokens);
                 return new BinaryExprNode(leftOp, relop, rightOp);
             }
-            else if{
-                MathopNode mathop = Mathop.parseMathOpNode(tokens);
+            else if (nextToken.getTokenType() == TokenType.MATH_OP){
+                MathopNode mathop = MathopNode.parseMathOpNode(tokens);
                 OperandNode rightOp = OperandNode.parseOperandNode(tokens);
                 return new BinaryExprNode(leftOp, mathop, rightOp);
             }
