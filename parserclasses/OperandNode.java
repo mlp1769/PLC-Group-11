@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 
 
-public interface OperandNode extends JottTree{
+public interface OperandNode extends ExprNode{
 
     public static OperandNode parseOperandNode(ArrayList<Token> tokens) throws Exception{
         Token currToken = tokens.get(0);
