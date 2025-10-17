@@ -6,7 +6,7 @@ import provided.TokenType;
 import java.util.ArrayList;
 
 
-public class FunctionCallNode implements Operand, BodyStmtNode, JottTree {
+public class FunctionCallNode implements OperandNode, BodyStmtNode, JottTree {
     
     private Token head;
     private IDNode id;
