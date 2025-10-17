@@ -34,7 +34,7 @@ public class FunctionCallNode implements OperandNode, BodyStmtNode, JottTree {
         }
         ParamsNode params = ParamsNode.parseParamsNode(tokens);
         Token RB = tokens.remove(0);
-        if(RB.getTokenType() != TokenType.R_BRACE){
+        if(RB.getTokenType() != TokenType.L_BRACE){
             System.err.println(String.format("Syntax Error %n Expected Right Brace got %s %n %s:%d",RB.getToken(),RB.getFilename(),RB.getLineNum()));
             throw new Exception();
         }

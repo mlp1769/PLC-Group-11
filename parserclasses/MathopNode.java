@@ -1,5 +1,5 @@
 package parserclasses;
-
+import java.util.ArrayList;
 import provided.Token;
 import provided.TokenType;
 
@@ -23,7 +23,7 @@ public class MathopNode implements ExprNode{
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
 
-    public static parseMathOpNode(ArrayList<Tokens> tokens) throws Exception{
+    public static MathopNode parseMathOpNode(ArrayList<Token> tokens) throws Exception{
         Token currToken = tokens.remove(0);
         if(currToken.getTokenType() == TokenType.MATH_OP){
             return new MathopNode(currToken);
