@@ -5,7 +5,7 @@ import provided.TokenType;
 
 public class MathopNode implements ExprNode{
 
-    private mathOp;
+    private Token mathOp;
 
     public MathopNode(Token mathOp){
         this.mathOp = mathOp;
@@ -14,8 +14,7 @@ public class MathopNode implements ExprNode{
 
     @Override
     public String convertToJott() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJott'");
+        return this.mathOp.getToken();
     }
 
     @Override

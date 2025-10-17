@@ -39,13 +39,13 @@ public class ParamsNode implements JottTree {
 
 
         //todo else parse expr then parse params_t
-        exprToPass = parseExprNode(tokens);
+        exprToPass = ExprNode.parseExprNode(tokens);
 
         //todo check if the first char in the token is ',' to see if its params_t
         boolean keepCheckingForParamsT = true;
         while(keepCheckingForParamsT){
             if(tokens.get(0).getToken().charAt(0)==','){
-                ParamsTNode tokenIndexParamsT = parseParamsTNode(tokens);
+                ParamsTNode tokenIndexParamsT = ParamsTNode.parseParamsTNode(tokens);
                 paramsToPass.add(tokenIndexParamsT);
                 tokens.remove(0);
             }else{

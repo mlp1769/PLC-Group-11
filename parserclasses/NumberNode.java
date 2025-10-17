@@ -37,7 +37,7 @@ public class NumberNode implements OperandNode {
     public static NumberNode parseNumberNode(ArrayList<Token> tokens) throws Exception {
         Token currToken = tokens.remove(0);
         if(currToken.getTokenType() == TokenType.NUMBER){
-            return new NumberNode(currToken)
+            return new NumberNode(currToken);
         }else{
             throw new Exception("Token is not a number");
         }

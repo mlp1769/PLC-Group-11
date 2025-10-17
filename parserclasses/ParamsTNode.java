@@ -24,7 +24,7 @@ public class ParamsTNode implements JottTree {
         }
         tokens.remove(0);
 
-        exprToPass = parseExprNode(tokens);
+        exprToPass = ExprNode.parseExprNode(tokens);
 
 
         return new ParamsTNode(exprToPass);

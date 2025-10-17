@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public interface OperandNode extends JottTree{
 
-    static OperandNode parseOperandNode(ArrayList<Token> tokens) throws Exception{
+    public static OperandNode parseOperandNode(ArrayList<Token> tokens) throws Exception{
         Token currToken = tokens.get(0);
         if (currToken.getTokenType() == TokenType.ID_KEYWORD){
             return IDNode.parseIDNode(tokens);
@@ -25,18 +25,16 @@ public interface OperandNode extends JottTree{
         }
         else if(currToken.getTokenType() == TokenType.MATH_OP){
             String mathop = currToken.getToken();
-            if(mathop == '-'){
-                if(tokens.get(1) == TokenType.NUMBER){
+            if(mathop.equals("-")){
+                if(tokens.get(1).getTokenType() == TokenType.NUMBER){
                     tokens.remove(1);
                     Token newToken = new Token(currToken.getToken() + tokens.get(1), currToken.getFilename(), currToken.getLineNum(), TokenType.NUMBER);
-                    tokens.add(0, newToken)
-                    return NumberNode.parseNumberNode(tokens)
+                    tokens.add(0, newToken);
+                    return NumberNode.parseNumberNode(tokens);
                 }
             }
             
         }
-        else{
-            throw new Exception("Invalid Node");
-        }
+        throw new Exception("Invalid Node");
     }
 }

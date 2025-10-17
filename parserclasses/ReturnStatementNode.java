@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 public class ReturnStatementNode implements JottTree {
 
-    private ExpressionNode expressionNode;
+    private ExprNode expressionNode;
 
-    public ReturnStatementNode(ExpressionNode expressionNode) {
+    public ReturnStatementNode(ExprNode expressionNode) {
         this.expressionNode = expressionNode;
     }
 
@@ -24,7 +24,7 @@ public class ReturnStatementNode implements JottTree {
             throw new Exception();
         }
 
-        ExpressionNode expressionNode = ExpressionNode.parseExpressionNode(tokens);
+        ExprNode expressionNode = ExprNode.parseExprNode(tokens);
 
         Token semicolonToken = tokens.remove(0);
         if(!semicolonToken.getTokenType().equals(TokenType.SEMICOLON)) {

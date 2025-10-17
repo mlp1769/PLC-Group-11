@@ -1,6 +1,9 @@
 package parserclasses;
 
 import provided.TokenType;
+import provided.JottTree;
+import provided.Token;
+import java.util.ArrayList;
 
 public class RelopNode implements ExprNode {
     private Token relOp;
@@ -21,9 +24,9 @@ public class RelopNode implements ExprNode {
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
 
-    public static parseRelopNode(ArrayList<Tokens> tokens) throws Exception{
+    public static RelopNode parseRelopNode(ArrayList<Tokens> tokens) throws Exception{
         Token currToken = tokens.remove(0);
-        if(currToken.getTokenType == TokenType.REL_OP){
+        if(currToken.getTokenType() == TokenType.REL_OP){
             return new RelopNode(currToken);
         }
         else{

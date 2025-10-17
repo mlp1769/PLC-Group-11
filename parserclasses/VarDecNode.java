@@ -9,9 +9,9 @@ import java.util.ArrayList;
 public class VarDecNode implements JottTree {
     // < type > < id >;
     private TypeNode type;
-    private IdNode id;
+    private IDNode id;
 
-    public VarDecNode(TypeNode typeNode, IdNode idNode){
+    public VarDecNode(TypeNode typeNode, IDNode idNode){
         this.type = typeNode;
         this.id = idNode;
     }
@@ -19,13 +19,13 @@ public class VarDecNode implements JottTree {
     public static VarDecNode parseVarDecNode (ArrayList<Token> tokens) throws Exception{
 
         TypeNode typeToPass;
-        IdNode idToPass;
+        IDNode idToPass;
 
         //todo parse type
-        typeToPass = parseTypeNode(tokens);
+        typeToPass = TypeNode.parseTypeNode(tokens);
 
         //todo parse id
-        idToPass = parseIDNode(tokens);
+        idToPass = IDNode.parseIDNode(tokens);
 
         //todo check if first token is ';'
         if(!(tokens.get(0).getTokenType()== TokenType.SEMICOLON)){
