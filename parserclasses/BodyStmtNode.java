@@ -41,11 +41,4 @@ public interface BodyStmtNode extends JottTree{
                 t0.getToken(), t0.getFilename(), t0.getLineNum());
         throw new Exception();
     }
-    static ArrayList<BodyStmtNode> parseBody(ArrayList<Token> tokens) throws Exception {
-        ArrayList<BodyStmtNode> list = new ArrayList<>();
-        while (!tokens.isEmpty() && tokens.get(0).getTokenType() != TokenType.R_BRACE) {
-            list.add(parseBodyStmtNode(tokens));
-        }
-        return list;
-    }
 }
