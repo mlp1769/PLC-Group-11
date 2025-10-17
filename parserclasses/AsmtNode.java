@@ -5,8 +5,7 @@ import provided.Token;
 import provided.TokenType;
 import java.util.ArrayList;
 
-/** <asmt> -> ID '=' <expr> ';' */
-public class AsmtNode implements BodyStmtNode, JottTree {
+public class AsmtNode implements BodyStmtNode{
 
     private final IDNode id;     // LHS identifier
     private final Token assign;  // '='
@@ -47,7 +46,7 @@ public class AsmtNode implements BodyStmtNode, JottTree {
             throw new Exception();
         }
 
-        JottTree exp = ExprParser.parseExpr(tokens);
+        JottTree exp = ExprNode.parseExprNode(tokens);
 
         Token semi = tokens.remove(0);
         if (semi.getTokenType() != TokenType.SEMICOLON) {
