@@ -22,8 +22,7 @@ public class IDNode implements OperandNode{
 
     @Override
     public boolean validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+        return true;
     }
 
     public static IDNode parseIDNode(ArrayList<Token> tokens) throws Exception{
