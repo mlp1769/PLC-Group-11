@@ -31,7 +31,7 @@ public class NumberNode implements OperandNode {
 
     @Override
     public boolean validateTree() {
-        return false;
+        return true;
     }
 
     public static NumberNode parseNumberNode(ArrayList<Token> tokens) throws Exception {
