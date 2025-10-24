@@ -146,6 +146,7 @@ public class JottTokenizer {
 							isString = false;
 							result.setLength(0);
 						}else{
+							result.setLength(0);
 							result.append(c);
 							isString = true;
 						}
