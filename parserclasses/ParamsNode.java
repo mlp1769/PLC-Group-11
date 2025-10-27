@@ -75,7 +75,16 @@ public class ParamsNode implements JottTree {
 
     @Override
     public boolean validateTree() {
-        return false;
+        if(expr.validateTree()){
+            for(int i=0; i<paramsT.size(); i++){
+                if(paramsT.get(i).validateTree() == false){
+                    return false;
+                }
+            }
+        } else{
+            return false;
+        }
+        return true;
     }
 
 

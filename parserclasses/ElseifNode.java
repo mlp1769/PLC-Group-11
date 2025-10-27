@@ -79,6 +79,11 @@ public class ElseifNode implements JottTree {
 
     @Override
     public boolean validateTree() {
+        if(expr.validateTree()){
+            if(body.validateTree()){
+                return true;
+            }
+        }
         return false;
     }
 
