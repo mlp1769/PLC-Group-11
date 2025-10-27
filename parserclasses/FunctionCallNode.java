@@ -48,9 +48,9 @@ public class FunctionCallNode implements OperandNode, BodyStmtNode{
     }
     @Override
     public boolean validateTree() {
-        if(SymbolTable.getFunction(this.id.convertToJott()) == null){
+        if(SymbolTable.getFunction(this.id.getID().getToken()) == null){
             System.err.println(String.format("Semantic Error: %n Function %s not declared %n %s:%d%n",
-                    id.getToken(), id.getFilename(), id.getLineNum()));
+                    id.getID().getToken(), id.getID().getFilename(), id.getID().getLineNum()));
             return false;
         }else{
             return this.id.validateTree() && this.params.validateTree();
