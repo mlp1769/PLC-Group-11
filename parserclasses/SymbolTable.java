@@ -23,6 +23,11 @@ public class SymbolTable {
     }
 
     public static void addVar(Token name, String type) throws Exception{
+        if(varTable.get(scope) == null){
+            System.err.println(String.format("Semantic Error: %n Uninitialized function %s %n %s:%d%n",
+                    name.getToken(), name.getFilename(), name.getLineNum()));
+            throw new Exception();
+        }
         if(varTable.get(scope).keySet().contains(name.getToken())){
             System.err.println(String.format("Semantic Error: %n Duplicate variable %s %n %s:%d%n",
                     name.getToken(), name.getFilename(), name.getLineNum()));
