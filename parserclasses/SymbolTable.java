@@ -23,11 +23,6 @@ public class SymbolTable {
     }
 
     public static void addVar(Token name, String type) throws Exception{
-        if(varTable.get(scope) == null){
-            System.err.println(String.format("Semantic Error: %n Uninitialized function %s %n %s:%d%n",
-                    name.getToken(), name.getFilename(), name.getLineNum()));
-            throw new Exception();
-        }
         if(varTable.get(scope).keySet().contains(name.getToken())){
             System.err.println(String.format("Semantic Error: %n Duplicate variable %s %n %s:%d%n",
                     name.getToken(), name.getFilename(), name.getLineNum()));
@@ -44,7 +39,12 @@ public class SymbolTable {
         return varTable.get(scope).get(name);
     }
 
-    public static void changeScope(String name){
-        scope = name;
+    public static void changeScope(Token name) throws Exception{
+        if(varTable.get(scope) == null){
+            System.err.println(String.format("Semantic Error: %n Uninitialized function %s %n %s:%d%n",
+                    name.getToken(), name.getFilename(), name.getLineNum()));
+            throw new Exception();
+        }
+        scope = name.getToken();
     }
 }
