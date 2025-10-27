@@ -33,8 +33,12 @@ public class FBodyNode implements JottTree {
 
     @Override
     public boolean validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+        for (VarDecNode stmt : this.vars) {
+            if(!stmt.validateTree()){
+              return false;
+            }
+        }
+        return this.body.validateTree();
     }
     
 }
