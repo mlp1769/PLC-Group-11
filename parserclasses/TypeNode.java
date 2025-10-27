@@ -21,6 +21,10 @@ public class TypeNode implements JottTree {
         return new TypeNode(type);
     }
 
+    public Token getType(){
+        return this.type;
+    }
+
     @Override
     public String convertToJott() {
         return this.type.getToken();
