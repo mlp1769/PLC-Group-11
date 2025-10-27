@@ -9,12 +9,12 @@ import java.util.ArrayList;
 public class FunctionDefNode implements JottTree {
 
     private Token defToken;
-    private Token idToken;
+    private IDNode idToken;
     private FunctionDefParamsNode params;
     private FunctionReturnNode returnType;
     private FBodyNode body;
 
-    public FunctionDefNode(Token defToken, Token idToken, FunctionDefParamsNode params, FunctionReturnNode returnType, FBodyNode body) {
+    public FunctionDefNode(Token defToken, IDNode idToken, FunctionDefParamsNode params, FunctionReturnNode returnType, FBodyNode body) {
         this.defToken = defToken;
         this.idToken = idToken;
         this.params = params;
@@ -32,14 +32,18 @@ public class FunctionDefNode implements JottTree {
             throw new Exception();
         }
 
-        Token id = tokens.remove(0);
+        IDNode id = IDNode.parseIDNode(tokens);
+        //tokens.remove(0);
 
+        /*
         if (id.getTokenType() != TokenType.ID_KEYWORD) {
             System.err.println("Syntax Error:");
             System.err.println("Expected id but got '"+id.getTokenType().toString().toLowerCase()+"' for function name");
             System.err.println(id.getFilename()+":"+id.getLineNum());
             throw new Exception();
         }
+
+         */
 
         Token lBracket = tokens.remove(0);
         if (lBracket.getTokenType() != TokenType.L_BRACKET) {
@@ -92,12 +96,17 @@ public class FunctionDefNode implements JottTree {
             throw new Exception();
         }
 
+        //add id and type to the symbol table
+        String type = returnType.convertToJott();
+
+        SymbolTable.addFunction(id.getID(), type);
+
         return new FunctionDefNode(def, id, params, returnType, body);
     }
 
     @Override
     public String convertToJott() {
-        return this.defToken.getToken() + " " + this.idToken.getToken() + "[" + this.params.convertToJott() + "]:" + this.returnType.convertToJott() + "{" + this.body.convertToJott() + "}";
+        return this.defToken.getToken() + " " + this.idToken.convertToJott() + "[" + this.params.convertToJott() + "]:" + this.returnType.convertToJott() + "{" + this.body.convertToJott() + "}";
     }
 
     @Override
@@ -111,14 +120,6 @@ public class FunctionDefNode implements JottTree {
 
     public void setDefToken(Token defToken) {
         this.defToken = defToken;
-    }
-
-    public Token getIdToken() {
-        return idToken;
-    }
-
-    public void setIdToken(Token idToken) {
-        this.idToken = idToken;
     }
 
     public FunctionDefParamsNode getParams() {
