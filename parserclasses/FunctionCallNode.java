@@ -48,8 +48,13 @@ public class FunctionCallNode implements OperandNode, BodyStmtNode{
     }
     @Override
     public boolean validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+        if(SymbolTable.getFunction(this.id.convertToJott()) == null){
+            System.err.println(String.format("Semantic Error: %n Function %s not declared %n %s:%d%n",
+                    id.getToken(), id.getFilename(), id.getLineNum()));
+            return false;
+        }else{
+            return this.id.validateTree() && this.params.validateTree();
+        }
     }
     
 }
