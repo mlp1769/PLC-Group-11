@@ -44,12 +44,17 @@ public class FunctionCallNode implements OperandNode, BodyStmtNode{
 
     @Override
     public String convertToJott() {
-        return this.head.getToken() + this.id.convertToJott() + this.LB.getToken() + this.params.convertToJott() + this.RB.getToken() + this.semi.getToken();
+        return this.head.getToken() + this.id.convertToJott() + this.LB.getToken() + this.params.convertToJott() + this.RB.getToken();
     }
     @Override
     public boolean validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+        if(SymbolTable.getFunction(this.id.convertToJott()) == null){
+            System.err.println(String.format("Semantic Error: %n Function %s not declared %n %s:%d%n",
+                    this.id.getID().getToken(), this.id.getID().getFilename(), this.id.getID().getLineNum()));
+            return false;
+        }else{
+            return this.id.validateTree() && this.params.validateTree();
+        }
     }
     
 }

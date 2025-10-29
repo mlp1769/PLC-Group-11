@@ -21,6 +21,10 @@ public class TypeNode implements JottTree {
         return new TypeNode(type);
     }
 
+    public Token getType(){
+        return this.type;
+    }
+
     @Override
     public String convertToJott() {
         return this.type.getToken();
@@ -28,8 +32,7 @@ public class TypeNode implements JottTree {
 
     @Override
     public boolean validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+        return true;
     }
     
 }

@@ -14,6 +14,10 @@ public class IDNode implements OperandNode{
 
     }
 
+    public Token getID(){
+        return this.id;
+    }
+
     @Override
     public String convertToJott() {
         return this.id.getToken();
@@ -22,8 +26,7 @@ public class IDNode implements OperandNode{
 
     @Override
     public boolean validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+        return true;
     }
 
     public static IDNode parseIDNode(ArrayList<Token> tokens) throws Exception{
