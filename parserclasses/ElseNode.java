@@ -60,7 +60,7 @@ public class ElseNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree() throws Exception{
         return body.validateTree();
     }
 

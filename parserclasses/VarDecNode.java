@@ -49,13 +49,9 @@ public class VarDecNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
-        if(type.validateTree()){
-            if(id.validateTree()){
-                return true;
-            }
-        }
-        return false;
+    public boolean validateTree() throws Exception {
+
+        return (type.validateTree() && id.validateTree());
     }
 
 
