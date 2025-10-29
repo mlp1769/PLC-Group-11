@@ -27,7 +27,6 @@ public class FunctionCallNode implements OperandNode, BodyStmtNode{
 			throw new Exception();
         }
         IDNode id = IDNode.parseIDNode(tokens);
-        SymbolTable.changeScope(id.getID());
         Token LB = tokens.remove(0);
         if(LB.getTokenType() != TokenType.L_BRACKET){
             System.err.println(String.format("Syntax Error %n Expected Left Brace got %s %n %s:%d",LB.getToken(),LB.getFilename(),LB.getLineNum()));
@@ -54,11 +53,6 @@ public class FunctionCallNode implements OperandNode, BodyStmtNode{
                     this.id.getID().getToken(), this.id.getID().getFilename(), this.id.getID().getLineNum()));
             return false;
         }else{
-            try {
-                SymbolTable.changeScope(id.getID());
-            } catch (Exception e) {
-                return false;
-            }
             return this.id.validateTree() && this.params.validateTree();
         }
     }
