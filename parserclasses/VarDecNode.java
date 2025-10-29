@@ -34,6 +34,9 @@ public class VarDecNode implements JottTree {
         }
         tokens.remove(0);
 
+        //add to symbol table
+        SymbolTable.addVar(idToPass.getID(), typeToPass.getType().toString());
+
         return new VarDecNode(typeToPass, idToPass);
 
     }
@@ -46,8 +49,9 @@ public class VarDecNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
-        return false;
+    public boolean validateTree() throws Exception {
+
+        return (type.validateTree() && id.validateTree());
     }
 
 
