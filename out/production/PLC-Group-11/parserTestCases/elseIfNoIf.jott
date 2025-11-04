@@ -1,5 +1,5 @@
 #this should fail phase 2
-#elseif after elseif
+#elseif after else
 #Error: <elsif> without an <if>
 
 Def main[x:Integer]:Integer{

@@ -14,6 +14,10 @@ public class IDNode implements OperandNode{
 
     }
 
+    public Token getID(){
+        return this.id;
+    }
+
     @Override
     public String convertToJott() {
         return this.id.getToken();

@@ -5,7 +5,7 @@
 #Error: <op> without leading <expr>
 
 Def main[]:Void{
-    Integer x; = -4;
+    Integer x;
 	Integer y;
 	x = -4;
 	y = - -4;
