@@ -34,6 +34,15 @@ public class NumberNode implements OperandNode {
         return true;
     }
 
+    public boolean isInteger(){
+        try {
+            Integer.parseInt(this.number.getToken());
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }  
+    }
+
     public static NumberNode parseNumberNode(ArrayList<Token> tokens) throws Exception {
         Token currToken = tokens.remove(0);
         if(currToken.getTokenType() == TokenType.NUMBER){
