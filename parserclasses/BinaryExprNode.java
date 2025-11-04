@@ -23,11 +23,24 @@ public class BinaryExprNode implements ExprNode{
     }
 
     @Override
-    public boolean validateTree(){
+    public boolean validateTree() throws Exception{
         if(operandOne instanceof NumberNode && operandTwo instanceof NumberNode){
-            return ((NumberNode) this.operandOne).isInteger() && ((NumberNode) this.operandTwo).isInteger(); 
+            NumberNode num1 = (NumberNode) operandOne;
+            NumberNode num2 = (NumberNode) operandTwo;
+            if(num1.isInteger() && num2.isInteger()){
+                return num1.validateTree() && operator.validateTree() && num2.validateTree();
+            }
+            else if(!num1.isInteger() && !num2.isInteger()){
+                return num1.validateTree() && operator.validateTree() && num2.validateTree();
+            }
+            else{
+                return false;
+            }
+         
         }
-        return true;
+        else{
+            return operandOne.validateTree() && operator.validateTree() && operandTwo.validateTree();
+        }
   
     }
 

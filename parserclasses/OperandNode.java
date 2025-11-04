@@ -40,4 +40,5 @@ public interface OperandNode extends ExprNode{
                     currToken.getToken(), currToken.getFilename(), currToken.getLineNum());
             throw new Exception();
     }
+
 }
