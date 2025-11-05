@@ -34,8 +34,16 @@ public class VarDecNode implements JottTree {
         }
         tokens.remove(0);
 
+        //todo check if first letter of id is capital. If not, error
+        if(Character.isUpperCase(idToPass.getID().getToken().charAt(0))){
+            System.err.println("Semantic Error\nAn 'id' must start with a capital letter\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
+            throw new Exception();
+        }
+
         //add to symbol table
         SymbolTable.addVar(idToPass.getID(), typeToPass.getType().toString());
+
+
 
         return new VarDecNode(typeToPass, idToPass);
 
