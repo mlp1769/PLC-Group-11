@@ -27,7 +27,12 @@ public class BinaryExprNode implements ExprNode{
         if(operandOne instanceof NumberNode && operandTwo instanceof NumberNode){
             NumberNode num1 = (NumberNode) operandOne;
             NumberNode num2 = (NumberNode) operandTwo;
-            if(num1.isInteger() && num2.isInteger()){
+            if(operator.convertToJott().equals("/") && (Integer.parseInt(num2.convertToJott()) == 0)){
+                System.err.println(String.format("Semantic Error: cannot divide %s number by 0. line %d filename %s%n", num1.getNumber().getToken(), num1.getNumber().getLineNum(), num1.getNumber().getFilename()));
+                throw new Exception();
+
+            }
+            else if(num1.isInteger() && num2.isInteger()){
                 return num1.validateTree() && operator.validateTree() && num2.validateTree();
             }
             else if(!num1.isInteger() && !num2.isInteger()){
