@@ -34,7 +34,7 @@ public class BinaryExprNode implements ExprNode{
                 return num1.validateTree() && operator.validateTree() && num2.validateTree();
             }
             else{
-                System.err.println(String.format("Semantic Error: Incorrect Call %s number not same type as %s number", num1.getNumber().getToken(), num2.getNumber().getToken()));
+                System.err.println(String.format("Semantic Error: Incorrect Call %s number not same type as %s number. line %d filename %s%n", num1.getNumber().getToken(), num2.getNumber().getToken(), num1.getNumber().getLineNum(), num1.getNumber().getFilename()));
                 throw new Exception();
             }
         }
@@ -51,7 +51,7 @@ public class BinaryExprNode implements ExprNode{
 
                 }
                 else{
-                    System.err.println(String.format("Semantic Error: Incorrect Call %s number not same type as %s var", num, var.getID().getToken()));
+                    System.err.println(String.format("Semantic Error: Incorrect Call %s number not same type as %s var. line %d filename %s%n", num, var.getID().getToken(), var.getID().getLineNum(), var.getID().getFilename()));
                     throw new Exception();
                 }
             }
@@ -61,7 +61,7 @@ public class BinaryExprNode implements ExprNode{
                     return var.validateTree() && equals.validateTree() && string.validateTree();
                 }
                 else{
-                    System.err.println(String.format("Semantic Error: Incorrect Call var %s is not a string", var.getID().getToken()));
+                    System.err.println(String.format("Semantic Error: Incorrect Call var %s is not a string. line %d filename %s%n", var.getID().getToken(), var.getID().getLineNum(), var.getID().getFilename()));
                     throw new Exception();
                 }
             }
@@ -72,7 +72,7 @@ public class BinaryExprNode implements ExprNode{
                     return var.validateTree() && equals.validateTree() && function.validateTree();
                 }
                 else{
-                    System.err.println(String.format("Semantic Error: Incorrect Call %s function not same type as %s var", funcname, var.getID().getToken()));
+                    System.err.println(String.format("Semantic Error: Incorrect Call %s function not same type as %s var. line %d filename %s%n", funcname, var.getID().getToken(), var.getID().getLineNum(), var.getID().getFilename()));
                     throw new Exception();
                 }
 
@@ -89,7 +89,7 @@ public class BinaryExprNode implements ExprNode{
                     return var.validateTree() && math.validateTree() && num.validateTree();
                 }
                 else{
-                    System.err.println(String.format("Semantic Error: Incorrect Call %s number not same type as %s var", num.getNumber().getToken(), var.getID().getToken()));
+                    System.err.println(String.format("Semantic Error: Incorrect Call %s number not same type as %s var. line %d filename %s%n", num.getNumber().getToken(), var.getID().getToken(), num.getNumber().getLineNum(), var.getID().getFilename()));
                     throw new Exception();
                 }
             }else if(operandTwo instanceof FunctionCallNode){
@@ -99,13 +99,13 @@ public class BinaryExprNode implements ExprNode{
                     return var.validateTree() && math.validateTree() && function.validateTree();
                 }
                 else{
-                    System.err.println(String.format("Semantic Error: Incorrect Call %s function not same type as %s var", funcname, var.getID().getToken()));
+                    System.err.println(String.format("Semantic Error: Incorrect Call %s function not same type as %s var. line %d filename %s%n", funcname, var.getID().getToken(), var.getID().getLineNum(), var.getID().getFilename()));
                     throw new Exception();
                 }
 
                 
             }else{
-                System.err.println(String.format("Semantic Error: Cannot add String and var %s", var.getID().getToken()));
+                System.err.println(String.format("Semantic Error: Cannot add String and var %s. line %d filename %s%n", var.getID().getToken(), var.getID().getLineNum(), var.getID().getFilename()));
                 throw new Exception();
             }
         }
