@@ -30,7 +30,7 @@ public class AsmtNode implements BodyStmtNode{
                     got, fn, ln);
             throw new Exception();
         }
-        IDNode lhs = IDNode.parseIDNode(tokens); // consumes identifier
+        IDNode lhs = IDNode.parseIDNode(tokens);
 
         // '='
         Token eq = tokens.remove(0);
@@ -64,6 +64,51 @@ public class AsmtNode implements BodyStmtNode{
     }
 
     @Override public boolean validateTree() {
-         return false; 
+           try {
+        if (id == null) semErr("Assignment missing left-hand side identifier", assign);
+        if (exp == null) semErr("Assignment missing right-hand side expression", assign);
+        id.validateTree();
+        exp.validateTree();
+
+        String name = id.convertToJott(); // adjust if you have a better accessor
+        String lhsType = SymbolTable.getVar(name);
+        if (lhsType == null) {
+            // if you can access the ID token itself, use that for location instead of 'assign'
+            semErr("Undeclared variable " + name, assign);
         }
+
+
+        try {
+            // String Type = ((ExprNode)exp).getType();
+            // if (!isAssignable(lhsType, rhsType)) {
+            //     semErr("Type mismatch in assignment: cannot assign " + rhsType + " to " + lhsType, assign);
+            // }
+        } catch (ClassCastException ignore) {
+            // no type info - skip
+        }
+
+        return true;
+    } catch (RuntimeException re) {
+        throw re;
+    } catch (Exception e) {
+        throw new RuntimeException(e);
+    }
+}
+
+    @SuppressWarnings("unused")
+    private static boolean isAssignable(String lhs, String rhs) {
+        if (lhs == null || rhs == null) return false;
+        if (lhs.equals(rhs)) return true;
+        if (lhs.equals("Double") && rhs.equals("Integer")) return true;
+        return false;
+    }
+
+    private static void semErr(String msg, Token loc) {
+        System.err.printf("Semantic Error: %n %s %n %s:%d%n",
+                msg,
+                (loc == null ? "<unknown>" : loc.getFilename()),
+                (loc == null ? 1 : loc.getLineNum()));
+        throw new RuntimeException(msg);
+    }
+
 }

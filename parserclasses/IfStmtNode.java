@@ -128,6 +128,40 @@ public class IfStmtNode implements BodyStmtNode, JottTree {
     }
 
     @Override public boolean validateTree() { 
-        return false; 
+            try {
+        if (cond == null) semErr("If condition missing", kwIf);
+        cond.validateTree();
+
+        if (thenBody == null) semErr("If missing then-body", lbr);
+        thenBody.validateTree();
+
+        if (kwElse != null) {
+            if (elseBody == null) semErr("Else missing body", kwElse);
+            elseBody.validateTree();
+        }
+
+        try {
+            // String t = ((ExprNode)cond).getType(); // adapt to your API
+            // if (!"Boolean".equals(t)) semErr("If condition must be Boolean", lb);
+        } catch (ClassCastException ignore) {
+            // no type info available
+        }
+
+        return true;
+    } catch (RuntimeException re) {
+        throw re;
+    } catch (Exception e) {
+        throw new RuntimeException(e);
     }
 }
+
+    private static void semErr(String msg, Token loc) {
+        System.err.printf("Semantic Error: %n %s %n %s:%d%n",
+                msg,
+                (loc == null ? "<unknown>" : loc.getFilename()),
+                (loc == null ? 1 : loc.getLineNum()));
+        throw new RuntimeException(msg);
+    }
+    
+}
+

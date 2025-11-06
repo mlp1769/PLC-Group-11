@@ -88,6 +88,38 @@ public class WhileLoopNode implements BodyStmtNode, JottTree {
     }
 
     @Override public boolean validateTree() { 
-        return false; 
+        try {
+        if (cond == null) semErr("While condition missing", kwWhile);
+        cond.validateTree();
+        if (body == null) semErr("While body missing", lbr);
+        body.validateTree();
+
+        // OPTIONAL: enforce Boolean condition if your Expr nodes expose a type
+        // Example options you might have in your codebase:
+        //  1) ((ExprNode)cond).getType()
+        //  2) ((TypedNode)cond).getType()
+        //  3) a static TypeResolver.typeOf(cond)
+        try {
+            // Uncomment/adapt if available in your code:
+            // String t = ((ExprNode)cond).getType();
+            // if (!"Boolean".equals(t)) semErr("While condition must be Boolean", lb);
+        } catch (ClassCastException ignore) {
+
+        }
+
+        return true;
+    } catch (RuntimeException re) {
+        throw re; // rethrow semantic error
+    } catch (Exception e) {
+        throw new RuntimeException(e);
     }
+}
+
+    private static void semErr(String msg, Token loc) {
+        System.err.printf("Semantic Error: %n %s %n %s:%d%n",
+                msg,
+                (loc == null ? "<unknown>" : loc.getFilename()),
+                (loc == null ? 1 : loc.getLineNum()));
+        throw new RuntimeException(msg);
+        }
 }
