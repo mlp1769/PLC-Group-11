@@ -44,6 +44,7 @@ public class FunctionDefParamsNodeT implements JottTree {
         TypeNode typeNode = TypeNode.parseTypeNode(tokens);
 
         SymbolTable.addVar(idToken, typeNode.getType().getToken());
+        SymbolTable.addParam(typeNode.getType().getToken());
 
         return new FunctionDefParamsNodeT(idToken, typeNode);
     }
