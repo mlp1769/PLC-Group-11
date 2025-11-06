@@ -141,7 +141,7 @@ public class IfStmtNode implements BodyStmtNode, JottTree {
         }
 
         try {
-            // String t = ((ExprNode)cond).getType(); // adapt to your API
+            // String t = ((ExprNode)cond).getType();
             // if (!"Boolean".equals(t)) semErr("If condition must be Boolean", lb);
         } catch (ClassCastException ignore) {
             // no type info available

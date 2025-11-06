@@ -93,14 +93,10 @@ public class WhileLoopNode implements BodyStmtNode, JottTree {
         cond.validateTree();
         if (body == null) semErr("While body missing", lbr);
         body.validateTree();
-
-        // OPTIONAL: enforce Boolean condition if your Expr nodes expose a type
-        // Example options you might have in your codebase:
         //  1) ((ExprNode)cond).getType()
         //  2) ((TypedNode)cond).getType()
         //  3) a static TypeResolver.typeOf(cond)
         try {
-            // Uncomment/adapt if available in your code:
             // String t = ((ExprNode)cond).getType();
             // if (!"Boolean".equals(t)) semErr("While condition must be Boolean", lb);
         } catch (ClassCastException ignore) {
