@@ -25,7 +25,12 @@ public class IDNode implements OperandNode{
 
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree() throws Exception{
+        String name = this.id.getToken();
+        if((Character.isLowerCase(name.charAt(name.length() - 1))) && (SymbolTable.getVar(name) == null)){
+            System.err.println(String.format("Semantic Error: Var %s is not in symbol table", name));
+            throw new Exception();
+        }
         return true;
     }
 

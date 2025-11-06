@@ -23,6 +23,10 @@ public class FunctionDefParamsNode implements JottTree {
         this.params = new ArrayList<>();
     }
 
+    public boolean isEmpty(){
+        return this.idToken == null && this.typeNode == null && this.params.isEmpty();
+    }
+
     public static FunctionDefParamsNode parseFunctionDefParamsNode(ArrayList<Token> tokens) throws Exception{
         Token idToken = tokens.remove(0);
         if(!idToken.getTokenType().equals(TokenType.ID_KEYWORD)){
@@ -41,6 +45,8 @@ public class FunctionDefParamsNode implements JottTree {
         }
 
         TypeNode typeNode = TypeNode.parseTypeNode(tokens);
+
+        SymbolTable.addVar(idToken, typeNode.getType().getToken());
 
         ArrayList<FunctionDefParamsNodeT> params = new ArrayList<>();
 
@@ -63,8 +69,18 @@ public class FunctionDefParamsNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
-        return false;
+    public boolean validateTree() throws Exception{
+        if(this.isEmpty()){
+            return true;
+        }
+        if(typeNode.validateTree()){
+            for(FunctionDefParamsNodeT moreParams: this.params){
+                moreParams.validateTree();
+            }
+        }else{
+            return false;
+        }
+        return true;
     }
 
 }

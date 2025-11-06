@@ -33,17 +33,10 @@ public class FunctionDefNode implements JottTree {
         }
 
         IDNode id = IDNode.parseIDNode(tokens);
-        //tokens.remove(0);
 
-        /*
-        if (id.getTokenType() != TokenType.ID_KEYWORD) {
-            System.err.println("Syntax Error:");
-            System.err.println("Expected id but got '"+id.getTokenType().toString().toLowerCase()+"' for function name");
-            System.err.println(id.getFilename()+":"+id.getLineNum());
-            throw new Exception();
-        }
+        SymbolTable.addFunction(id.getID(), "missing");
 
-         */
+        SymbolTable.changeScope(id.getID());
 
         Token lBracket = tokens.remove(0);
         if (lBracket.getTokenType() != TokenType.L_BRACKET) {
@@ -86,6 +79,10 @@ public class FunctionDefNode implements JottTree {
             throw new Exception();
         }
 
+        String type = returnType.convertToJott();
+
+        SymbolTable.updateReturnType(type);
+
         FBodyNode body = FBodyNode.parseFBodyNode(tokens);
 
         Token rBrace = tokens.remove(0);
@@ -96,11 +93,6 @@ public class FunctionDefNode implements JottTree {
             throw new Exception();
         }
 
-        //add id and type to the symbol table
-        String type = returnType.convertToJott();
-
-        SymbolTable.addFunction(id.getID(), type);
-
         return new FunctionDefNode(def, id, params, returnType, body);
     }
 
@@ -110,12 +102,20 @@ public class FunctionDefNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
-        return false;
+    public boolean validateTree() throws Exception{
+        return idToken.validateTree() && params.validateTree() && returnType.validateTree() && body.validateTree();
     }
 
     public Token getDefToken() {
         return defToken;
+    }
+
+    public IDNode getIdToken() {
+        return idToken;
+    }
+
+    public void setIdToken(IDNode idToken) {
+        this.idToken = idToken;
     }
 
     public void setDefToken(Token defToken) {

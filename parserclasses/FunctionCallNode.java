@@ -41,6 +41,9 @@ public class FunctionCallNode implements OperandNode, BodyStmtNode{
         return new FunctionCallNode(head, id, LB, params, RB);
 
     }
+    public Token getFunctionName(){
+        return this.id.getID();
+    }
 
     @Override
     public String convertToJott() {

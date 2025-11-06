@@ -43,6 +43,8 @@ public class FunctionDefParamsNodeT implements JottTree {
 
         TypeNode typeNode = TypeNode.parseTypeNode(tokens);
 
+        SymbolTable.addVar(idToken, typeNode.getType().getToken());
+
         return new FunctionDefParamsNodeT(idToken, typeNode);
     }
 
@@ -53,6 +55,6 @@ public class FunctionDefParamsNodeT implements JottTree {
 
     @Override
     public boolean validateTree() {
-        return false;
+        return typeNode.validateTree();
     }
 }
