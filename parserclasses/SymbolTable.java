@@ -9,6 +9,7 @@ public class SymbolTable {
     private static HashMap<String, String> functionTable = new HashMap<>();
     private static HashMap<String, HashMap<String, String>> varTable = new HashMap<>();
     private static HashMap<String, ArrayList<String>> paramTable = new HashMap<>();
+    private static ArrayList<String> copyTable;
     private static String scope = "";
 
     public SymbolTable(){}
@@ -59,8 +60,17 @@ public class SymbolTable {
         paramTable.get(scope).add(type);
     }
 
-    public static ArrayList<String> getParam(){
-        return paramTable.get(scope);
+    public static String getParamstart(){
+        copyTable = new ArrayList<>(paramTable.get(scope));
+        return copyTable.remove(0);
+    }
+
+    public static String getParam(){
+        try {
+            return copyTable.remove(0);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public static void changeScope(Token name) throws Exception{

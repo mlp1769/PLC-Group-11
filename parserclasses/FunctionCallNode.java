@@ -32,7 +32,11 @@ public class FunctionCallNode implements OperandNode, BodyStmtNode{
             System.err.println(String.format("Syntax Error %n Expected Left Brace got %s %n %s:%d",LB.getToken(),LB.getFilename(),LB.getLineNum()));
             throw new Exception(); 
         }
+
+        Token scope = new Token(SymbolTable.getScope(),"s",1,TokenType.COLON);
+        SymbolTable.changeScope(id.getID());
         ParamsNode params = ParamsNode.parseParamsNode(tokens);
+        SymbolTable.changeScope(scope);
         Token RB = tokens.remove(0);
         if(RB.getTokenType() != TokenType.R_BRACKET){
             System.err.println(String.format("Syntax Error %n Expected Right Brace got %s %n %s:%d",RB.getToken(),RB.getFilename(),RB.getLineNum()));
