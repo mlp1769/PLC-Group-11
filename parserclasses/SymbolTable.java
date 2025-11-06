@@ -31,6 +31,10 @@ public class SymbolTable {
         varTable.get(scope).put(name.getToken(), type);
     }
 
+    public static void updateReturnType(String type){
+        functionTable.put(scope, type);
+    }
+
     public static String getFunction(String name){
         return functionTable.get(name);
     }
@@ -46,5 +50,9 @@ public class SymbolTable {
             throw new Exception();
         }
         scope = name.getToken();
+    }
+
+    public static String getScope(){
+        return scope;
     }
 }
