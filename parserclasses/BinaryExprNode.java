@@ -34,13 +34,86 @@ public class BinaryExprNode implements ExprNode{
                 return num1.validateTree() && operator.validateTree() && num2.validateTree();
             }
             else{
-                return false;
+                System.err.println(String.format("Semantic Error: Incorrect Call %s number not same type as %s number", num1.getNumber().getToken(), num2.getNumber().getToken()));
+                throw new Exception();
             }
-         
+        }
+        else if(operandOne instanceof IDNode && operator instanceof RelopNode){
+            IDNode var = (IDNode) operandOne;
+            RelopNode equals = (RelopNode) operator;
+            if(operandTwo instanceof NumberNode){
+                NumberNode num = (NumberNode) operandTwo;
+                if(SymbolTable.getVar(var.getID().getToken()).equals("Integer") && num.isInteger()){
+                    return var.validateTree() && equals.validateTree() && num.validateTree();
+                }
+                else if(SymbolTable.getVar(var.getID().getToken()).equals("Double") && !num.isInteger()){
+                    return var.validateTree() && equals.validateTree() && num.validateTree();
+
+                }
+                else{
+                    System.err.println(String.format("Semantic Error: Incorrect Call %s number not same type as %s var", num, var.getID().getToken()));
+                    throw new Exception();
+                }
+            }
+            else if(operandTwo instanceof StringLiteralNode){
+                StringLiteralNode string = (StringLiteralNode) operandTwo;
+                if(SymbolTable.getVar(var.getID().getToken()).equals("String")){
+                    return var.validateTree() && equals.validateTree() && string.validateTree();
+                }
+                else{
+                    System.err.println(String.format("Semantic Error: Incorrect Call var %s is not a string", var.getID().getToken()));
+                    throw new Exception();
+                }
+            }
+            else if(operandTwo instanceof FunctionCallNode){
+                FunctionCallNode function = (FunctionCallNode) operandTwo;
+                String funcname = function.getFunctionName().getToken();
+                if(SymbolTable.getVar(var.getID().getToken()).equals(SymbolTable.getFunction(funcname))){
+                    return var.validateTree() && equals.validateTree() && function.validateTree();
+                }
+                else{
+                    System.err.println(String.format("Semantic Error: Incorrect Call %s function not same type as %s var", funcname, var.getID().getToken()));
+                    throw new Exception();
+                }
+
+            }
+        }else if(operandOne instanceof IDNode && operator instanceof MathopNode){
+            IDNode var = (IDNode) operandOne;
+            MathopNode math = (MathopNode) operator;
+            if(operandTwo instanceof NumberNode){
+                NumberNode num = (NumberNode) operandTwo;
+                if(SymbolTable.getVar(var.getID().getToken()).equals("Integer") && num.isInteger()){
+                    return var.validateTree() && math.validateTree() && num.validateTree();
+                }
+                else if(SymbolTable.getVar(var.getID().getToken()).equals("Double") && !num.isInteger()){
+                    return var.validateTree() && math.validateTree() && num.validateTree();
+                }
+                else{
+                    System.err.println(String.format("Semantic Error: Incorrect Call %s number not same type as %s var", num.getNumber().getToken(), var.getID().getToken()));
+                    throw new Exception();
+                }
+            }else if(operandTwo instanceof FunctionCallNode){
+                FunctionCallNode function = (FunctionCallNode) operandTwo;
+                String funcname = function.getFunctionName().getToken();
+                if(SymbolTable.getVar(var.getID().getToken()).equals(SymbolTable.getFunction(funcname))){
+                    return var.validateTree() && math.validateTree() && function.validateTree();
+                }
+                else{
+                    System.err.println(String.format("Semantic Error: Incorrect Call %s function not same type as %s var", funcname, var.getID().getToken()));
+                    throw new Exception();
+                }
+
+                
+            }else{
+                System.err.println(String.format("Semantic Error: Cannot add String and var %s", var.getID().getToken()));
+                throw new Exception();
+            }
         }
         else{
             return operandOne.validateTree() && operator.validateTree() && operandTwo.validateTree();
         }
+        System.err.println(String.format("Semantic Error: Overall Error in sematics of Expression"));
+        throw new Exception();
   
     }
 
