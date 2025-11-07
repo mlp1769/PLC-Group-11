@@ -69,9 +69,7 @@ public class BodyNode implements JottTree{
         boolean noReturns = true;
         for (BodyStmtNode bodyStmt : this.body) {
             if(bodyStmt instanceof IfStmtNode){
-                for (BodyNode bodyNode :((IfStmtNode) bodyStmt).getBodyNodes()){
-                    noReturns = bodyNode.returnsVoid();
-                }
+                for (BodyNode bodyNode :((IfStmtNode) bodyStmt).getBodyNodes()) if(!bodyNode.returnsVoid()){noReturns = false;}
             }
         }
         return noReturns;
