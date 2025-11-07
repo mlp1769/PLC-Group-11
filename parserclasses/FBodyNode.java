@@ -5,6 +5,10 @@ import provided.Token;
 import provided.TokenType;
 import java.util.ArrayList;
 
+import javax.crypto.ExemptionMechanismException;
+
+import org.w3c.dom.events.EventException;
+
 public class FBodyNode implements JottTree {
 
     private ArrayList<VarDecNode> vars;
@@ -30,9 +34,18 @@ public class FBodyNode implements JottTree {
         }
         return text + this.body.convertToJott();
     }
-
+    
     @Override
     public boolean validateTree() throws Exception{
+        if(SymbolTable.getFunction(SymbolTable.getScope()).equals("Void")){
+            if(!validVoid()){
+                throw new ExceptionInInitializerError();
+            }
+        }else{
+            if(!validReturn()){
+                throw new ExceptionInInitializerError();
+            }
+        }
         for (VarDecNode stmt : this.vars) {
             if(!stmt.validateTree()){
               return false;
@@ -42,8 +55,35 @@ public class FBodyNode implements JottTree {
     }
 
     private boolean validVoid(){
-        return this.body.getReturnStatementNode().returnVoid(); 
-        this.body.getBodyStmtNodes().forEach(body -> {if(body instanceof IfStmtNode){((IfStmtNode) body).getBodyNodes.forEach(BodyNode ->{})}});
+        return this.body.getReturnStatementNode().returnVoid() && validVoidBody(this.body.getBodyStmtNodes());
+    }
+
+    private boolean validVoidBody(ArrayList<BodyStmtNode> body){
+        boolean noReturns = true;
+        for (BodyStmtNode bodyStmt : body) {
+            if(bodyStmt instanceof IfStmtNode){
+                for (BodyNode bodyNode :((IfStmtNode) bodyStmt).getBodyNodes()){
+                    noReturns = bodyNode.returnsVoid();
+                }
+            }
+        }
+        return noReturns;
+    }
+
+    private boolean validReturn(){
+        return !this.body.getReturnStatementNode().returnVoid() && validReturnBody(this.body.getBodyStmtNodes());
+    }
+
+    private boolean validReturnBody(ArrayList<BodyStmtNode> bodyNode){
+        Boolean validReturn = false;
+        for (BodyStmtNode bodyStmt : bodyNode) {
+            if(bodyStmt instanceof IfStmtNode){
+                ArrayList<BodyNode> body = ((IfStmtNode)bodyStmt).getBodyNodes();
+                if(!body.get(body.size()-1).returnsVoid())
+                    for (BodyNode ifBody : body) if(!ifBody.returnsVoid()){validReturn = true;} else{validReturn = validReturnBody(ifBody.getBodyStmtNodes());} //Evil for each if all loop
+            }
+        }
+        return validReturn;
     }
     
 }
