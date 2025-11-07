@@ -19,16 +19,9 @@ public class Jott {
             ArrayList<Token> tokens = JottTokenizer.tokenize(fileName);
             JottTree root = JottParser.parse(tokens);
             root.validateTree();
-
-
         }catch(Exception e){
-            System.out.println("whomp whomp :(");
+            System.out.println(e);
         }
-
-
-
-
-
     }
 
 }
