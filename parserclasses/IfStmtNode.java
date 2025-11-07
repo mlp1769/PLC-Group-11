@@ -192,4 +192,36 @@ private static void semErr(String msg, provided.Token loc) {
             (loc == null ? 1 : loc.getLineNum()));
     throw new RuntimeException(msg);
 }
+
+public ArrayList<BodyNode> getAllBodies() {
+    ArrayList<BodyNode> allBodies = new ArrayList<>();
+
+    //If body
+    if (thenBody != null) {
+        allBodies.add(thenBody);
+    }
+
+    //ElseIf bodys
+    if (elseifNodes != null) {
+        for (ElseifNode en : elseifNodes) {
+            if (en == null) continue;
+            try {
+                java.lang.reflect.Field bdy = en.getClass().getDeclaredField("body");
+                bdy.setAccessible(true);
+                Object bodyObj = bdy.get(en);
+                if (bodyObj instanceof BodyNode) {
+                    allBodies.add((BodyNode) bodyObj);
+                }
+            } catch (Exception ignore) {
+            }
+        }
+    }
+    //Else bodys
+    if (elseBody != null) {
+        allBodies.add(elseBody);
+    }
+
+    return allBodies;
+}
+
 }
