@@ -180,19 +180,19 @@ private static void semErr(String msg, provided.Token loc) {
 public ArrayList<BodyNode> getBodyNodes() {
     ArrayList<BodyNode> BodyNodes = new ArrayList<>();
 
-    //If body
+    // IF body
     if (thenBody != null) {
         BodyNodes.add(thenBody);
     }
 
-    //ElseIf bodys
+    // ELSEIF bodies
     if (elseifNodes != null) {
-        for (ElseifNode elseifNode : elseifNodes) {
-            if (elseifNode == null) continue;
+        for (ElseifNode en : elseifNodes) {
+            if (en == null) continue;
             try {
-                java.lang.reflect.Field body = elseifNode.getClass().getDeclaredField("body");
-                body.setAccessible(true);
-                Object bodyObj = body.get(elseifNode);
+                java.lang.reflect.Field f = en.getClass().getDeclaredField("body");
+                f.setAccessible(true);
+                Object bodyObj = f.get(en);
                 if (bodyObj instanceof BodyNode) {
                     BodyNodes.add((BodyNode) bodyObj);
                 }
@@ -200,14 +200,15 @@ public ArrayList<BodyNode> getBodyNodes() {
             }
         }
     }
-    //Else bodys
+
+    // ELSE body 
     if (elseNode != null) {
         try {
-            java.lang.reflect.Field body = elseNode.getClass().getDeclaredField("body");
-            body.setAccessible(true);
-            Object bodyObj = body.get(elseNode);
+            java.lang.reflect.Field f = elseNode.getClass().getDeclaredField("body");
+            f.setAccessible(true);
+            Object bodyObj = f.get(elseNode);
             if (bodyObj instanceof BodyNode) {
-                getBodyNodes().add((BodyNode) bodyObj);
+                BodyNodes.add((BodyNode) bodyObj);
             }
         } catch (Exception ignore) {
         }
@@ -215,5 +216,4 @@ public ArrayList<BodyNode> getBodyNodes() {
 
     return BodyNodes;
 }
-
 }

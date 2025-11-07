@@ -74,6 +74,14 @@ public class FBodyNode implements JottTree {
     }
 
     private boolean validReturnBody(ArrayList<BodyStmtNode> bodyNode){
+        for (BodyStmtNode s : bodyNode) {
+        if (s instanceof IfStmtNode) {
+            ArrayList<BodyNode> bodies = ((IfStmtNode) s).getBodyNodes();
+            for (BodyNode b : bodies) {
+                System.err.println("BodyNode@" + System.identityHashCode(b));
+            }
+        }
+    }
         Boolean validReturn = false;
         for (BodyStmtNode bodyStmt : bodyNode) {
             if(bodyStmt instanceof IfStmtNode){

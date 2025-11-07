@@ -27,11 +27,19 @@ public class FunctionCallNode implements OperandNode, BodyStmtNode{
 			throw new Exception();
         }
         IDNode id = IDNode.parseIDNode(tokens);
+        if(SymbolTable.getFunction(id.getID().getToken()) == null){
+            System.err.println("Semantic Error:");
+            System.err.println("Function "+id.getID().getToken()+" not defined");
+            System.err.println(id.getToken().getFilename()+":"+id.getToken().getLineNum());
+            throw new Exception();
+        }
+
         Token LB = tokens.remove(0);
         if(LB.getTokenType() != TokenType.L_BRACKET){
             System.err.println(String.format("Syntax Error %n Expected Left Brace got %s %n %s:%d",LB.getToken(),LB.getFilename(),LB.getLineNum()));
             throw new Exception(); 
         }
+
 
         SymbolTable.getParamstart(id.getID().getToken());
         ParamsNode params = ParamsNode.parseParamsNode(tokens);
