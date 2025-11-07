@@ -37,8 +37,18 @@ public class IDNode implements OperandNode{
     public static IDNode parseIDNode(ArrayList<Token> tokens) throws Exception{
         Token currToken = tokens.remove(0);
         if (currToken.getTokenType() == TokenType.ID_KEYWORD){
+            if(currToken.getToken().equals("Def") || currToken.getToken().equals("Return") ||
+        currToken.getToken().equals("If") || currToken.getToken().equals("Else") ||
+        currToken.getToken().equals("Elseif") || currToken.getToken().equals("While") ||
+        currToken.getToken().equals("Double") || currToken.getToken().equals("Integer") ||
+        currToken.getToken().equals("String") || currToken.getToken().equals("Boolean") ||
+        currToken.getToken().equals("Void") || currToken.getToken().equals("True") ||
+        currToken.getToken().equals("False")){
+            System.err.printf("Semantic Error: %n %s is a keyword %n %s:%d%n",
+                    currToken.getToken(), currToken.getFilename(), currToken.getLineNum());
+            throw new Exception();
+        }
             return new IDNode(currToken);
-
         }
         else{
             System.err.printf("Syntax Error %n Expected ID got %s %n %s:%d%n",

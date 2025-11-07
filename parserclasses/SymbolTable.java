@@ -19,7 +19,13 @@ public class SymbolTable {
             System.err.println(String.format("Semantic Error: %n Duplicate function %s %n %s:%d%n",
                     name.getToken(), name.getFilename(), name.getLineNum()));
             throw new Exception();
-        }else if(functionTable.containsKey("Def") || functionTable.containsKey("Return") ||
+        }
+
+        functionTable.put(name.getToken(), type);
+        varTable.put(name.getToken(), new HashMap<String, String>());
+        paramTable.put(name.getToken(), new ArrayList<String>());
+
+        if(functionTable.containsKey("Def") || functionTable.containsKey("Return") ||
         functionTable.containsKey("If") || functionTable.containsKey("Else") ||
         functionTable.containsKey("Elseif") || functionTable.containsKey("While") ||
         functionTable.containsKey("Double") || functionTable.containsKey("Integer") ||
@@ -30,9 +36,6 @@ public class SymbolTable {
                     name.getToken(), name.getFilename(), name.getLineNum()));
             throw new Exception();
         }
-        functionTable.put(name.getToken(), type);
-        varTable.put(name.getToken(), new HashMap<String, String>());
-        paramTable.put(name.getToken(), new ArrayList<String>());
     }
 
     public static void addVar(Token name, String type) throws Exception{
@@ -74,7 +77,7 @@ public class SymbolTable {
     }
 
     public static void changeScope(Token name) throws Exception{
-        if(varTable.get(scope) == null){
+        if(!functionTable.containsKey(name.getToken())){
             System.err.println(String.format("Semantic Error: %n Uninitialized function %s %n %s:%d%n",
                     name.getToken(), name.getFilename(), name.getLineNum()));
             throw new Exception();
@@ -90,6 +93,16 @@ public class SymbolTable {
         functionTable = new HashMap<>();
         varTable = new HashMap<>();
         paramTable = new HashMap<>();
+        Token print = new Token("print", null, 0, null);
+        try {
+            SymbolTable.addFunction(print, "Void");
+            SymbolTable.changeScope(print);
+            SymbolTable.addVar(print, "String");
+        } catch (Exception e) {
+            //Should never error 
+        }
+        SymbolTable.addParam("String");
         scope = "";
+        
     }
 }
