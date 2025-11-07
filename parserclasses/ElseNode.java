@@ -50,6 +50,10 @@ public class ElseNode implements JottTree {
 
     }
 
+    public BodyNode getBody(){
+        return this.body;
+    }
+
     @Override
     public String convertToJott() {
         if(body==null){
