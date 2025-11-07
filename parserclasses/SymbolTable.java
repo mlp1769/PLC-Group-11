@@ -85,4 +85,11 @@ public class SymbolTable {
     public static String getScope(){
         return scope;
     }
+
+    public static void clear(){
+        functionTable = new HashMap<>();
+        varTable = new HashMap<>();
+        paramTable = new HashMap<>();
+        scope = "";
+    }
 }

@@ -59,6 +59,7 @@ public class ProgramNode implements JottTree {
     }
 
     public static ProgramNode parseProgramNodeProgram(ArrayList<Token> tokens) throws Exception {
+        SymbolTable.clear();
         ArrayList<FunctionDefNode> functionDefs = new ArrayList<>();
         while (!tokens.isEmpty()) {
             functionDefs.add(FunctionDefNode.parseFunctionDefNode(tokens));
