@@ -41,4 +41,6 @@ public interface OperandNode extends ExprNode{
             throw new Exception();
     }
 
+    public Token getToken();
+
 }
