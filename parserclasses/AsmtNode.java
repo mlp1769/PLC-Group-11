@@ -65,21 +65,17 @@ public class AsmtNode implements BodyStmtNode{
 
     @Override public boolean validateTree() {
    try {
-        // structure checks
         if (id == null || !(id instanceof IDNode)) {
             semErr("Left-hand side of assignment must be an identifier", assign);
         }
         if (exp == null) {
             semErr("Assignment missing right-hand side expression", assign);
         }
-
-        // delegate to children
         id.validateTree();
-        exp.validateTree();   // expression can be any type per your requirement
-
+        exp.validateTree();
         return true;
     } catch (RuntimeException re) {
-        throw re; // per project rule: do not return false
+        throw re;
     } catch (Exception e) {
         throw new RuntimeException(e);
     }
