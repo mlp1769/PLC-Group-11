@@ -19,14 +19,19 @@ public class JottParser {
      * @return the root of the Jott Parse Tree represented by the tokens.
      *         or null upon an error in parsing.
      */
-    public static JottTree parse(ArrayList<Token> tokens){
+    public static JottTree parse(ArrayList<Token> tokens) throws Exception{
         JottTree possible = null;
 
+        possible = ProgramNode.parseProgramNodeProgram(tokens);
+
+        /*
         try{
              possible = ProgramNode.parseProgramNodeProgram(tokens);
         } catch (Exception e) {
             return null;
         }
+
+         */
 
 		return possible;
     }
