@@ -71,7 +71,7 @@ public class FBodyNode implements JottTree {
     }
 
     private boolean validReturn(){
-        return !this.body.getReturnStatementNode().returnVoid() && validReturnBody(this.body.getBodyStmtNodes());
+        return !this.body.getReturnStatementNode().returnVoid() || validReturnBody(this.body.getBodyStmtNodes());
     }
 
     private boolean validReturnBody(ArrayList<BodyStmtNode> bodyNode){
