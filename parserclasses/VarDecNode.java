@@ -41,7 +41,7 @@ public class VarDecNode implements JottTree {
         }
 
         //add to symbol table
-        SymbolTable.addVar(idToPass.getID(), typeToPass.getType().toString());
+        SymbolTable.addVar(idToPass.getID(), typeToPass.getType().getToken());
 
 
 
