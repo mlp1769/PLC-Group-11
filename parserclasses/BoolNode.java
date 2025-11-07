@@ -36,5 +36,9 @@ public class BoolNode implements ExprNode{
         }
        
     }
-    
+
+    @Override
+    public String getExpressionType() throws Exception {
+        return "Boolean";
+    }
 }

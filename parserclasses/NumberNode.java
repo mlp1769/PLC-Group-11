@@ -53,4 +53,9 @@ public class NumberNode implements OperandNode {
             throw new Exception();
         }
     }
+
+    @Override
+    public String getExpressionType() throws Exception {
+        return this.isInteger() ? "Integer" : "Double";
+    }
 }

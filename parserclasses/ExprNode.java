@@ -47,5 +47,5 @@ public interface ExprNode extends JottTree{
         }
     }
 
-    
+    String getExpressionType() throws Exception;
 }

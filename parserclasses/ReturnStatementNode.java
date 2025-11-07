@@ -32,14 +32,13 @@ public class ReturnStatementNode implements JottTree {
         }
 
         String returnType = SymbolTable.getFunction(SymbolTable.getScope());
-        /* 
-        if(!expressionNode.getReturnType().equals(returnType)) {
+
+        if(!expressionNode.getExpressionType().equals(returnType)) {
             System.err.println("Semantic Error:");
             System.err.println("Return type does not match function return type.");
             System.err.println(returnToken.getFilename()+":"+returnToken.getLineNum());
             throw new Exception();
         }
-        */
 
         return new ReturnStatementNode(expressionNode);
     }

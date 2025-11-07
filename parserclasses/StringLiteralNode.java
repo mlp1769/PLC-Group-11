@@ -35,5 +35,9 @@ public class StringLiteralNode implements ExprNode{
         }
          
     }
-    
+
+    @Override
+    public String getExpressionType() throws Exception {
+        return "String";
+    }
 }
