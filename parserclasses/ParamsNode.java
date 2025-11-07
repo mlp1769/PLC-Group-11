@@ -56,7 +56,7 @@ public class ParamsNode implements JottTree {
 
 
         //duplicate paramsList; take head from paramsTable
-        String paramsHead = SymbolTable.getParamstart();
+        String paramsHead = SymbolTable.getParam();
 
         //check if paramsHead == null; if it is, throw error
         if(paramsHead==null){
