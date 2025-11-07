@@ -97,11 +97,11 @@ public class SymbolTable {
         try {
             SymbolTable.addFunction(print, "Void");
             SymbolTable.changeScope(print);
-            SymbolTable.addVar(print, "String");
+            SymbolTable.addVar(print, "All");
         } catch (Exception e) {
             //Should never error 
         }
-        SymbolTable.addParam("String");
+        SymbolTable.addParam("All");
         scope = "";
         
     }
