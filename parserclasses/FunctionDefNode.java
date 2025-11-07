@@ -103,7 +103,13 @@ public class FunctionDefNode implements JottTree {
 
     @Override
     public boolean validateTree() throws Exception{
-        return idToken.validateTree() && params.validateTree() && returnType.validateTree() && body.validateTree();
+        try {
+            return idToken.validateTree() && params.validateTree() && returnType.validateTree() && body.validateTree();
+        } catch (ExceptionInInitializerError e) {
+            System.err.println(String.format("Semantic Error: %n %s has no valid return %n %s:%d%n",
+                    this.idToken.getID().getToken(), this.idToken.getID().getFilename(), this.idToken.getID().getLineNum()));
+            throw new Exception();
+        }
     }
 
     public Token getDefToken() {

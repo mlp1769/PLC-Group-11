@@ -53,6 +53,28 @@ public class BodyNode implements JottTree{
         //return text;
     }
 
+    public ReturnStatementNode getReturnStatementNode(){
+        return this.rtn;
+    }
+
+    public ArrayList<BodyStmtNode> getBodyStmtNodes(){
+        return this.body;
+    }
+
+    public Boolean returnsVoid(){
+        return this.rtn.returnVoid() && returnsVoidBody();
+    }
+
+    public Boolean returnsVoidBody(){
+        boolean noReturns = true;
+        for (BodyStmtNode bodyStmt : this.body) {
+            if(bodyStmt instanceof IfStmtNode){
+                for (BodyNode bodyNode :((IfStmtNode) bodyStmt).getBodyNodes()) if(!bodyNode.returnsVoid()){noReturns = false;}
+            }
+        }
+        return noReturns;
+    }
+
     @Override
     public boolean validateTree() throws Exception{
         for (BodyStmtNode stmt : this.body) {
