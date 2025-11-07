@@ -15,16 +15,12 @@ public class IfStmtNode implements BodyStmtNode, JottTree {
     private final Token lbr;
     private final BodyNode thenBody;
     private final Token rbr;
-    private final Token kwElse;
-    private final Token lbre;
-    private final BodyNode elseBody;
-    private final Token rbre;
+    private final ElseNode elseNode;
     private final ArrayList<ElseifNode> elseifNodes;
 
     public IfStmtNode(Token kwIf, Token lb, ExprNode cond, Token rb,
-                      Token lbr, BodyNode thenBody, Token rbr,
-                      Token kwElse, Token lbre, BodyNode elseBody, Token rbre,
-                      ArrayList<ElseifNode> elseifNodes) {
+                    Token lbr, BodyNode thenBody, Token rbr, ArrayList<ElseifNode> elseifNodes,
+                    ElseNode elseNode) {
         this.kwIf = kwIf;
         this.lb = lb;
         this.cond = cond;
@@ -32,10 +28,7 @@ public class IfStmtNode implements BodyStmtNode, JottTree {
         this.lbr = lbr;
         this.thenBody = thenBody;
         this.rbr = rbr;
-        this.kwElse = kwElse;
-        this.lbre = lbre;
-        this.elseBody = elseBody;
-        this.rbre = rbre;
+        this.elseNode = elseNode;
         this.elseifNodes = (elseifNodes == null) ? new ArrayList<>() : elseifNodes;
     }
 
@@ -94,72 +87,50 @@ public class IfStmtNode implements BodyStmtNode, JottTree {
         }
 
         // optional Else
-        Token kwElse = null, LBE = null, RBE = null;
-        BodyNode elseBody = null;
+        ElseNode elseNode = null;
         if (!tokens.isEmpty()
                 && tokens.get(0).getTokenType() == TokenType.ID_KEYWORD
                 && "Else".equals(tokens.get(0).getToken())) {
-            kwElse = tokens.remove(0);
-            LBE = tokens.remove(0);
-            if (LBE.getTokenType() != TokenType.L_BRACE) {
-                System.err.printf("Syntax Error %n Expected Left Brace got %s %n %s:%d%n",
-                        LBE.getToken(), LBE.getFilename(), LBE.getLineNum());
-                throw new Exception();
-            }
-            elseBody = BodyNode.parseBodyNode(tokens);
-            RBE = tokens.remove(0);
-            if (RBE.getTokenType() != TokenType.R_BRACE) {
-                System.err.printf("Syntax Error %n Expected Right Brace got %s %n %s:%d%n",
-                        RBE.getToken(), RBE.getFilename(), RBE.getLineNum());
-                throw new Exception();
-            }
+            elseNode = ElseNode.parseElseNode(tokens);
         }
-
-        return new IfStmtNode(ifTok, LB, condition, RB, LBT, thenBody, RBT,
-                              kwElse, LBE, elseBody, RBE, elseifNodes);
+        return new IfStmtNode(ifTok, LB, condition, RB, LBT, thenBody, RBT, elseifNodes, elseNode);
     }
 
     public String convertToJott() {
         StringBuilder sb = new StringBuilder();
         sb.append(kwIf.getToken())
-          .append(lb.getToken())
-          .append(cond.convertToJott())
-          .append(rb.getToken())
-          .append(lbr.getToken())
-          .append(thenBody.convertToJott())
-          .append(rbr.getToken());
+        .append(lb.getToken())
+        .append(cond.convertToJott())
+        .append(rb.getToken())
+        .append(lbr.getToken())
+        .append(thenBody.convertToJott())
+        .append(rbr.getToken());
 
-        for (ElseifNode e : elseifNodes) {
-            sb.append(e.convertToJott());
+        if (elseifNodes != null) {
+            for (ElseifNode e : elseifNodes) {
+                if (e != null) sb.append(e.convertToJott());
+            }
         }
 
-        if (kwElse != null) {
-            sb.append(kwElse.getToken())
-              .append(lbre.getToken())
-              .append(elseBody.convertToJott())
-              .append(rbre.getToken());
+        if (elseNode != null) {
+            sb.append(elseNode.convertToJott());
         }
+
         return sb.toString();
     }
-
-    @Override public boolean validateTree() { 
+    @Override
+    public boolean validateTree() { 
     try {
-        if (cond == null) semErr("If condition missing", kwIf);
-
-        cond.validateTree();                 
-        if (thenBody == null) semErr("If missing then-body", lbr);
-        thenBody.validateTree();             
-        if (kwElse != null) {
-            if (elseBody == null) semErr("Else missing body", kwElse);
-            elseBody.validateTree();         
+        if (cond == null) {
+            semErr("If condition missing", kwIf);
         }
-
+        cond.validateTree();                           
         if (cond instanceof BoolNode) {
             return true;
         } 
         else if (cond instanceof IDNode) {
             String name = ((IDNode) cond).convertToJott();     
-            String sym    = SymbolTable.getVar(name);
+            String sym  = SymbolTable.getVar(name);
             if (!"Boolean".equals(sym)) {
                 semErr("If condition must be Boolean, got " + (sym == null ? "Unknown" : sym), lb);
             }
@@ -174,7 +145,20 @@ public class IfStmtNode implements BodyStmtNode, JottTree {
         else {
             semErr("If condition must be Boolean, unsupported expression type", lb);
         }
+        
+        if (thenBody == null){ 
+            semErr("If missing then-body", lbr);
+        }
+        thenBody.validateTree();  
 
+        if (elseifNodes != null) {
+            for (ElseifNode eli : elseifNodes) {
+                if (eli != null) eli.validateTree();
+            }
+        }
+        if (elseNode != null) {
+            elseNode.validateTree();
+        }
         return true;
     } 
     catch (RuntimeException re) {
@@ -193,35 +177,43 @@ private static void semErr(String msg, provided.Token loc) {
     throw new RuntimeException(msg);
 }
 
-public ArrayList<BodyNode> getAllBodies() {
-    ArrayList<BodyNode> allBodies = new ArrayList<>();
+public ArrayList<BodyNode> getBodyNodes() {
+    ArrayList<BodyNode> BodyNodes = new ArrayList<>();
 
     //If body
     if (thenBody != null) {
-        allBodies.add(thenBody);
+        BodyNodes.add(thenBody);
     }
 
     //ElseIf bodys
     if (elseifNodes != null) {
-        for (ElseifNode en : elseifNodes) {
-            if (en == null) continue;
+        for (ElseifNode elseifNode : elseifNodes) {
+            if (elseifNode == null) continue;
             try {
-                java.lang.reflect.Field bdy = en.getClass().getDeclaredField("body");
-                bdy.setAccessible(true);
-                Object bodyObj = bdy.get(en);
+                java.lang.reflect.Field body = elseifNode.getClass().getDeclaredField("body");
+                body.setAccessible(true);
+                Object bodyObj = body.get(elseifNode);
                 if (bodyObj instanceof BodyNode) {
-                    allBodies.add((BodyNode) bodyObj);
+                    BodyNodes.add((BodyNode) bodyObj);
                 }
             } catch (Exception ignore) {
             }
         }
     }
     //Else bodys
-    if (elseBody != null) {
-        allBodies.add(elseBody);
+    if (elseNode != null) {
+        try {
+            java.lang.reflect.Field body = elseNode.getClass().getDeclaredField("body");
+            body.setAccessible(true);
+            Object bodyObj = body.get(elseNode);
+            if (bodyObj instanceof BodyNode) {
+                getBodyNodes().add((BodyNode) bodyObj);
+            }
+        } catch (Exception ignore) {
+        }
     }
 
-    return allBodies;
+    return BodyNodes;
 }
 
 }
