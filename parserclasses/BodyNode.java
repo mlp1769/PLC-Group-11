@@ -53,6 +53,17 @@ public class BodyNode implements JottTree{
         //return text;
     }
 
+    public ReturnStatementNode getReturnStatementNode(){
+        return this.rtn;
+    }
+
+    public ArrayList<BodyStmtNode> getBodyStmtNodes(){
+        return this.body;
+    }
+    
+    public Boolean returnsVoid(){
+        return this.rtn.returnVoid() && this.body.forEach(body -> {if(body instanceof IfStmtNode){((IfStmtNode) body).getBodyNodes.forEach(BodyNode ->{BodyNode.returnsVoid()})}});
+    }
     @Override
     public boolean validateTree() throws Exception{
         for (BodyStmtNode stmt : this.body) {

@@ -51,6 +51,10 @@ public class ReturnStatementNode implements JottTree {
         return "Return " + this.expressionNode.convertToJott()+";" ;
     }
 
+    public boolean returnVoid() {
+        return this.expressionNode == null;
+    }
+
     @Override
     public boolean validateTree() throws Exception{
         return expressionNode.validateTree();

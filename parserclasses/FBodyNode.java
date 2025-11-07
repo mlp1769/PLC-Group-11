@@ -40,5 +40,10 @@ public class FBodyNode implements JottTree {
         }
         return this.body.validateTree();
     }
+
+    private boolean validVoid(){
+        return this.body.getReturnStatementNode().returnVoid(); 
+        this.body.getBodyStmtNodes().forEach(body -> {if(body instanceof IfStmtNode){((IfStmtNode) body).getBodyNodes.forEach(BodyNode ->{})}});
+    }
     
 }
