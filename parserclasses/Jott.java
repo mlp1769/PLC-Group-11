@@ -22,7 +22,7 @@ public class Jott {
 
 
         }catch(Exception e){
-            System.out.println("whomp whomp :(");
+            System.out.println(e);
         }
 
 
