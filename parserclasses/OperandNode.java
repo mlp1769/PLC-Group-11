@@ -1,6 +1,5 @@
 package parserclasses;
 
-import provided.JottTree;
 import provided.Token;
 import provided.TokenType;
 import java.util.ArrayList;
@@ -40,5 +39,7 @@ public interface OperandNode extends ExprNode{
                     currToken.getToken(), currToken.getFilename(), currToken.getLineNum());
             throw new Exception();
     }
+
+    public Token getToken();
 
 }

@@ -77,7 +77,7 @@ public class IfStmtNode implements BodyStmtNode, JottTree {
                     RBT.getToken(), RBT.getFilename(), RBT.getLineNum());
             throw new Exception();
         }
-
+        // ElseIf
         ArrayList<ElseifNode> elseifNodes = new ArrayList<>();
         while (!tokens.isEmpty()
                 && tokens.get(0).getTokenType() == TokenType.ID_KEYWORD

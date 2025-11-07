@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import provided.Token;
 import provided.TokenType;
 
-public class MathopNode implements ExprNode{
+public class MathopNode implements ExprNode, OperationNode{
 
     private Token mathOp;
 
@@ -40,5 +40,14 @@ public class MathopNode implements ExprNode{
                     mathOp.getToken(), mathOp.getFilename(), mathOp.getLineNum()));
         throw new Exception();
     }
-    
+
+    @Override
+    public Boolean isMathOp() {
+        return false;
+    }
+
+    @Override
+    public Token getOperatorToken() {
+        return this.mathOp;
+    }
 }

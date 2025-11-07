@@ -34,7 +34,7 @@ public class ParamsNode implements JottTree {
 
 
         //todo check if the first token is ']'
-        if(tokens.get(0).getTokenType()==TokenType.R_BRACE){
+        if(tokens.get(0).getTokenType()==TokenType.R_BRACKET){
             return new ParamsNode();
         }
 
@@ -53,6 +53,24 @@ public class ParamsNode implements JottTree {
                 keepCheckingForParamsT=false;
             }
         }
+
+
+        //duplicate paramsList; take head from paramsTable
+        String paramsHead = SymbolTable.getParam();
+
+        //check if paramsHead == null; if it is, throw error
+        if(paramsHead==null){
+            System.err.println("Semantic Error\nThe number of provided params doesn't match the number of expected params\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
+            throw new Exception();
+        }
+
+
+        //check if paramsHead == the type of expr
+        if(!(exprToPass.getExpressionType().equals(paramsHead) || paramsHead.equals("All"))) {
+            System.err.println("Semantic Error:\nParam type does not match function param type.\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
+            throw new Exception();
+        }
+
 
         return new ParamsNode(exprToPass, paramsToPass);
 
