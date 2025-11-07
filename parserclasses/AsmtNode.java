@@ -9,10 +9,10 @@ public class AsmtNode implements BodyStmtNode{
 
     private final IDNode id;
     private final Token assign;  // '='
-    private final JottTree exp;  // <expr>
+    private final ExprNode exp;  // <expr>
     private final Token semi;    // ';'
 
-    public AsmtNode(IDNode id, Token assign, JottTree exp, Token semi) {
+    public AsmtNode(IDNode id, Token assign, ExprNode exp, Token semi) {
         this.id = id;
         this.assign = assign;
         this.exp = exp;
@@ -30,7 +30,7 @@ public class AsmtNode implements BodyStmtNode{
                     got, fn, ln);
             throw new Exception();
         }
-        IDNode lhs = IDNode.parseIDNode(tokens); // consumes identifier
+        IDNode lhs = IDNode.parseIDNode(tokens);
 
         // '='
         Token eq = tokens.remove(0);
@@ -46,7 +46,7 @@ public class AsmtNode implements BodyStmtNode{
             throw new Exception();
         }
 
-        JottTree exp = ExprNode.parseExprNode(tokens);
+        ExprNode exp = ExprNode.parseExprNode(tokens);
 
         Token semi = tokens.remove(0);
         if (semi.getTokenType() != TokenType.SEMICOLON) {
@@ -64,6 +64,31 @@ public class AsmtNode implements BodyStmtNode{
     }
 
     @Override public boolean validateTree() {
-         return false; 
+   try {
+        // structure checks
+        if (id == null || !(id instanceof IDNode)) {
+            semErr("Left-hand side of assignment must be an identifier", assign);
         }
+        if (exp == null) {
+            semErr("Assignment missing right-hand side expression", assign);
+        }
+
+        // delegate to children
+        id.validateTree();
+        exp.validateTree();   // expression can be any type per your requirement
+
+        return true;
+    } catch (RuntimeException re) {
+        throw re; // per project rule: do not return false
+    } catch (Exception e) {
+        throw new RuntimeException(e);
+    }
+}
+private static void semErr(String msg, provided.Token loc) {
+    System.err.printf("Semantic Error:%n%s%n%s:%d%n",
+            msg,
+            (loc == null ? "<unknown>" : loc.getFilename()),
+            (loc == null ? 1 : loc.getLineNum()));
+    throw new RuntimeException(msg);
+}
 }
