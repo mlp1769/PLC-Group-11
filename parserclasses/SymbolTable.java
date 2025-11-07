@@ -63,9 +63,8 @@ public class SymbolTable {
         paramTable.get(scope).add(type);
     }
 
-    public static String getParamstart(){
-        copyTable = new ArrayList<>(paramTable.get(scope));
-        return copyTable.remove(0);
+    public static void getParamstart(String call){
+        copyTable = new ArrayList<>(paramTable.get(call));
     }
 
     public static String getParam(){
