@@ -69,7 +69,10 @@ public class ElseifNode implements JottTree {
         tokens.remove(0);
 
         return new ElseifNode(exprToPass, bodyToPass);
+    }
 
+    public BodyNode getBody(){
+        return this.body;
     }
 
     @Override
