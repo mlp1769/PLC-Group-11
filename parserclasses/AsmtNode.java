@@ -63,28 +63,32 @@ public class AsmtNode implements BodyStmtNode{
         return id.convertToJott() + assign.getToken() + exp.convertToJott() + semi.getToken();
     }
 
-    @Override public boolean validateTree() {
-   try {
-        if (id == null || !(id instanceof IDNode)) {
-            semErr("Left-hand side of assignment must be an identifier", assign);
+    @Override 
+    public boolean validateTree() {
+    try {
+            if (id == null || !(id instanceof IDNode)) {
+                semErr("Left-hand side of assignment must be an identifier", assign);
+            }
+            if (exp == null) {
+                semErr("Assignment missing right-hand side expression", assign);
+            }
+            id.validateTree();
+            exp.validateTree();
+            return true;
+        } catch (RuntimeException re)
+        {
+            throw re;
+        } catch (Exception e) 
+        {
+            throw new RuntimeException(e);
         }
-        if (exp == null) {
-            semErr("Assignment missing right-hand side expression", assign);
-        }
-        id.validateTree();
-        exp.validateTree();
-        return true;
-    } catch (RuntimeException re) {
-        throw re;
-    } catch (Exception e) {
-        throw new RuntimeException(e);
     }
-}
-private static void semErr(String msg, provided.Token loc) {
-    System.err.printf("Semantic Error:%n%s%n%s:%d%n",
-            msg,
-            (loc == null ? "<unknown>" : loc.getFilename()),
-            (loc == null ? 1 : loc.getLineNum()));
-    throw new RuntimeException(msg);
-}
+    private static void semErr(String msg, provided.Token loc)
+    {
+        System.err.printf("Semantic Error:%n%s%n%s:%d%n",
+                msg,
+                (loc == null ? "<unknown>" : loc.getFilename()),
+                (loc == null ? 1 : loc.getLineNum()));
+        throw new RuntimeException(msg);
+    }
 }
