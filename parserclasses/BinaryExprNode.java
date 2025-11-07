@@ -9,10 +9,10 @@ import java.util.ArrayList;
 public class BinaryExprNode implements ExprNode{
     private OperandNode operandOne;
     private OperandNode operandTwo;
-    private JottTree operator;
+    private OperationNode operator;
  
 
-    public BinaryExprNode(OperandNode operandOne, JottTree operator, OperandNode operandTwo){
+    public BinaryExprNode(OperandNode operandOne, OperationNode operator, OperandNode operandTwo){
         this.operandOne = operandOne;
         this.operator = operator;
         this.operandTwo = operandTwo;
@@ -129,6 +129,9 @@ public class BinaryExprNode implements ExprNode{
 
     @Override
     public String getExpressionType() throws Exception {
-        return this.operandOne.getExpressionType().equals(this.operandTwo.getExpressionType()) ? this.operandOne.getExpressionType() : "no";
+        if(operator.isMathOp()){
+            return this.operandOne.getExpressionType().equals(this.operandTwo.getExpressionType())? this.operandOne.getExpressionType() : "no";
+        }
+        return this.operandOne.getExpressionType().equals(this.operandTwo.getExpressionType()) ? "Boolean" : "no";
     }
 }
