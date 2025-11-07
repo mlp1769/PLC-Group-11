@@ -9,7 +9,7 @@ public class IfStmtNode implements BodyStmtNode, JottTree {
 
     private final Token kwIf;         // "If"
     private final Token lb;           // '['
-    private final JottTree cond;      // <expr>
+    private final ExprNode cond;      // <expr>
     private final Token rb;           // ']'
     private final Token lbr;   // '{'
     private final BodyNode thenBody;  // then block
@@ -19,7 +19,7 @@ public class IfStmtNode implements BodyStmtNode, JottTree {
     private final BodyNode elseBody;  // optional else block
     private final Token rbre;   // '}'
 
-    public IfStmtNode(Token kwIf, Token lb, JottTree cond, Token rb,
+    public IfStmtNode(Token kwIf, Token lb, ExprNode cond, Token rb,
                       Token lbr, BodyNode thenBody, Token rbr,
                       Token kwElse, Token lbre, BodyNode elseBody, Token rbre) {
         this.kwIf = kwIf;
@@ -53,7 +53,7 @@ public class IfStmtNode implements BodyStmtNode, JottTree {
         }
 
         // <expr>
-        JottTree condition = ExprNode.parseExprNode(tokens);
+        ExprNode condition = ExprNode.parseExprNode(tokens);
 
         // ']'
         Token RB = tokens.remove(0);
@@ -128,40 +128,53 @@ public class IfStmtNode implements BodyStmtNode, JottTree {
     }
 
     @Override public boolean validateTree() { 
-            try {
+    try {
         if (cond == null) semErr("If condition missing", kwIf);
-        cond.validateTree();
 
+        cond.validateTree();                 
         if (thenBody == null) semErr("If missing then-body", lbr);
-        thenBody.validateTree();
-
+        thenBody.validateTree();             
         if (kwElse != null) {
             if (elseBody == null) semErr("Else missing body", kwElse);
-            elseBody.validateTree();
+            elseBody.validateTree();         
         }
 
-        try {
-            // String t = ((ExprNode)cond).getType();
-            // if (!"Boolean".equals(t)) semErr("If condition must be Boolean", lb);
-        } catch (ClassCastException ignore) {
-            // no type info available
+        if (cond instanceof BoolNode) {
+        } 
+        else if (cond instanceof IDNode) {
+            String name = ((IDNode) cond).convertToJott();     
+            String sym    = SymbolTable.getVar(name);
+            if (!"Boolean".equals(sym)) {
+                semErr("If condition must be Boolean, got " + (sym == null ? "Unknown" : sym), lb);
+            }
+        } 
+        else if (cond instanceof BinaryExprNode) {
+            String s = cond.convertToJott();
+            if (!(s.contains("==") || s.contains("!=") || s.contains("<=") ||
+                  s.contains(">=") || s.contains("<")  || s.contains(">"))) {
+                semErr("If condition must be Boolean (relational expression expected)", lb);
+            }
+        } 
+        else {
+            semErr("If condition must be Boolean, unsupported expression type", lb);
         }
 
         return true;
-    } catch (RuntimeException re) {
+    } 
+    catch (RuntimeException re) {
         throw re;
-    } catch (Exception e) {
+    } 
+    catch (Exception e) {
         throw new RuntimeException(e);
     }
 }
 
-    private static void semErr(String msg, Token loc) {
-        System.err.printf("Semantic Error: %n %s %n %s:%d%n",
-                msg,
-                (loc == null ? "<unknown>" : loc.getFilename()),
-                (loc == null ? 1 : loc.getLineNum()));
-        throw new RuntimeException(msg);
-    }
-    
+private static void semErr(String msg, provided.Token loc) {
+    System.err.printf("Semantic Error:%n%s%n%s:%d%n",
+            msg,
+            (loc == null ? "<unknown>" : loc.getFilename()),
+            (loc == null ? 1 : loc.getLineNum()));
+    throw new RuntimeException(msg);
+}
 }
 

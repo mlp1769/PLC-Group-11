@@ -9,13 +9,13 @@ public class WhileLoopNode implements BodyStmtNode, JottTree {
 
     private final Token kwWhile;    // "While"
     private final Token lb;         // '['
-    private final JottTree cond;    // <expr>
+    private final ExprNode cond;    // <expr>
     private final Token rb;         // ']'
     private final Token lbr;     // '{'
     private final BodyNode body;    // body node (statements + optional Return)
     private final Token rbr;     // '}'
 
-    public WhileLoopNode(Token kwWhile, Token lb, JottTree cond, Token rb,
+    public WhileLoopNode(Token kwWhile, Token lb, ExprNode cond, Token rb,
                          Token lbr, BodyNode body, Token rbr) {
         this.kwWhile = kwWhile;
         this.lb = lb;
@@ -44,7 +44,7 @@ public class WhileLoopNode implements BodyStmtNode, JottTree {
         }
 
         // <expr>
-        JottTree condition = ExprNode.parseExprNode(tokens);
+        ExprNode condition = ExprNode.parseExprNode(tokens);
 
         // ']'
         Token RB = tokens.remove(0);
@@ -88,34 +88,55 @@ public class WhileLoopNode implements BodyStmtNode, JottTree {
     }
 
     @Override public boolean validateTree() { 
-        try {
+    try {
         if (cond == null) semErr("While condition missing", kwWhile);
-        cond.validateTree();
-        if (body == null) semErr("While body missing", lbr);
-        body.validateTree();
-        //  1) ((ExprNode)cond).getType()
-        //  2) ((TypedNode)cond).getType()
-        //  3) a static TypeResolver.typeOf(cond)
-        try {
-            // String t = ((ExprNode)cond).getType();
-            // if (!"Boolean".equals(t)) semErr("While condition must be Boolean", lb);
-        } catch (ClassCastException ignore) {
 
+        cond.validateTree();                 
+        if (body == null) semErr("While body missing", lbr);
+        body.validateTree();                 
+
+        if (cond instanceof BoolNode) {
+        } 
+        else if (cond instanceof IDNode) {
+            String name = ((IDNode) cond).convertToJott();
+            String sym    = SymbolTable.getVar(name);
+            if (!"Boolean".equals(sym)) {
+                semErr("While condition must be Boolean, got " + (sym == null ? "Unknown" : sym), lb);
+            }
+        } 
+        else if (cond instanceof BinaryExprNode) {
+            String s = cond.convertToJott();
+            if (!(s.contains("==") || s.contains("!=") || s.contains("<=") ||
+                  s.contains(">=") || s.contains("<")  || s.contains(">"))) {
+                semErr("While condition must be Boolean (relational expression expected)", lb);
+            }
+        } 
+        else if (cond instanceof FunctionCallNode) {
+            String fname = ((FunctionCallNode) cond).getFunctionName().getToken();
+            String ret   = SymbolTable.getFunction(fname);
+            if (!"Boolean".equals(ret)) {
+                semErr("While condition must be Boolean, but function " + fname +
+                       " returns " + (ret == null ? "Unknown" : ret), lb);
+            }
+
+        } 
+        else {
+            semErr("While condition must be Boolean, unsupported expression type", lb);
         }
 
         return true;
     } catch (RuntimeException re) {
-        throw re; // rethrow semantic error
+        throw re;
     } catch (Exception e) {
         throw new RuntimeException(e);
     }
 }
 
-    private static void semErr(String msg, Token loc) {
-        System.err.printf("Semantic Error: %n %s %n %s:%d%n",
-                msg,
-                (loc == null ? "<unknown>" : loc.getFilename()),
-                (loc == null ? 1 : loc.getLineNum()));
-        throw new RuntimeException(msg);
-        }
+private static void semErr(String msg, provided.Token loc) {
+    System.err.printf("Semantic Error:%n%s%n%s:%d%n",
+            msg,
+            (loc == null ? "<unknown>" : loc.getFilename()),
+            (loc == null ? 1 : loc.getLineNum()));
+    throw new RuntimeException(msg);
+}
 }
