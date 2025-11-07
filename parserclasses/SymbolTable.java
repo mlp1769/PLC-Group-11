@@ -94,14 +94,27 @@ public class SymbolTable {
         varTable = new HashMap<>();
         paramTable = new HashMap<>();
         Token print = new Token("print", null, 0, null);
+        Token concat = new Token("concat", null, 0, null);
+        Token concat2 = new Token("concat2", null, 0, null);
+        Token lenth = new Token("lenth", null, 0, null);
         try {
             SymbolTable.addFunction(print, "Void");
             SymbolTable.changeScope(print);
             SymbolTable.addVar(print, "All");
+            SymbolTable.addParam("All");
+            SymbolTable.addFunction(concat, "String");
+            SymbolTable.changeScope(concat);
+            SymbolTable.addVar(concat, "String");
+            SymbolTable.addVar(concat2, "String");
+            SymbolTable.addParam("String");
+            SymbolTable.addParam("String");
+            SymbolTable.addFunction(lenth, "Integer");
+            SymbolTable.changeScope(lenth);
+            SymbolTable.addVar(lenth, "String");
+            SymbolTable.addParam("String");
         } catch (Exception e) {
             //Should never error 
         }
-        SymbolTable.addParam("All");
         scope = "";
         
     }

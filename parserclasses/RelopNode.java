@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import javax.sound.midi.SysexMessage;
 
-public class RelopNode implements ExprNode {
+public class RelopNode implements ExprNode, OperationNode {
     private Token relOp;
 
     public RelopNode(Token relOp){
@@ -43,5 +43,14 @@ public class RelopNode implements ExprNode {
                     relOp.getToken(), relOp.getFilename(), relOp.getLineNum()));
         throw new Exception();
     }
-    
+
+    @Override
+    public Boolean isMathOp() {
+        return false;
+    }
+
+    @Override
+    public Token getOperatorToken() {
+        return this.relOp;
+    }
 }
