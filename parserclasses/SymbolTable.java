@@ -56,7 +56,7 @@ public class SymbolTable {
     }
     
     public static String getVar(String name){
-        return varTable.get(scope).get(name);
+        return (varTable.get(scope)).get(name);
     }
 
     public static void addParam(String type){

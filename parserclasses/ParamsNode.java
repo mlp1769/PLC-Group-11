@@ -54,10 +54,8 @@ public class ParamsNode implements JottTree {
             }
         }
 
-        //duplicate paramsTable
-        SymbolTable.getParamstart();
 
-        //take head from paramsTable
+        //duplicate paramsList; take head from paramsTable
         String paramsHead = SymbolTable.getParamstart();
 
         //check if paramsHead == null; if it is, throw error
@@ -66,8 +64,9 @@ public class ParamsNode implements JottTree {
             throw new Exception();
         }
 
+
         //check if paramsHead == the type of expr
-        if(!exprToPass.getExpressionType().equals(paramsHead)) {
+        if(!(exprToPass.getExpressionType().equals(paramsHead) || paramsHead.equals("All"))) {
             System.err.println("Semantic Error:\nParam type does not match function param type.\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
             throw new Exception();
         }

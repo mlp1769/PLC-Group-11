@@ -24,7 +24,8 @@ public class FBodyNode implements JottTree {
         while(tokens.get(0).getToken().equals("Double") || tokens.get(0).getToken().equals("Integer") || tokens.get(0).getToken().equals("String") || tokens.get(0).getToken().equals("Boolean")){
             vars.add(VarDecNode.parseVarDecNode(tokens));
         }
-        return new FBodyNode(vars, BodyNode.parseBodyNode(tokens));
+        BodyNode bodyToPass = BodyNode.parseBodyNode(tokens);
+        return new FBodyNode(vars, bodyToPass);
     }
     @Override
     public String convertToJott() {
