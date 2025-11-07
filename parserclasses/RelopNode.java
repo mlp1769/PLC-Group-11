@@ -5,6 +5,8 @@ import provided.JottTree;
 import provided.Token;
 import java.util.ArrayList;
 
+import javax.sound.midi.SysexMessage;
+
 public class RelopNode implements ExprNode {
     private Token relOp;
 
@@ -33,6 +35,13 @@ public class RelopNode implements ExprNode {
             throw new Exception();
         }
 
+    }
+
+    @Override
+    public String getExpressionType() throws Exception {
+        System.err.println(String.format("Syntax Error %n RELOP THIS METHOD SHOULD NOT BE CALLED %s %n %s:%d%n",
+                    relOp.getToken(), relOp.getFilename(), relOp.getLineNum()));
+        throw new Exception();
     }
     
 }
