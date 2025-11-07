@@ -7,21 +7,24 @@ import java.util.ArrayList;
 
 public class IfStmtNode implements BodyStmtNode, JottTree {
 
-    private final Token kwIf;         // "If"
-    private final Token lb;           // '['
-    private final ExprNode cond;      // <expr>
-    private final Token rb;           // ']'
-    private final Token lbr;   // '{'
-    private final BodyNode thenBody;  // then block
-    private final Token rbr;   // '}'
-    private final Token kwElse;       // optional "Else"
-    private final Token lbre;   // '{'
-    private final BodyNode elseBody;  // optional else block
-    private final Token rbre;   // '}'
+    // missing fields (referenced below)
+    private final Token kwIf;
+    private final Token lb;
+    private final ExprNode cond;
+    private final Token rb;
+    private final Token lbr;
+    private final BodyNode thenBody;
+    private final Token rbr;
+    private final Token kwElse;
+    private final Token lbre;
+    private final BodyNode elseBody;
+    private final Token rbre;
+    private final ArrayList<ElseifNode> elseifNodes;
 
     public IfStmtNode(Token kwIf, Token lb, ExprNode cond, Token rb,
                       Token lbr, BodyNode thenBody, Token rbr,
-                      Token kwElse, Token lbre, BodyNode elseBody, Token rbre) {
+                      Token kwElse, Token lbre, BodyNode elseBody, Token rbre,
+                      ArrayList<ElseifNode> elseifNodes) {
         this.kwIf = kwIf;
         this.lb = lb;
         this.cond = cond;
@@ -33,10 +36,10 @@ public class IfStmtNode implements BodyStmtNode, JottTree {
         this.lbre = lbre;
         this.elseBody = elseBody;
         this.rbre = rbre;
+        this.elseifNodes = (elseifNodes == null) ? new ArrayList<>() : elseifNodes;
     }
 
     public static IfStmtNode parseIfStmtNode(ArrayList<Token> tokens) throws Exception {
-        // If
         Token ifTok = tokens.remove(0);
         if (ifTok.getTokenType() != TokenType.ID_KEYWORD || !"If".equals(ifTok.getToken())) {
             System.err.printf("Syntax Error %n Expected If got %s %n %s:%d%n",
@@ -70,9 +73,11 @@ public class IfStmtNode implements BodyStmtNode, JottTree {
                     LBT.getToken(), LBT.getFilename(), LBT.getLineNum());
             throw new Exception();
         }
+
         // <body>
         BodyNode thenBody = BodyNode.parseBodyNode(tokens);
 
+        // '}'
         Token RBT = tokens.remove(0);
         if (RBT.getTokenType() != TokenType.R_BRACE) {
             System.err.printf("Syntax Error %n Expected Right Brace got %s %n %s:%d%n",
@@ -80,23 +85,28 @@ public class IfStmtNode implements BodyStmtNode, JottTree {
             throw new Exception();
         }
 
-        Token elseTok = null, LBE = null, RBE = null;
-        BodyNode elseBody = null;
+        ArrayList<ElseifNode> elseifNodes = new ArrayList<>();
+        while (!tokens.isEmpty()
+                && tokens.get(0).getTokenType() == TokenType.ID_KEYWORD
+                && "ElseIf".equals(tokens.get(0).getToken())) {
+            ElseifNode en = ElseifNode.parseElseifNode(tokens);
+            elseifNodes.add(en);
+        }
 
+        // optional Else
+        Token kwElse = null, LBE = null, RBE = null;
+        BodyNode elseBody = null;
         if (!tokens.isEmpty()
                 && tokens.get(0).getTokenType() == TokenType.ID_KEYWORD
                 && "Else".equals(tokens.get(0).getToken())) {
-            elseTok = tokens.remove(0);
-
+            kwElse = tokens.remove(0);
             LBE = tokens.remove(0);
             if (LBE.getTokenType() != TokenType.L_BRACE) {
                 System.err.printf("Syntax Error %n Expected Left Brace got %s %n %s:%d%n",
                         LBE.getToken(), LBE.getFilename(), LBE.getLineNum());
                 throw new Exception();
             }
-
             elseBody = BodyNode.parseBodyNode(tokens);
-
             RBE = tokens.remove(0);
             if (RBE.getTokenType() != TokenType.R_BRACE) {
                 System.err.printf("Syntax Error %n Expected Right Brace got %s %n %s:%d%n",
@@ -105,10 +115,10 @@ public class IfStmtNode implements BodyStmtNode, JottTree {
             }
         }
 
-        return new IfStmtNode(ifTok, LB, condition, RB, LBT, thenBody, RBT, elseTok, LBE, elseBody, RBE);
+        return new IfStmtNode(ifTok, LB, condition, RB, LBT, thenBody, RBT,
+                              kwElse, LBE, elseBody, RBE, elseifNodes);
     }
 
-    @Override
     public String convertToJott() {
         StringBuilder sb = new StringBuilder();
         sb.append(kwIf.getToken())
@@ -118,6 +128,11 @@ public class IfStmtNode implements BodyStmtNode, JottTree {
           .append(lbr.getToken())
           .append(thenBody.convertToJott())
           .append(rbr.getToken());
+
+        for (ElseifNode e : elseifNodes) {
+            sb.append(e.convertToJott());
+        }
+
         if (kwElse != null) {
             sb.append(kwElse.getToken())
               .append(lbre.getToken())
@@ -140,6 +155,7 @@ public class IfStmtNode implements BodyStmtNode, JottTree {
         }
 
         if (cond instanceof BoolNode) {
+            return true;
         } 
         else if (cond instanceof IDNode) {
             String name = ((IDNode) cond).convertToJott();     
@@ -177,4 +193,3 @@ private static void semErr(String msg, provided.Token loc) {
     throw new RuntimeException(msg);
 }
 }
-

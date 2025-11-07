@@ -96,6 +96,7 @@ public class WhileLoopNode implements BodyStmtNode, JottTree {
         body.validateTree();                 
 
         if (cond instanceof BoolNode) {
+            return true;
         } 
         else if (cond instanceof IDNode) {
             String name = ((IDNode) cond).convertToJott();

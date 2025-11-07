@@ -9,10 +9,10 @@ public class AsmtNode implements BodyStmtNode{
 
     private final IDNode id;
     private final Token assign;  // '='
-    private final JottTree exp;  // <expr>
+    private final ExprNode exp;  // <expr>
     private final Token semi;    // ';'
 
-    public AsmtNode(IDNode id, Token assign, JottTree exp, Token semi) {
+    public AsmtNode(IDNode id, Token assign, ExprNode exp, Token semi) {
         this.id = id;
         this.assign = assign;
         this.exp = exp;
@@ -46,7 +46,7 @@ public class AsmtNode implements BodyStmtNode{
             throw new Exception();
         }
 
-        JottTree exp = ExprNode.parseExprNode(tokens);
+        ExprNode exp = ExprNode.parseExprNode(tokens);
 
         Token semi = tokens.remove(0);
         if (semi.getTokenType() != TokenType.SEMICOLON) {
@@ -64,51 +64,31 @@ public class AsmtNode implements BodyStmtNode{
     }
 
     @Override public boolean validateTree() {
-           try {
-        if (id == null) semErr("Assignment missing left-hand side identifier", assign);
-        if (exp == null) semErr("Assignment missing right-hand side expression", assign);
+   try {
+        // structure checks
+        if (id == null || !(id instanceof IDNode)) {
+            semErr("Left-hand side of assignment must be an identifier", assign);
+        }
+        if (exp == null) {
+            semErr("Assignment missing right-hand side expression", assign);
+        }
+
+        // delegate to children
         id.validateTree();
-        exp.validateTree();
-
-        String name = id.convertToJott(); // adjust if you have a better accessor
-        String lhsType = SymbolTable.getVar(name);
-        if (lhsType == null) {
-            // if you can access the ID token itself, use that for location instead of 'assign'
-            semErr("Undeclared variable " + name, assign);
-        }
-
-
-        try {
-            // String Type = ((ExprNode)exp).getType();
-            // if (!isAssignable(lhsType, rhsType)) {
-            //     semErr("Type mismatch in assignment: cannot assign " + rhsType + " to " + lhsType, assign);
-            // }
-        } catch (ClassCastException ignore) {
-            // no type info - skip
-        }
+        exp.validateTree();   // expression can be any type per your requirement
 
         return true;
     } catch (RuntimeException re) {
-        throw re;
+        throw re; // per project rule: do not return false
     } catch (Exception e) {
         throw new RuntimeException(e);
     }
 }
-
-    @SuppressWarnings("unused")
-    private static boolean isAssignable(String lhs, String rhs) {
-        if (lhs == null || rhs == null) return false;
-        if (lhs.equals(rhs)) return true;
-        if (lhs.equals("Double") && rhs.equals("Integer")) return true;
-        return false;
-    }
-
-    private static void semErr(String msg, Token loc) {
-        System.err.printf("Semantic Error: %n %s %n %s:%d%n",
-                msg,
-                (loc == null ? "<unknown>" : loc.getFilename()),
-                (loc == null ? 1 : loc.getLineNum()));
-        throw new RuntimeException(msg);
-    }
-
+private static void semErr(String msg, provided.Token loc) {
+    System.err.printf("Semantic Error:%n%s%n%s:%d%n",
+            msg,
+            (loc == null ? "<unknown>" : loc.getFilename()),
+            (loc == null ? 1 : loc.getLineNum()));
+    throw new RuntimeException(msg);
+}
 }
