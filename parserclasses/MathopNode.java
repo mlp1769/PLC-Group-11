@@ -33,5 +33,12 @@ public class MathopNode implements ExprNode{
             throw new Exception();
         }
     }
+
+    @Override
+    public String getExpressionType() throws Exception {
+        System.err.println(String.format("Syntax Error %n MATHOP THIS METHOD SHOULD NOT BE CALLED %s %n %s:%d%n",
+                    mathOp.getToken(), mathOp.getFilename(), mathOp.getLineNum()));
+        throw new Exception();
+    }
     
 }

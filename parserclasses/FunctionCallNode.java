@@ -63,5 +63,11 @@ public class FunctionCallNode implements OperandNode, BodyStmtNode{
             return this.id.validateTree() && this.params.validateTree();
         }
     }
+
+    @Override
+    public String getExpressionType() throws Exception {
+        return SymbolTable.getFunction(this.id.getID().getToken());
+    }
+    
     
 }

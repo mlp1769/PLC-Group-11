@@ -56,5 +56,9 @@ public class IDNode implements OperandNode{
             throw new Exception();
         }
     }
+     @Override
+    public String getExpressionType() throws Exception {
+        return SymbolTable.getVar(this.id.getToken());
+    }
     
 }
