@@ -57,6 +57,9 @@ public class ParamsTNode implements JottTree {
 
     @Override
     public boolean validateTree() throws Exception {
-        return expr.validateTree();
+        if(!(expr==null)){
+            return expr.validateTree();
+        }
+        return true;
     }
 }
