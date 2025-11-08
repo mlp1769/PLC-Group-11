@@ -9,3 +9,7 @@ To test the the tokenizer run JottTokenizerTester.java
 ## Parser
 
 To test the the parser run JottParserTester.java
+
+## Main
+
+To validate a Jott program, place the test file name as a commandline arguement for Jott.java.
