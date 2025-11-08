@@ -43,7 +43,7 @@ public class MathopNode implements ExprNode, OperationNode{
 
     @Override
     public Boolean isMathOp() {
-        return false;
+        return true;
     }
 
     @Override
