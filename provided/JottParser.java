@@ -7,7 +7,7 @@ package provided;
  * @author
  */
 
-import parserclasses.ProgramNode;
+import src.parserclasses.ProgramNode;
 
 import java.util.ArrayList;
 
