@@ -7,7 +7,7 @@
       "request": "launch",
       "mainClass": "parserclasses.Jott",
       "cwd": "${workspaceFolder}",
-      "args": ["${workspaceFolder}/phase3testcases/validLoop.jott"],
+      "args": ["${workspaceFolder}/phase3testcases/ifStmtReturns.jott"],
       "console": "integratedTerminal"
     }
   ]
