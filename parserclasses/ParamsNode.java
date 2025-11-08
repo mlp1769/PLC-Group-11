@@ -34,7 +34,7 @@ public class ParamsNode implements JottTree {
 
 
         //todo check if the first token is ']'
-        if(tokens.get(0).getTokenType()==TokenType.R_BRACE){
+        if(tokens.get(0).getTokenType()==TokenType.R_BRACKET){
             return new ParamsNode();
         }
 

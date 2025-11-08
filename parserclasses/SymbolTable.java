@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class SymbolTable {
     private static HashMap<String, String> functionTable = new HashMap<>();
     private static HashMap<String, HashMap<String, String>> varTable = new HashMap<>();
+    // first string name of function, second arraylist of types
     private static HashMap<String, ArrayList<String>> paramTable = new HashMap<>();
     private static ArrayList<String> copyTable;
     private static String scope = "";
@@ -64,7 +65,11 @@ public class SymbolTable {
     }
 
     public static void getParamstart(String call){
-        copyTable = new ArrayList<>(paramTable.get(call));
+        if(paramTable.get(call) == null){
+            copyTable = new ArrayList<>();
+        }else{
+            copyTable = new ArrayList<>(paramTable.get(call));
+        }
     }
 
     public static String getParam(){
