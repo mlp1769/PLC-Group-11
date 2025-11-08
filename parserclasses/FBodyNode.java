@@ -74,12 +74,23 @@ public class FBodyNode implements JottTree {
     }
 
     private boolean validReturnBody(ArrayList<BodyStmtNode> bodyNode){
-        Boolean validReturn = false;
+        boolean validReturn = false;
         for (BodyStmtNode bodyStmt : bodyNode) {
             if(bodyStmt instanceof IfStmtNode){
                 ArrayList<BodyNode> body = ((IfStmtNode)bodyStmt).getBodyNodes();
-                if(!body.get(body.size()-1).returnsVoid())
-                    for (BodyNode ifBody : body) if(!ifBody.returnsVoid()){validReturn = true;} else{validReturn = validReturnBody(ifBody.getBodyStmtNodes());} //Evil for each if all loop
+                if(!body.get(body.size()-1).returnsVoid()) {
+                    boolean validReturnTrueForAll = true;
+                    for (BodyNode ifBody : body) {
+                        if(ifBody.returnsVoid()){
+                            if(!validReturnBody(ifBody.getBodyStmtNodes())){
+                                validReturnTrueForAll = false;
+                            }
+                        }
+                    }
+                    if(validReturnTrueForAll){
+                        return true;
+                    }
+                }
             }
         }
         return validReturn;
