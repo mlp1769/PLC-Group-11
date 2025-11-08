@@ -108,7 +108,7 @@ public class SymbolTable {
         Token print = new Token("print", null, 0, null);
         Token concat = new Token("concat", null, 0, null);
         Token concat2 = new Token("concat2", null, 0, null);
-        Token lenth = new Token("lenth", null, 0, null);
+        Token lenth = new Token("length", null, 0, null);
         try {
             SymbolTable.addFunction(print, "Void");
             SymbolTable.changeScope(print);
