@@ -3,6 +3,8 @@ package parserclasses;
 import provided.JottTree;
 import provided.Token;
 import provided.TokenType;
+
+import java.net.IDN;
 import java.util.ArrayList;
 
 public class AsmtNode implements BodyStmtNode{
@@ -74,13 +76,16 @@ public class AsmtNode implements BodyStmtNode{
             }
             id.validateTree();
             exp.validateTree();
+            if (SymbolTable.getVar(id.getID().getToken()).equals(exp.getExpressionType())) {
+                return true;
+            }
+            else {
+                semErr("Assignement type not matching", assign);
+            }
             return true;
-        } catch (RuntimeException re)
-        {
-            throw re;
-        } catch (Exception e) 
-        {
-            throw new RuntimeException(e);
+        } 
+        catch (Exception e) {
+            return false;
         }
     }
     private static void semErr(String msg, provided.Token loc)
