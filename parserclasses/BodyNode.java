@@ -78,11 +78,12 @@ public class BodyNode implements JottTree{
     @Override
     public boolean validateTree() throws Exception{
         for (BodyStmtNode stmt : this.body) {
-            if(!stmt.validateTree()){
-              return false;
-            }
+            stmt.validateTree();
         }
-        return this.rtn.validateTree();
+        if(this.rtn!=null){
+            return this.rtn.validateTree();
+        }
+        return true;
     }
     
 }
