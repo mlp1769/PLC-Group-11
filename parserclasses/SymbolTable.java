@@ -80,6 +80,14 @@ public class SymbolTable {
         }
     }
 
+    public static ArrayList<String> getCopyTable() {
+        return copyTable;
+    }
+
+    public static void setCopyTabe(ArrayList<String> copyTable2){
+        copyTable = copyTable2;
+    }
+
     public static void changeScope(Token name) throws Exception{
         if(!functionTable.containsKey(name.getToken())){
             System.err.println(String.format("Semantic Error: %n Uninitialized function %s %n %s:%d%n",
