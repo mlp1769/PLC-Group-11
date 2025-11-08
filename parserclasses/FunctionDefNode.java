@@ -103,6 +103,7 @@ public class FunctionDefNode implements JottTree {
 
     @Override
     public boolean validateTree() throws Exception{
+        SymbolTable.changeScope(this.idToken.getID());
         try {
             return idToken.validateTree() && params.validateTree() && returnType.validateTree() && body.validateTree();
         } catch (ExceptionInInitializerError e) {

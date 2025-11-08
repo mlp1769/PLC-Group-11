@@ -29,14 +29,14 @@ public class VarDecNode implements JottTree {
 
         //todo check if first token is ';'
         if(!(tokens.get(0).getTokenType()== TokenType.SEMICOLON)){
-            System.err.println("Syntax Error\nMissing semicolon\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
+            System.err.println("Syntax Error:\nMissing semicolon\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
             throw new Exception();
         }
         tokens.remove(0);
 
         //todo check if first letter of id is capital. If not, error
         if(Character.isUpperCase(idToPass.getID().getToken().charAt(0))){
-            System.err.println("Semantic Error\nAn 'id' must start with a capital letter\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
+            System.err.println("Semantic Error:\nAn 'id' must start with a capital letter\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
             throw new Exception();
         }
 

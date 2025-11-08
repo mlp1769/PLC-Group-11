@@ -32,6 +32,12 @@ public class ReturnStatementNode implements JottTree {
         }
 
         String returnType = SymbolTable.getFunction(SymbolTable.getScope());
+        if(returnType.equals("Void") && expressionNode != null) {
+            System.err.println("Semantic Error:");
+            System.err.println("Expected no return statement in void function.");
+            System.err.println(returnToken.getFilename()+":"+returnToken.getLineNum());
+            throw new Exception();
+        }
 
         if(!expressionNode.getExpressionType().equals(returnType)) {
             System.err.println("Semantic Error:");
@@ -57,6 +63,9 @@ public class ReturnStatementNode implements JottTree {
 
     @Override
     public boolean validateTree() throws Exception{
+        if(expressionNode == null){
+            return true;
+        }
         return expressionNode.validateTree();
     }
 }

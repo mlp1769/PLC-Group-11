@@ -25,14 +25,14 @@ public class ElseifNode implements JottTree {
 
         //todo check if first token is 'elseif'
         if(!(tokens.get(0).getToken().toLowerCase().equals("elseif"))){
-            System.err.println("Syntax Error\nMissing 'elseif' keyword in else-statement\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
+            System.err.println("Syntax Error:\nMissing 'elseif' keyword in else-statement\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
             throw new Exception();
         }
         tokens.remove(0);
 
         //todo check if first token is '['
         if(!(tokens.get(0).getTokenType()==TokenType.L_BRACKET)){
-            System.err.println("Syntax Error\nMissing left brace in else-statement\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
+            System.err.println("Syntax Error:\nMissing left brace in else-statement\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
             throw new Exception();
         }
         tokens.remove(0);
@@ -42,7 +42,7 @@ public class ElseifNode implements JottTree {
 
         //todo check if first token is ']'
         if(!(tokens.get(0).getTokenType()==TokenType.R_BRACKET)){
-            System.err.println("Syntax Error\nMissing right brace in else-statement\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
+            System.err.println("Syntax Error:\nMissing right brace in else-statement\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
             throw new Exception();
         }
         tokens.remove(0);
@@ -53,7 +53,7 @@ public class ElseifNode implements JottTree {
 
         //todo check if first token is '{'
         if(!(tokens.get(0).getTokenType()==TokenType.L_BRACE)){
-            System.err.println("Syntax Error\nMissing left bracket in else-statement\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
+            System.err.println("Syntax Error:\nMissing left bracket in else-statement\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
             throw new Exception();
         }
         tokens.remove(0);
@@ -63,7 +63,7 @@ public class ElseifNode implements JottTree {
 
         //todo check if first token is '}'
         if(!(tokens.get(0).getTokenType()==TokenType.R_BRACE)){
-            System.err.println("Syntax Error\nMissing right bracket in else-statement\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
+            System.err.println("Syntax Error:\nMissing right bracket in else-statement\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
             throw new Exception();
         }
         tokens.remove(0);

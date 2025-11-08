@@ -28,7 +28,7 @@ public class BodyNode implements JottTree{
                 if(stm instanceof FunctionCallNode){
                     Token semi = tokens.remove(0);
                     if(semi.getTokenType() != TokenType.SEMICOLON){
-                        System.err.printf("Syntax Error %n Expected ; got '%s' %n %s:%d%n",
+                        System.err.printf("Syntax Error: %n Expected ; got '%s' %n %s:%d%n",
                             semi.getToken(), semi.getFilename(), semi.getLineNum());
                         throw new Exception();
                     }
@@ -78,11 +78,12 @@ public class BodyNode implements JottTree{
     @Override
     public boolean validateTree() throws Exception{
         for (BodyStmtNode stmt : this.body) {
-            if(!stmt.validateTree()){
-              return false;
-            }
+            stmt.validateTree();
         }
-        return this.rtn.validateTree();
+        if(this.rtn!=null){
+            return this.rtn.validateTree();
+        }
+        return true;
     }
     
 }

@@ -27,8 +27,14 @@ public class IDNode implements OperandNode{
     @Override
     public boolean validateTree() throws Exception{
         String name = this.id.getToken();
-        if(Character.isLowerCase(name.charAt(0))&& SymbolTable.getVar(name) == null && SymbolTable.getFunction(name) == null){
-            System.err.println(String.format("Semantic Error: Var %s is not in symbol table", name));
+        if(!Character.isLowerCase(name.charAt(0))){
+
+            System.err.printf("Semantic Error: %n %s id needs to start with a lowercase letter %n %s:%d%n", id.getToken(), id.getFilename(), id.getLineNum());
+            throw new Exception();
+        }
+
+        if(SymbolTable.getVar(name) == null && SymbolTable.getFunction(name) == null){
+            System.err.println(String.format("Semantic Error: %s is not defined", name));
             throw new Exception();
         }
         return true;
@@ -51,7 +57,7 @@ public class IDNode implements OperandNode{
             return new IDNode(currToken);
         }
         else{
-            System.err.printf("Syntax Error %n Expected ID got %s %n %s:%d%n",
+            System.err.printf("Syntax Error: %n Expected ID got %s %n %s:%d%n",
                     currToken.getToken(), currToken.getFilename(), currToken.getLineNum());
             throw new Exception();
         }

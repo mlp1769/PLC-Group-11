@@ -31,16 +31,34 @@ public class ParamsNode implements JottTree {
         ExprNode exprToPass = null;
         ArrayList<ParamsTNode> paramsToPass = new ArrayList<>();
 
-
+        //duplicate paramsList; take head from paramsTable
+        String paramsHead = SymbolTable.getParam();
 
         //todo check if the first token is ']'
-        if(tokens.get(0).getTokenType()==TokenType.R_BRACE){
+        if(tokens.get(0).getTokenType()==TokenType.R_BRACKET && paramsHead==null){
             return new ParamsNode();
         }
 
+        //check if paramsHead == null; if it is, throw error
+        if(tokens.get(0).getTokenType()==TokenType.R_BRACKET&&paramsHead!=null){
+            System.err.println("Semantic Error:\nThe number of provided params doesn't match the number of expected params\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
+            throw new Exception();
+        }
+
+        //check if paramsHead == null; if it is, throw error
+        if(paramsHead==null){
+            System.err.println("Semantic Error:\nThe number of provided params doesn't match the number of expected params\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
+            throw new Exception();
+        }
 
         //todo else parse expr then parse params_t
         exprToPass = ExprNode.parseExprNode(tokens);
+
+        //check if paramsHead == the type of expr
+        if(!(exprToPass.getExpressionType().equals(paramsHead) || paramsHead.equals("All"))) {
+            System.err.println("Semantic Error:\nParam type does not match function param type.\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
+            throw new Exception();
+        }
 
         //todo check if the first char in the token is ',' to see if its params_t
         boolean keepCheckingForParamsT = true;
@@ -53,23 +71,12 @@ public class ParamsNode implements JottTree {
                 keepCheckingForParamsT=false;
             }
         }
-
-
-        //duplicate paramsList; take head from paramsTable
-        String paramsHead = SymbolTable.getParamstart();
-
-        //check if paramsHead == null; if it is, throw error
-        if(paramsHead==null){
-            System.err.println("Semantic Error\nThe number of provided params doesn't match the number of expected params\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
+        if(SymbolTable.getCopyTable().size()!=0){
+            System.err.println("Semantic Error:\nThe number of provided params doesn't match the number of expected params\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
             throw new Exception();
         }
 
 
-        //check if paramsHead == the type of expr
-        if(!(exprToPass.getExpressionType().equals(paramsHead) || paramsHead.equals("All"))) {
-            System.err.println("Semantic Error:\nParam type does not match function param type.\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
-            throw new Exception();
-        }
 
 
         return new ParamsNode(exprToPass, paramsToPass);
@@ -94,9 +101,11 @@ public class ParamsNode implements JottTree {
 
     @Override
     public boolean validateTree() throws Exception{
-        if(expr.validateTree()){
-            for(int i=0; i<paramsT.size(); i++){
-                paramsT.get(i).validateTree();
+        if(!(expr==null)){
+            if(expr.validateTree()){
+                for(int i=0; i<paramsT.size(); i++){
+                    paramsT.get(i).validateTree();
+                }
             }
         }
         return true;

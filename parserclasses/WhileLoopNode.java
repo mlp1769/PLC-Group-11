@@ -30,7 +30,7 @@ public class WhileLoopNode implements BodyStmtNode, JottTree {
         // While
         Token whileTok = tokens.remove(0);
         if (whileTok.getTokenType() != TokenType.ID_KEYWORD || !"While".equals(whileTok.getToken())) {
-            System.err.printf("Syntax Error %n Expected While got %s %n %s:%d%n",
+            System.err.printf("Syntax Error: %n Expected While got %s %n %s:%d%n",
                     whileTok.getToken(), whileTok.getFilename(), whileTok.getLineNum());
             throw new Exception();
         }
@@ -38,7 +38,7 @@ public class WhileLoopNode implements BodyStmtNode, JottTree {
         // '['
         Token LB = tokens.remove(0);
         if (LB.getTokenType() != TokenType.L_BRACKET) {
-            System.err.printf("Syntax Error %n Expected Left Bracket got %s %n %s:%d%n",
+            System.err.printf("Syntax Error: %n Expected Left Bracket got %s %n %s:%d%n",
                     LB.getToken(), LB.getFilename(), LB.getLineNum());
             throw new Exception();
         }
@@ -49,7 +49,7 @@ public class WhileLoopNode implements BodyStmtNode, JottTree {
         // ']'
         Token RB = tokens.remove(0);
         if (RB.getTokenType() != TokenType.R_BRACKET) {
-            System.err.printf("Syntax Error %n Expected Right Bracket got %s %n %s:%d%n",
+            System.err.printf("Syntax Error: %n Expected Right Bracket got %s %n %s:%d%n",
                     RB.getToken(), RB.getFilename(), RB.getLineNum());
             throw new Exception();
         }
@@ -57,7 +57,7 @@ public class WhileLoopNode implements BodyStmtNode, JottTree {
         // '{'
         Token lbr = tokens.remove(0);
         if (lbr.getTokenType() != TokenType.L_BRACE) {
-            System.err.printf("Syntax Error %n Expected Left Brace got %s %n %s:%d%n",
+            System.err.printf("Syntax Error: %n Expected Left Brace got %s %n %s:%d%n",
                     lbr.getToken(), lbr.getFilename(), lbr.getLineNum());
             throw new Exception();
         }
@@ -68,7 +68,7 @@ public class WhileLoopNode implements BodyStmtNode, JottTree {
         // '}'
         Token rbr = tokens.remove(0);
         if (rbr.getTokenType() != TokenType.R_BRACE) {
-            System.err.printf("Syntax Error %n Expected Right Brace got %s %n %s:%d%n",
+            System.err.printf("Syntax Error: %n Expected Right Brace got %s %n %s:%d%n",
                     rbr.getToken(), rbr.getFilename(), rbr.getLineNum());
             throw new Exception();
         }

@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run Jott: ifStmtReturns.jott",
+      "type": "java",
+      "request": "launch",
+      "mainClass": "parserclasses.Jott",
+      "cwd": "${workspaceFolder}",
+      "args": ["${workspaceFolder}/phase3testcases/ifStmtReturns.jott"],
+      "console": "integratedTerminal"
+    }
+  ]
+}

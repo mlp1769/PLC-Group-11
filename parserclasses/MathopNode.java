@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import provided.Token;
 import provided.TokenType;
 
-public class MathopNode implements ExprNode{
+public class MathopNode implements ExprNode, OperationNode{
 
     private Token mathOp;
 
@@ -28,7 +28,7 @@ public class MathopNode implements ExprNode{
             return new MathopNode(currToken);
         }
         else{
-            System.err.printf("Syntax Error %n Expected Math OP got %s %n %s:%d%n",
+            System.err.printf("Syntax Error: %n Expected Math OP got %s %n %s:%d%n",
                     currToken.getToken(), currToken.getFilename(), currToken.getLineNum());
             throw new Exception();
         }
@@ -36,9 +36,18 @@ public class MathopNode implements ExprNode{
 
     @Override
     public String getExpressionType() throws Exception {
-        System.err.println(String.format("Syntax Error %n MATHOP THIS METHOD SHOULD NOT BE CALLED %s %n %s:%d%n",
+        System.err.println(String.format("Syntax Error: %n MATHOP THIS METHOD SHOULD NOT BE CALLED %s %n %s:%d%n",
                     mathOp.getToken(), mathOp.getFilename(), mathOp.getLineNum()));
         throw new Exception();
     }
-    
+
+    @Override
+    public Boolean isMathOp() {
+        return true;
+    }
+
+    @Override
+    public Token getOperatorToken() {
+        return this.mathOp;
+    }
 }

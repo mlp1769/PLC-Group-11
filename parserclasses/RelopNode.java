@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import javax.sound.midi.SysexMessage;
 
-public class RelopNode implements ExprNode {
+public class RelopNode implements ExprNode, OperationNode {
     private Token relOp;
 
     public RelopNode(Token relOp){
@@ -30,7 +30,7 @@ public class RelopNode implements ExprNode {
             return new RelopNode(currToken);
         }
         else{
-            System.err.printf("Syntax Error %n Real OP String got %s %n %s:%d%n",
+            System.err.printf("Syntax Error: %n Real OP String got %s %n %s:%d%n",
                     currToken.getToken(), currToken.getFilename(), currToken.getLineNum());
             throw new Exception();
         }
@@ -39,9 +39,18 @@ public class RelopNode implements ExprNode {
 
     @Override
     public String getExpressionType() throws Exception {
-        System.err.println(String.format("Syntax Error %n RELOP THIS METHOD SHOULD NOT BE CALLED %s %n %s:%d%n",
+        System.err.println(String.format("Syntax Error: %n RELOP THIS METHOD SHOULD NOT BE CALLED %s %n %s:%d%n",
                     relOp.getToken(), relOp.getFilename(), relOp.getLineNum()));
         throw new Exception();
     }
-    
+
+    @Override
+    public Boolean isMathOp() {
+        return false;
+    }
+
+    @Override
+    public Token getOperatorToken() {
+        return this.relOp;
+    }
 }

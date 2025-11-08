@@ -20,7 +20,7 @@ public class ParamsTNode implements JottTree {
 
         //todo check if first token is ','
         if(tokens.get(0).getTokenType() != TokenType.COMMA){
-            System.err.println("Syntax Error\nMissing comma before a parameter\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
+            System.err.println("Syntax Error:\nMissing comma before a parameter\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
             throw new Exception();
         }
         tokens.remove(0);
@@ -32,7 +32,7 @@ public class ParamsTNode implements JottTree {
 
         //check if paramsHead == null; if it is, throw error
         if(paramsHead==null){
-            System.err.println("Semantic Error\nThe number of provided params doesn't match the number of expected params\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
+            System.err.println("Semantic Error:\nThe number of provided params doesn't match the number of expected params\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
             throw new Exception();
         }
 
@@ -57,6 +57,9 @@ public class ParamsTNode implements JottTree {
 
     @Override
     public boolean validateTree() throws Exception {
-        return expr.validateTree();
+        if(!(expr==null)){
+            return expr.validateTree();
+        }
+        return true;
     }
 }

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class SymbolTable {
     private static HashMap<String, String> functionTable = new HashMap<>();
     private static HashMap<String, HashMap<String, String>> varTable = new HashMap<>();
+    // first string name of function, second arraylist of types
     private static HashMap<String, ArrayList<String>> paramTable = new HashMap<>();
     private static ArrayList<String> copyTable;
     private static String scope = "";
@@ -63,9 +64,12 @@ public class SymbolTable {
         paramTable.get(scope).add(type);
     }
 
-    public static String getParamstart(){
-        copyTable = new ArrayList<>(paramTable.get(scope));
-        return copyTable.remove(0);
+    public static void getParamstart(String call){
+        if(paramTable.get(call) == null){
+            copyTable = new ArrayList<>();
+        }else{
+            copyTable = new ArrayList<>(paramTable.get(call));
+        }
     }
 
     public static String getParam(){
@@ -74,6 +78,14 @@ public class SymbolTable {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public static ArrayList<String> getCopyTable() {
+        return copyTable;
+    }
+
+    public static void setCopyTabe(ArrayList<String> copyTable2){
+        copyTable = copyTable2;
     }
 
     public static void changeScope(Token name) throws Exception{
@@ -94,14 +106,27 @@ public class SymbolTable {
         varTable = new HashMap<>();
         paramTable = new HashMap<>();
         Token print = new Token("print", null, 0, null);
+        Token concat = new Token("concat", null, 0, null);
+        Token concat2 = new Token("concat2", null, 0, null);
+        Token lenth = new Token("length", null, 0, null);
         try {
             SymbolTable.addFunction(print, "Void");
             SymbolTable.changeScope(print);
             SymbolTable.addVar(print, "All");
+            SymbolTable.addParam("All");
+            SymbolTable.addFunction(concat, "String");
+            SymbolTable.changeScope(concat);
+            SymbolTable.addVar(concat, "String");
+            SymbolTable.addVar(concat2, "String");
+            SymbolTable.addParam("String");
+            SymbolTable.addParam("String");
+            SymbolTable.addFunction(lenth, "Integer");
+            SymbolTable.changeScope(lenth);
+            SymbolTable.addVar(lenth, "String");
+            SymbolTable.addParam("String");
         } catch (Exception e) {
             //Should never error 
         }
-        SymbolTable.addParam("All");
         scope = "";
         
     }
