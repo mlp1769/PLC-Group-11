@@ -28,7 +28,7 @@ public class MathopNode implements ExprNode, OperationNode{
             return new MathopNode(currToken);
         }
         else{
-            System.err.printf("Syntax Error %n Expected Math OP got %s %n %s:%d%n",
+            System.err.printf("Syntax Error: %n Expected Math OP got %s %n %s:%d%n",
                     currToken.getToken(), currToken.getFilename(), currToken.getLineNum());
             throw new Exception();
         }
@@ -36,7 +36,7 @@ public class MathopNode implements ExprNode, OperationNode{
 
     @Override
     public String getExpressionType() throws Exception {
-        System.err.println(String.format("Syntax Error %n MATHOP THIS METHOD SHOULD NOT BE CALLED %s %n %s:%d%n",
+        System.err.println(String.format("Syntax Error: %n MATHOP THIS METHOD SHOULD NOT BE CALLED %s %n %s:%d%n",
                     mathOp.getToken(), mathOp.getFilename(), mathOp.getLineNum()));
         throw new Exception();
     }

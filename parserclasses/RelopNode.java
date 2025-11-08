@@ -30,7 +30,7 @@ public class RelopNode implements ExprNode, OperationNode {
             return new RelopNode(currToken);
         }
         else{
-            System.err.printf("Syntax Error %n Real OP String got %s %n %s:%d%n",
+            System.err.printf("Syntax Error: %n Real OP String got %s %n %s:%d%n",
                     currToken.getToken(), currToken.getFilename(), currToken.getLineNum());
             throw new Exception();
         }
@@ -39,7 +39,7 @@ public class RelopNode implements ExprNode, OperationNode {
 
     @Override
     public String getExpressionType() throws Exception {
-        System.err.println(String.format("Syntax Error %n RELOP THIS METHOD SHOULD NOT BE CALLED %s %n %s:%d%n",
+        System.err.println(String.format("Syntax Error: %n RELOP THIS METHOD SHOULD NOT BE CALLED %s %n %s:%d%n",
                     relOp.getToken(), relOp.getFilename(), relOp.getLineNum()));
         throw new Exception();
     }

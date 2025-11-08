@@ -34,7 +34,7 @@ public class IDNode implements OperandNode{
         }
 
         if(SymbolTable.getVar(name) == null && SymbolTable.getFunction(name) == null){
-            System.err.println(String.format("Semantic Error: %s is not in symbol table", name));
+            System.err.println(String.format("Semantic Error: %s is not defined", name));
             throw new Exception();
         }
         return true;
@@ -57,7 +57,7 @@ public class IDNode implements OperandNode{
             return new IDNode(currToken);
         }
         else{
-            System.err.printf("Syntax Error %n Expected ID got %s %n %s:%d%n",
+            System.err.printf("Syntax Error: %n Expected ID got %s %n %s:%d%n",
                     currToken.getToken(), currToken.getFilename(), currToken.getLineNum());
             throw new Exception();
         }

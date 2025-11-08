@@ -41,13 +41,13 @@ public class ParamsNode implements JottTree {
 
         //check if paramsHead == null; if it is, throw error
         if(tokens.get(0).getTokenType()==TokenType.R_BRACKET&&paramsHead!=null){
-            System.err.println("Semantic Error\nThe number of provided params doesn't match the number of expected params\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
+            System.err.println("Semantic Error:\nThe number of provided params doesn't match the number of expected params\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
             throw new Exception();
         }
 
         //check if paramsHead == null; if it is, throw error
         if(paramsHead==null){
-            System.err.println("Semantic Error\nThe number of provided params doesn't match the number of expected params\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
+            System.err.println("Semantic Error:\nThe number of provided params doesn't match the number of expected params\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
             throw new Exception();
         }
 
@@ -72,7 +72,7 @@ public class ParamsNode implements JottTree {
             }
         }
         if(SymbolTable.getCopyTable().size()!=0){
-            System.err.println("Semantic Error\nThe number of provided params doesn't match the number of expected params\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
+            System.err.println("Semantic Error:\nThe number of provided params doesn't match the number of expected params\n"+tokens.get(0).getFilename()+":"+tokens.get(0).getLineNum());
             throw new Exception();
         }
 

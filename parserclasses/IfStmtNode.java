@@ -35,7 +35,7 @@ public class IfStmtNode implements BodyStmtNode, JottTree {
     public static IfStmtNode parseIfStmtNode(ArrayList<Token> tokens) throws Exception {
         Token ifTok = tokens.remove(0);
         if (ifTok.getTokenType() != TokenType.ID_KEYWORD || !"If".equals(ifTok.getToken())) {
-            System.err.printf("Syntax Error %n Expected If got %s %n %s:%d%n",
+            System.err.printf("Syntax Error: %n Expected If got %s %n %s:%d%n",
                     ifTok.getToken(), ifTok.getFilename(), ifTok.getLineNum());
             throw new Exception();
         }
@@ -43,7 +43,7 @@ public class IfStmtNode implements BodyStmtNode, JottTree {
         // '['
         Token LB = tokens.remove(0);
         if (LB.getTokenType() != TokenType.L_BRACKET) {
-            System.err.printf("Syntax Error %n Expected Left Bracket got %s %n %s:%d%n",
+            System.err.printf("Syntax Error: %n Expected Left Bracket got %s %n %s:%d%n",
                     LB.getToken(), LB.getFilename(), LB.getLineNum());
             throw new Exception();
         }
@@ -73,7 +73,7 @@ public class IfStmtNode implements BodyStmtNode, JottTree {
         // '}'
         Token RBT = tokens.remove(0);
         if (RBT.getTokenType() != TokenType.R_BRACE) {
-            System.err.printf("Syntax Error %n Expected Right Brace got %s %n %s:%d%n",
+            System.err.printf("Syntax Error: %n Expected Right Brace got %s %n %s:%d%n",
                     RBT.getToken(), RBT.getFilename(), RBT.getLineNum());
             throw new Exception();
         }
