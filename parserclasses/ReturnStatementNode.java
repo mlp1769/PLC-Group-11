@@ -57,6 +57,9 @@ public class ReturnStatementNode implements JottTree {
 
     @Override
     public boolean validateTree() throws Exception{
+        if(expressionNode == null){
+            return true;
+        }
         return expressionNode.validateTree();
     }
 }
