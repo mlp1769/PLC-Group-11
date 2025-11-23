@@ -58,6 +58,11 @@ public class ProgramNode implements JottTree {
         return true;
     }
 
+    @Override
+    public Object exicute() throws Exception {
+        return null;
+    }
+
     public static ProgramNode parseProgramNodeProgram(ArrayList<Token> tokens) throws Exception {
         SymbolTable.clear();
         ArrayList<FunctionDefNode> functionDefs = new ArrayList<>();

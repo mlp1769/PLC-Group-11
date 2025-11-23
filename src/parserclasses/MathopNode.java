@@ -22,6 +22,11 @@ public class MathopNode implements ExprNode, OperationNode{
         return true;
     }
 
+    @Override
+    public Object exicute() throws Exception {
+        return null;
+    }
+
     public static MathopNode parseMathOpNode(ArrayList<Token> tokens) throws Exception{
         Token currToken = tokens.remove(0);
         if(currToken.getTokenType() == TokenType.MATH_OP){

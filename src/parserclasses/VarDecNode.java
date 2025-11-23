@@ -62,8 +62,10 @@ public class VarDecNode implements JottTree {
         return (type.validateTree() && id.validateTree());
     }
 
-
-
+    @Override
+    public Object exicute() throws Exception {
+        return null;
+    }
 
 
 }

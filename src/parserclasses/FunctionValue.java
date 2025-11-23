@@ -3,7 +3,10 @@ package src.parserclasses;
 public class FunctionValue {
     private String type;
     private FBodyNode body;
-    public FunctionValue() {}
+    public FunctionValue() {
+        this.type = null;
+        this.body = null;
+    }
 
     public String getType() {
         return type;

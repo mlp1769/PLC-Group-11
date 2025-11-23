@@ -62,7 +62,11 @@ public class SymbolTable {
     }
     
     public static String getVar(String name){
-        return (varTable.get(scope)).get(name).getType();
+        try{
+            return varTable.get(scope).get(name).getType();
+        } catch (Exception e){
+            return null;
+        }
     }
 
     public static void setValue(String name, Object value){varTable.get(scope).get(name).setValue(value);}
@@ -135,9 +139,8 @@ public class SymbolTable {
             SymbolTable.addParam(print, "All");
             SymbolTable.addFunction(concat);
             SymbolTable.changeScope(concat);
-            SymbolTable.addVar(concat2, "String");
             SymbolTable.addParam(concat,"String");
-            SymbolTable.addParam(concat,"String");
+            SymbolTable.addParam(concat2,"String");
             SymbolTable.addFunction(lenth);
             SymbolTable.changeScope(lenth);
             SymbolTable.updateReturnType("Integer");

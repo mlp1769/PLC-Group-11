@@ -1,10 +1,11 @@
 package src.parserclasses;
 
 public class VarValue {
-    private String type;
+    private final String type;
     private Object value;
     public VarValue(String type) {
         this.type = type;
+        this.value = null;
     }
 
     public void setValue(Object value) {

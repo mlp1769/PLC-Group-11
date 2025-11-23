@@ -34,5 +34,10 @@ public class TypeNode implements JottTree {
     public boolean validateTree() {
         return true;
     }
-    
+
+    @Override
+    public Object exicute() throws Exception {
+        return null;
+    }
+
 }

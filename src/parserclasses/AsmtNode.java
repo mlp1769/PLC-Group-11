@@ -86,6 +86,12 @@ public class AsmtNode implements BodyStmtNode{
             return false;
         }
     }
+
+    @Override
+    public Object exicute() throws Exception {
+        return null;
+    }
+
     private static void semErr(String msg, provided.Token loc)
     {
         System.err.printf("Semantic Error:%n%s%n%s:%d%n",

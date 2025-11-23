@@ -68,14 +68,10 @@ public class ElseNode implements JottTree {
         return body.validateTree();
     }
 
-
-
-
-
-
-
-
-
+    @Override
+    public Object exicute() throws Exception {
+        return null;
+    }
 
 
 }

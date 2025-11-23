@@ -71,6 +71,11 @@ public class FunctionCallNode implements OperandNode, BodyStmtNode{
     }
 
     @Override
+    public Object exicute() throws Exception {
+        return null;
+    }
+
+    @Override
     public String getExpressionType() throws Exception {
         return SymbolTable.getFunction(this.id.getID().getToken());
     }

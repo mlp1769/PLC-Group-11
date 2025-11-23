@@ -169,7 +169,12 @@ public class IfStmtNode implements BodyStmtNode, JottTree {
     }
 }
 
-private static void semErr(String msg, provided.Token loc) {
+    @Override
+    public Object exicute() throws Exception {
+        return null;
+    }
+
+    private static void semErr(String msg, provided.Token loc) {
     System.err.printf("Semantic Error:%n%s%n%s:%d%n",
             msg,
             (loc == null ? "<unknown>" : loc.getFilename()),

@@ -122,6 +122,11 @@ public class BinaryExprNode implements ExprNode{
     }
 
     @Override
+    public Object exicute() throws Exception {
+        return null;
+    }
+
+    @Override
     public String getExpressionType() throws Exception {
         if(operator.isMathOp()){
             return this.operandOne.getExpressionType().equals(this.operandTwo.getExpressionType())? this.operandOne.getExpressionType() : "no";

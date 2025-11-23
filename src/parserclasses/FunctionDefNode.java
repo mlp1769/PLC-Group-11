@@ -113,6 +113,11 @@ public class FunctionDefNode implements JottTree {
         }
     }
 
+    @Override
+    public Object exicute() throws Exception {
+        return null;
+    }
+
     public Token getDefToken() {
         return defToken;
     }
