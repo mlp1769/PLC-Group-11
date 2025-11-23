@@ -5,26 +5,27 @@ import java.util.HashMap;
 import provided.Token;
 import java.util.ArrayList;
 
+
 public class SymbolTable {
-    private static HashMap<String, String> functionTable = new HashMap<>();
-    private static HashMap<String, HashMap<String, String>> varTable = new HashMap<>();
+    private static HashMap<String, FunctionValue> functionTable = new HashMap<>();
+    private static HashMap<String, HashMap<String, VarValue>> varTable = new HashMap<>();
     // first string name of function, second arraylist of types
-    private static HashMap<String, ArrayList<String>> paramTable = new HashMap<>();
-    private static ArrayList<String> copyTable;
+    private static HashMap<String, ArrayList<String[]>> paramTable = new HashMap<>();
+    private static ArrayList<String[]> copyTable;
     private static String scope = "";
 
     public SymbolTable(){}
 
-    public static void addFunction(Token name, String type) throws Exception{
+    public static void addFunction(Token name) throws Exception{
         if(functionTable.containsKey(name.getToken())){
             System.err.println(String.format("Semantic Error: %n Duplicate function %s %n %s:%d%n",
                     name.getToken(), name.getFilename(), name.getLineNum()));
             throw new Exception();
         }
 
-        functionTable.put(name.getToken(), type);
-        varTable.put(name.getToken(), new HashMap<String, String>());
-        paramTable.put(name.getToken(), new ArrayList<String>());
+        functionTable.put(name.getToken(), new FunctionValue());
+        varTable.put(name.getToken(), new HashMap<String, VarValue>());
+        paramTable.put(name.getToken(), new ArrayList<String[]>());
 
         if(functionTable.containsKey("Def") || functionTable.containsKey("Return") ||
         functionTable.containsKey("If") || functionTable.containsKey("Else") ||
@@ -45,23 +46,33 @@ public class SymbolTable {
                     name.getToken(), name.getFilename(), name.getLineNum()));
             throw new Exception();
         }
-        varTable.get(scope).put(name.getToken(), type);
+        varTable.get(scope).put(name.getToken(), new VarValue(type));
     }
 
+    public static void addFunctionBody(FBodyNode body){functionTable.get(scope).setBody(body);}
+
+    public static FBodyNode getFunctionBody(FBodyNode body){return functionTable.get(scope).getBody();}
+
     public static void updateReturnType(String type){
-        functionTable.put(scope, type);
+        functionTable.get(scope).setType(type);
     }
 
     public static String getFunction(String name){
-        return functionTable.get(name);
+        return functionTable.get(name).getType();
     }
     
     public static String getVar(String name){
-        return (varTable.get(scope)).get(name);
+        return (varTable.get(scope)).get(name).getType();
     }
 
-    public static void addParam(String type){
-        paramTable.get(scope).add(type);
+    public static void setValue(String name, Object value){varTable.get(scope).get(name).setValue(value);}
+
+    public static Object getValue(String name){return varTable.get(scope).get(name).getValue();}
+
+    public static void addParam(Token name, String type) throws  Exception{
+        SymbolTable.addVar(name,type);
+        String[] binding = {name.getToken(), type};
+        paramTable.get(scope).add(binding);
     }
 
     public static void getParamstart(String call){
@@ -74,17 +85,25 @@ public class SymbolTable {
 
     public static String getParam(){
         try {
-            return copyTable.remove(0);
+            return copyTable.remove(0)[1];
         } catch (Exception e) {
             return null;
         }
     }
 
-    public static ArrayList<String> getCopyTable() {
+    public static String getParamName(){
+        try {
+            return copyTable.remove(0)[0];
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static ArrayList<String[]> getCopyTable() {
         return copyTable;
     }
 
-    public static void setCopyTabe(ArrayList<String> copyTable2){
+    public static void setCopyTable(ArrayList<String[]> copyTable2){
         copyTable = copyTable2;
     }
 
@@ -110,20 +129,19 @@ public class SymbolTable {
         Token concat2 = new Token("concat2", null, 0, null);
         Token lenth = new Token("length", null, 0, null);
         try {
-            SymbolTable.addFunction(print, "Void");
+            SymbolTable.addFunction(print);
             SymbolTable.changeScope(print);
-            SymbolTable.addVar(print, "All");
-            SymbolTable.addParam("All");
-            SymbolTable.addFunction(concat, "String");
+            SymbolTable.updateReturnType("Void");
+            SymbolTable.addParam(print, "All");
+            SymbolTable.addFunction(concat);
             SymbolTable.changeScope(concat);
-            SymbolTable.addVar(concat, "String");
             SymbolTable.addVar(concat2, "String");
-            SymbolTable.addParam("String");
-            SymbolTable.addParam("String");
-            SymbolTable.addFunction(lenth, "Integer");
+            SymbolTable.addParam(concat,"String");
+            SymbolTable.addParam(concat,"String");
+            SymbolTable.addFunction(lenth);
             SymbolTable.changeScope(lenth);
-            SymbolTable.addVar(lenth, "String");
-            SymbolTable.addParam("String");
+            SymbolTable.updateReturnType("Integer");
+            SymbolTable.addParam(lenth, "String");
         } catch (Exception e) {
             //Should never error 
         }

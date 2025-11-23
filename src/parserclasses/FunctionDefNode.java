@@ -34,7 +34,7 @@ public class FunctionDefNode implements JottTree {
 
         IDNode id = IDNode.parseIDNode(tokens);
 
-        SymbolTable.addFunction(id.getID(), "missing");
+        SymbolTable.addFunction(id.getID());
 
         SymbolTable.changeScope(id.getID());
 
