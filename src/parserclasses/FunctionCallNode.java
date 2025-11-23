@@ -39,10 +39,10 @@ public class FunctionCallNode implements OperandNode, BodyStmtNode{
             throw new Exception(); 
         }
 
-        ArrayList<String> copyTable = SymbolTable.getCopyTable();
+        ArrayList<String[]> copyTable = SymbolTable.getCopyTable();
         SymbolTable.getParamstart(id.getID().getToken());
         ParamsNode params = ParamsNode.parseParamsNode(tokens);
-        SymbolTable.setCopyTabe(copyTable);
+        SymbolTable.setCopyTable(copyTable);
         Token RB = tokens.remove(0);
         if(RB.getTokenType() != TokenType.R_BRACKET){
             System.err.println(String.format("Syntax Error: %n Expected Right Brace got %s %n %s:%d",RB.getToken(),RB.getFilename(),RB.getLineNum()));
@@ -68,6 +68,11 @@ public class FunctionCallNode implements OperandNode, BodyStmtNode{
         }else{
             return this.id.validateTree() && this.params.validateTree();
         }
+    }
+
+    @Override
+    public Object exicute() throws Exception {
+        return null;
     }
 
     @Override

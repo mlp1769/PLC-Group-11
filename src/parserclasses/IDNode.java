@@ -38,6 +38,11 @@ public class IDNode implements OperandNode{
         return true;
     }
 
+    @Override
+    public Object exicute() throws Exception {
+        return null;
+    }
+
     public static IDNode parseIDNode(ArrayList<Token> tokens) throws Exception{
         Token currToken = tokens.remove(0);
         if (currToken.getTokenType() == TokenType.ID_KEYWORD){

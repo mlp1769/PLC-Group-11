@@ -85,14 +85,10 @@ public class ElseifNode implements JottTree {
         return (expr.validateTree() && body.validateTree());
     }
 
-
-
-
-
-
-
-
-
+    @Override
+    public Object exicute() throws Exception {
+        return null;
+    }
 
 
 }

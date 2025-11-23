@@ -38,5 +38,10 @@ public class FunctionReturnNode implements JottTree {
         }
         return this.type.validateTree();
     }
-    
+
+    @Override
+    public Object exicute() throws Exception {
+        return null;
+    }
+
 }

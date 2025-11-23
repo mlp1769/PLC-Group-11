@@ -85,5 +85,10 @@ public class BodyNode implements JottTree{
         }
         return true;
     }
-    
+
+    @Override
+    public Object exicute() throws Exception {
+        return null;
+    }
+
 }

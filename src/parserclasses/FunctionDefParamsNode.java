@@ -46,8 +46,7 @@ public class FunctionDefParamsNode implements JottTree {
 
         TypeNode typeNode = TypeNode.parseTypeNode(tokens);
 
-        SymbolTable.addVar(idToken, typeNode.getType().getToken());
-        SymbolTable.addParam(typeNode.getType().getToken());
+        SymbolTable.addParam(idToken, typeNode.getType().getToken());
 
         ArrayList<FunctionDefParamsNodeT> params = new ArrayList<>();
 
@@ -82,6 +81,11 @@ public class FunctionDefParamsNode implements JottTree {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public Object exicute() throws Exception {
+        return null;
     }
 
 }

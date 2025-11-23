@@ -22,6 +22,11 @@ public class StringLiteralNode implements ExprNode{
         return true;
     }
 
+    @Override
+    public Object exicute() throws Exception {
+        return null;
+    }
+
     public static StringLiteralNode parseStringLiteralNode(ArrayList<Token> tokens) throws Exception{
         Token currToken = tokens.remove(0);
         if(currToken.getTokenType() == TokenType.STRING){

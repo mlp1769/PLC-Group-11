@@ -22,6 +22,11 @@ public class BoolNode implements ExprNode{
         return true;
     }
 
+    @Override
+    public Object exicute() throws Exception {
+        return null;
+    }
+
     public static BoolNode parseBoolNode(ArrayList<Token> tokens) throws Exception{
         Token currToken = tokens.remove(0);
         if(currToken.getToken().equals("True") || currToken.getToken().equals("False")){
