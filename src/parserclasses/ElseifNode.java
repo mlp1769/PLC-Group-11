@@ -86,8 +86,12 @@ public class ElseifNode implements JottTree {
     }
 
     @Override
-    public Object exicute() throws Exception {
-        return null;
+    public Object execute() throws Exception {
+        if(expr.execute()!=null && expr.execute()!=Boolean.FALSE){
+            return body.execute();
+        } else {
+            return Boolean.FALSE;
+        }
     }
 
 

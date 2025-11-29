@@ -69,8 +69,8 @@ public class ElseNode implements JottTree {
     }
 
     @Override
-    public Object exicute() throws Exception {
-        return null;
+    public Object execute() throws Exception {
+        return body.execute();
     }
 
 
