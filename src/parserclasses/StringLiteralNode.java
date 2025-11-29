@@ -23,7 +23,7 @@ public class StringLiteralNode implements ExprNode{
     }
 
     @Override
-    public Object exicute() throws Exception {
+    public Object execute() throws Exception {
         return null;
     }
 

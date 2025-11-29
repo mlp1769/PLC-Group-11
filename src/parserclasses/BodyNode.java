@@ -87,7 +87,7 @@ public class BodyNode implements JottTree{
     }
 
     @Override
-    public Object exicute() throws Exception {
+    public Object execute() throws Exception {
         return null;
     }
 

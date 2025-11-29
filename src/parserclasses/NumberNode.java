@@ -33,7 +33,7 @@ public class NumberNode implements OperandNode {
     }
 
     @Override
-    public Object exicute() throws Exception {
+    public Object execute() throws Exception {
         return null;
     }
 
