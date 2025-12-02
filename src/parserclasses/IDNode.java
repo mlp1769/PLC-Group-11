@@ -40,7 +40,7 @@ public class IDNode implements OperandNode{
 
     @Override
     public Object execute() throws Exception {
-        return null;
+        return SymbolTable.getValue(this.id.getToken());
     }
 
     public static IDNode parseIDNode(ArrayList<Token> tokens) throws Exception{

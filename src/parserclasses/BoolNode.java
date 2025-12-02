@@ -24,7 +24,12 @@ public class BoolNode implements ExprNode{
 
     @Override
     public Object execute() throws Exception {
-        return null;
+        if(this.bool.getToken().equals("True")){
+            return true;
+        }
+        else{
+            return false;
+        }     
     }
 
     public static BoolNode parseBoolNode(ArrayList<Token> tokens) throws Exception{

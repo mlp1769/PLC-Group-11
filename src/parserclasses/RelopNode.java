@@ -23,7 +23,7 @@ public class RelopNode implements ExprNode, OperationNode {
 
     @Override
     public Object execute() throws Exception {
-        return null;
+        return this.relOp.getToken();
     }
 
     public static RelopNode parseRelopNode(ArrayList<Token> tokens) throws Exception{
