@@ -90,7 +90,7 @@ public class ElseifNode implements JottTree {
         if(expr.execute()!=null && expr.execute()!=Boolean.FALSE){
             return body.execute();
         } else {
-            return Boolean.FALSE;
+            return this;
         }
     }
 
