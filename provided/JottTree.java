@@ -20,5 +20,5 @@ public interface JottTree {
      */
     public boolean validateTree() throws Exception;
 
-    public Object exicute() throws Exception;
+    public Object execute() throws Exception;
 }

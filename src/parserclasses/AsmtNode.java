@@ -88,7 +88,7 @@ public class AsmtNode implements BodyStmtNode{
     }
 
     @Override
-    public Object exicute() throws Exception {
+    public Object execute() throws Exception {
         return null;
     }
 

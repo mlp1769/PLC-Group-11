@@ -23,8 +23,8 @@ public class StringLiteralNode implements ExprNode{
     }
 
     @Override
-    public Object exicute() throws Exception {
-        return null;
+    public Object execute() throws Exception {
+        return this.literal.getToken();
     }
 
     public static StringLiteralNode parseStringLiteralNode(ArrayList<Token> tokens) throws Exception{

@@ -122,8 +122,368 @@ public class BinaryExprNode implements ExprNode{
     }
 
     @Override
-    public Object exicute() throws Exception {
-        return null;
+    public Object execute() throws Exception {
+         if(this.operandOne instanceof NumberNode){
+            NumberNode number = (NumberNode) this.operandOne;
+            if(this.operandTwo instanceof NumberNode){
+                NumberNode operand2 = (NumberNode) this.operandTwo;
+                if(operator.isMathOp()){
+                    if(operator.execute().equals("+")){
+                        return (double) number.execute() + (double) operand2.execute();
+                    }
+                    else if(operator.execute().equals("/")){
+                        return (double) number.execute() / (double) operand2.execute();
+                    }
+                    else if(operator.execute().equals("-")){
+                        return (double) number.execute() - (double) operand2.execute();
+                    }
+                    else{
+                        return (double) number.execute() * (double) operand2.execute();
+                    }  
+                }
+                else{
+                    if(operator.execute().equals("<")){
+                        return (double) number.execute() < (double) operand2.execute();
+                    }
+                    else if(operator.execute().equals(">")){
+                        return (double) number.execute() > (double) operand2.execute();
+                    }
+                    else if(operator.execute().equals(">=")){
+                        return (double) number.execute() >= (double) operand2.execute();
+                    }
+                    else if(operator.execute().equals("<=")){
+                        return (double) number.execute() <= (double) operand2.execute();
+                    }
+                }
+                
+            }else if(this.operandTwo instanceof IDNode){
+                IDNode operand2 = (IDNode) this.operandTwo;
+                if(operator.isMathOp()){
+                    if(operator.execute().equals("+")){
+                        return (double) number.execute() + (double) operand2.execute();
+                    }
+                    else if(operator.execute().equals("/")){
+                        if((double)operand2.execute() == 0){
+                            System.err.println("Execution Error:");
+                            System.err.println("Can't divide by 0");
+                            System.err.println(operand2.getToken().getFilename()+":"+operand2.getToken().getLineNum());
+                            throw new Exception();
+                        }
+                        else{
+                            return (double) number.execute() / (double) operand2.execute();
+                        }
+                
+                    }
+                    else if(operator.execute().equals("-")){
+                        return (double) number.execute() - (double) operand2.execute();
+                    }
+                    else{
+                        return (double) number.execute() * (double) operand2.execute();
+                    }  
+                }
+                else{
+                    if(operator.execute().equals("<")){
+                        return (double) number.execute() < (double) operand2.execute();
+                    }
+                    else if(operator.execute().equals(">")){
+                        return (double) number.execute() > (double) operand2.execute();
+                    }
+                    else if(operator.execute().equals(">=")){
+                        return (double) number.execute() >= (double) operand2.execute();
+                    }
+                    else if(operator.execute().equals("<=")){
+                        return (double) number.execute() <= (double) operand2.execute();
+                    }
+                }
+            }else if(this.operandTwo instanceof FunctionCallNode){
+                FunctionCallNode operand2 = (FunctionCallNode) this.operandTwo;
+                if(operator.isMathOp()){
+                    if(operator.execute().equals("+")){
+                        return (double) number.execute() + (double) operand2.execute();
+                    }
+                    else if(operator.execute().equals("/")){
+                        if((double)operand2.execute() == 0){
+                            System.err.println("Execution Error:");
+                            System.err.println("Can't divide by 0");
+                            System.err.println(operand2.getToken().getFilename()+":"+operand2.getToken().getLineNum());
+                            throw new Exception();
+                        }
+                        else{
+                            return (double) number.execute() / (double) operand2.execute();
+                        }
+                    }
+                    else if(operator.execute().equals("-")){
+                        return (double) number.execute() - (double) operand2.execute();
+                    }
+                    else{
+                        return (double) number.execute() * (double) operand2.execute();
+                    }  
+                }
+                else{
+                    if(operator.execute().equals("<")){
+                        return (double) number.execute() < (double) operand2.execute();
+                    }
+                    else if(operator.execute().equals(">")){
+                        return (double) number.execute() > (double) operand2.execute();
+                    }
+                    else if(operator.execute().equals(">=")){
+                        return (double) number.execute() >= (double) operand2.execute();
+                    }
+                    else if(operator.execute().equals("<=")){
+                        return (double) number.execute() <= (double) operand2.execute();
+                    }
+                }
+            }else{
+                throw new Exception("Not a binary expression");
+            }
+
+        } else if(operandOne instanceof  IDNode){
+            IDNode id = (IDNode) this.operandOne;
+            if(this.operandTwo instanceof NumberNode){
+                NumberNode operand2 = (NumberNode) this.operandTwo;
+                if(operator.isMathOp()){
+                    if(operator.execute().equals("+")){
+                        return (double) id.execute() + (double) operand2.execute();
+                    }
+                    else if(operator.execute().equals("/")){
+                        return (double) id.execute() / (double) operand2.execute();
+                    }
+                    else if(operator.execute().equals("-")){
+                        return (double) id.execute() - (double) operand2.execute();
+                    }
+                    else{
+                        return (double) id.execute() * (double) operand2.execute();
+                    }  
+                }
+                else{
+                    if(operator.execute().equals("<")){
+                        return (double) id.execute() < (double) operand2.execute();
+                    }
+                    else if(operator.execute().equals(">")){
+                        return (double) id.execute() > (double) operand2.execute();
+                    }
+                    else if(operator.execute().equals(">=")){
+                        return (double) id.execute() >= (double) operand2.execute();
+                    }
+                    else if(operator.execute().equals("<=")){
+                        return (double) id.execute() <= (double) operand2.execute();
+                    }
+                }
+            }else if(this.operandTwo instanceof IDNode){
+                IDNode operand2 = (IDNode) this.operandTwo;
+                if(id.getExpressionType().equals("String")){
+                    System.err.println("Execution Error");
+                    System.err.println("Can't add or compare two strings");
+                    System.err.println(operandOne.getToken().getFilename()+":"+operandOne.getToken().getLineNum());
+                    throw new Exception();
+                }
+                else if(id.getExpressionType().equals("Boolean")){
+                    if(operator.isMathOp()){
+                        System.err.println("Execution Error");
+                        System.err.println("Can't compare or add two booleans");
+                        System.err.println(operandOne.getToken().getFilename()+":"+operandOne.getToken().getLineNum());
+                        throw new Exception();
+                    }
+                }
+                else{
+                    if(operator.isMathOp()){
+                        if(operator.execute().equals("+")){
+                            return (double) id.execute() + (double) operand2.execute();
+                        }
+                        else if(operator.execute().equals("/")){
+                            if((double)operand2.execute() == 0){
+                            System.err.println("Execution Error:");
+                            System.err.println("Can't divide by 0");
+                            System.err.println(operand2.getToken().getFilename()+":"+operand2.getToken().getLineNum());
+                            throw new Exception();
+                        }
+                        else{
+                            return (double) id.execute() / (double) operand2.execute();
+                        }
+                        }
+                        else if(operator.execute().equals("-")){
+                            return (double) id.execute() - (double) operand2.execute();
+                        }
+                        else{
+                            return (double) id.execute() * (double) operand2.execute();
+                        }  
+                }
+                else{
+                    if(operator.execute().equals("<")){
+                        return (double) id.execute() < (double) operand2.execute();
+                    }
+                    else if(operator.execute().equals(">")){
+                        return (double) id.execute() > (double) operand2.execute();
+                    }
+                    else if(operator.execute().equals(">=")){
+                        return (double) id.execute() >= (double) operand2.execute();
+                    }
+                    else if(operator.execute().equals("<=")){
+                        return (double) id.execute() <= (double) operand2.execute();
+                    }
+
+                }
+            }
+            }else if(this.operandTwo instanceof FunctionCallNode){
+                FunctionCallNode operand2 = (FunctionCallNode) this.operandTwo;
+                 if(operator.isMathOp()){
+                        if(operator.execute().equals("+")){
+                            return (double) id.execute() + (double) operand2.execute();
+                        }
+                        else if(operator.execute().equals("/")){
+                            if((double)operand2.execute() == 0){
+                            System.err.println("Execution Error:");
+                            System.err.println("Can't divide by 0");
+                            System.err.println(operand2.getToken().getFilename()+":"+operand2.getToken().getLineNum());
+                            throw new Exception();
+                        }
+                        else{
+                            return (double) id.execute() / (double) operand2.execute();
+                        }
+                        }
+                        else if(operator.execute().equals("-")){
+                            return (double) id.execute() - (double) operand2.execute();
+                        }
+                        else{
+                            return (double) id.execute() * (double) operand2.execute();
+                        }  
+                }
+                else{
+                    if(operator.execute().equals("<")){
+                        return (double) id.execute() < (double) operand2.execute();
+                    }
+                    else if(operator.execute().equals(">")){
+                        return (double) id.execute() > (double) operand2.execute();
+                    }
+                    else if(operator.execute().equals(">=")){
+                        return (double) id.execute() >= (double) operand2.execute();
+                    }
+                    else if(operator.execute().equals("<=")){
+                        return (double) id.execute() <= (double) operand2.execute();
+                    }
+
+                }
+            }else{
+                throw new Exception("Not a binary expression");
+            }
+        }else if(operandOne instanceof FunctionCallNode){
+            FunctionCallNode function = (FunctionCallNode) this.operandOne;
+            if(this.operandTwo instanceof NumberNode){
+                NumberNode operand2 = (NumberNode) this.operandTwo;
+                 if(operator.isMathOp()){
+                        if(operator.execute().equals("+")){
+                            return (double) function.execute() + (double) operand2.execute();
+                        }
+                        else if(operator.execute().equals("/")){
+                            return (double) function.execute() / (double) operand2.execute();
+                        }
+                        else if(operator.execute().equals("-")){
+                            return (double) function.execute() - (double) operand2.execute();
+                        }
+                        else{
+                            return (double) function.execute() * (double) operand2.execute();
+                        }  
+                }
+                else{
+                    if(operator.execute().equals("<")){
+                        return (double) function.execute() < (double) operand2.execute();
+                    }
+                    else if(operator.execute().equals(">")){
+                        return (double) function.execute() > (double) operand2.execute();
+                    }
+                    else if(operator.execute().equals(">=")){
+                        return (double) function.execute() >= (double) operand2.execute();
+                    }
+                    else if(operator.execute().equals("<=")){
+                        return (double) function.execute() <= (double) operand2.execute();
+                    }
+
+                }
+
+            }else if(this.operandTwo instanceof IDNode){
+                IDNode operand2 = (IDNode) this.operandTwo;
+                if(operator.isMathOp()){
+                        if(operator.execute().equals("+")){
+                            return (double) function.execute() + (double) operand2.execute();
+                        }
+                        else if(operator.execute().equals("/")){
+                            if((double)operand2.execute() == 0){
+                            System.err.println("Execution Error:");
+                            System.err.println("Can't divide by 0");
+                            System.err.println(operand2.getToken().getFilename()+":"+operand2.getToken().getLineNum());
+                            throw new Exception();
+                        }
+                        else{
+                            return (double) function.execute() / (double) operand2.execute();
+                        }
+                        }
+                        else if(operator.execute().equals("-")){
+                            return (double) function.execute() - (double) operand2.execute();
+                        }
+                        else{
+                            return (double) function.execute() * (double) operand2.execute();
+                        }  
+                }
+                else{
+                    if(operator.execute().equals("<")){
+                        return (double) function.execute() < (double) operand2.execute();
+                    }
+                    else if(operator.execute().equals(">")){
+                        return (double) function.execute() > (double) operand2.execute();
+                    }
+                    else if(operator.execute().equals(">=")){
+                        return (double) function.execute() >= (double) operand2.execute();
+                    }
+                    else if(operator.execute().equals("<=")){
+                        return (double) function.execute() <= (double) operand2.execute();
+                    }
+                }
+
+            }else if(this.operandTwo instanceof FunctionCallNode){
+                FunctionCallNode operand2 = (FunctionCallNode) this.operandTwo;
+                if(operator.isMathOp()){
+                        if(operator.execute().equals("+")){
+                            return (double) function.execute() + (double) operand2.execute();
+                        }
+                        else if(operator.execute().equals("/")){
+                            if((double)operand2.execute() == 0){
+                            System.err.println("Execution Error:");
+                            System.err.println("Can't divide by 0");
+                            System.err.println(operand2.getToken().getFilename()+":"+operand2.getToken().getLineNum());
+                            throw new Exception();
+                        }
+                        else{
+                            return (double) function.execute() / (double) operand2.execute();
+                        }
+                        }
+                        else if(operator.execute().equals("-")){
+                            return (double) function.execute() - (double) operand2.execute();
+                        }
+                        else{
+                            return (double) function.execute() * (double) operand2.execute();
+                        }  
+                }
+                else{
+                    if(operator.execute().equals("<")){
+                        return (double) function.execute() < (double) operand2.execute();
+                    }
+                    else if(operator.execute().equals(">")){
+                        return (double) function.execute() > (double) operand2.execute();
+                    }
+                    else if(operator.execute().equals(">=")){
+                        return (double) function.execute() >= (double) operand2.execute();
+                    }
+                    else if(operator.execute().equals("<=")){
+                        return (double) function.execute() <= (double) operand2.execute();
+                    }
+                }
+            }else{
+                throw new Exception("Not a binary expression");
+            }
+        }else{
+            throw new Exception("Not a binary expression");
+        }
+        throw new Exception("Something went wrong in Binary Execution");
     }
 
     @Override

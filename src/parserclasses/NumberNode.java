@@ -33,8 +33,9 @@ public class NumberNode implements OperandNode {
     }
 
     @Override
-    public Object exicute() throws Exception {
-        return null;
+    public Object execute() throws Exception {
+        int num = Integer.parseInt(this.number.getToken());
+        return num;
     }
 
     public boolean isInteger(){

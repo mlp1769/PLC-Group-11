@@ -39,8 +39,8 @@ public class IDNode implements OperandNode{
     }
 
     @Override
-    public Object exicute() throws Exception {
-        return null;
+    public Object execute() throws Exception {
+        return SymbolTable.getValue(this.id.getToken());
     }
 
     public static IDNode parseIDNode(ArrayList<Token> tokens) throws Exception{

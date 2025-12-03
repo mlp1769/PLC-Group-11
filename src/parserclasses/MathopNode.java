@@ -23,8 +23,8 @@ public class MathopNode implements ExprNode, OperationNode{
     }
 
     @Override
-    public Object exicute() throws Exception {
-        return null;
+    public Object execute() throws Exception {
+        return this.mathOp.getToken();
     }
 
     public static MathopNode parseMathOpNode(ArrayList<Token> tokens) throws Exception{
