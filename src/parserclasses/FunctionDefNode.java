@@ -85,6 +85,8 @@ public class FunctionDefNode implements JottTree {
 
         FBodyNode body = FBodyNode.parseFBodyNode(tokens);
 
+        SymbolTable.addFunctionBody(body);
+
         Token rBrace = tokens.remove(0);
         if (rBrace.getTokenType() != TokenType.R_BRACE) {
             System.err.println("Syntax Error:");
