@@ -71,6 +71,6 @@ public class ReturnStatementNode implements JottTree {
 
     @Override
     public Object execute() throws Exception {
-        return null;
+        return this.expressionNode.execute();
     }
 }
