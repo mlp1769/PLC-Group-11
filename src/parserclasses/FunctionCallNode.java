@@ -71,10 +71,11 @@ public class FunctionCallNode implements OperandNode, BodyStmtNode{
     }
 
     @Override
-    public Object exicute() throws Exception {
+    public Object execute() throws Exception {
         SymbolTable.changeScope(this.head);
+        this.params.execute();
         FBodyNode body = SymbolTable.getFunctionBody();
-        return body.exicute();
+        return body.execute();
     }
 
     @Override

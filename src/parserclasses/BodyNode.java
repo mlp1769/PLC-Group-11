@@ -87,11 +87,17 @@ public class BodyNode implements JottTree{
     }
 
     @Override
-    public Object exicute() throws Exception {
+    public Object execute() throws Exception {
         for (BodyStmtNode stmt : this.body) {
-            stmt.exicute();
+            if(stmt instanceof IfStmtNode) {
+                Object val = stmt.execute();
+                if(val != null){
+                    return val;
+                }
+            }
+            stmt.execute();
         }
-        return this.rtn.exicute();
+        return this.rtn.execute();
     }
 
 }
