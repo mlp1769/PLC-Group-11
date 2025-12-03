@@ -40,8 +40,8 @@ public class FunctionReturnNode implements JottTree {
     }
 
     @Override
-    public Object execute() throws Exception {
-        return null;
+    public Object exicute() throws Exception {
+        return this.type.exicute();
     }
 
 }

@@ -53,7 +53,10 @@ public class FBodyNode implements JottTree {
 
     @Override
     public Object execute() throws Exception {
-        return null;
+        for (VarDecNode stmt : this.vars) {
+            stmt.execute();
+        }
+        return this.body.execute();
     }
 
     private boolean validVoid(){

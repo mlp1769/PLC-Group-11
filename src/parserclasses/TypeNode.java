@@ -37,7 +37,7 @@ public class TypeNode implements JottTree {
 
     @Override
     public Object execute() throws Exception {
-        return null;
+        return this.type.getToken();
     }
 
 }

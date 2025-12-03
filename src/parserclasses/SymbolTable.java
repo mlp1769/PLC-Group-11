@@ -51,7 +51,7 @@ public class SymbolTable {
 
     public static void addFunctionBody(FBodyNode body){functionTable.get(scope).setBody(body);}
 
-    public static FBodyNode getFunctionBody(FBodyNode body){return functionTable.get(scope).getBody();}
+    public static FBodyNode getFunctionBody(){return functionTable.get(scope).getBody();}
 
     public static void updateReturnType(String type){
         functionTable.get(scope).setType(type);
