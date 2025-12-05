@@ -107,9 +107,6 @@ public class AsmtNode implements BodyStmtNode{
         value = ((Integer) value).doubleValue();
         rhsType = "Double";
     }
-    if (!lhsType.equals(rhsType)) {
-        semErr("Type mismatch: cannot assign " + rhsType + " to " + lhsType, assign);
-    }
     SymbolTable.setValue(name, value);
     return null;
     }

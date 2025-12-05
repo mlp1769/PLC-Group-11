@@ -72,25 +72,32 @@ public class FunctionCallNode implements OperandNode, BodyStmtNode{
 
     @Override
     public Object execute() throws Exception {
+        String scope = SymbolTable.getScope();
+        Token scopeToken = new Token(scope,null,0,null);
         SymbolTable.getParamstart(this.id.getID().getToken());
         SymbolTable.changeParamScope(this.id.getID().getToken());
         this.params.execute();
         SymbolTable.changeScope(this.id.getID());
         if(this.id.getID().getToken().equals("print")){
             System.out.println(SymbolTable.getValue("print"));
+            SymbolTable.changeScope(scopeToken);
             return null;
         }
         if(this.id.getID().getToken().equals("concat")){
             String s1 = (String) SymbolTable.getValue("concat");
             String s2 = (String) SymbolTable.getValue("concat2");
+            SymbolTable.changeScope(scopeToken);
             return s1+s2;
         }
         if(this.id.getID().getToken().equals("length")){
             String s1 = (String) SymbolTable.getValue("length");
+            SymbolTable.changeScope(scopeToken);
             return s1.length();
         }
         FBodyNode body = SymbolTable.getFunctionBody();
-        return body.execute();
+        Object val = body.execute();
+        SymbolTable.changeScope(scopeToken);
+        return val;
     }
 
     @Override
