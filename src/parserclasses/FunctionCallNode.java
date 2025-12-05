@@ -72,8 +72,10 @@ public class FunctionCallNode implements OperandNode, BodyStmtNode{
 
     @Override
     public Object execute() throws Exception {
-        SymbolTable.changeScope(this.id.getID());
+        SymbolTable.getParamstart(this.id.getID().getToken());
+        SymbolTable.changeParamScope(this.id.getID().getToken());
         this.params.execute();
+        SymbolTable.changeScope(this.id.getID());
         if(this.id.getID().getToken().equals("print")){
             System.out.println(SymbolTable.getValue("print"));
             return null;

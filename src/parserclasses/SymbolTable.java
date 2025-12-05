@@ -13,6 +13,7 @@ public class SymbolTable {
     private static HashMap<String, ArrayList<String[]>> paramTable = new HashMap<>();
     private static ArrayList<String[]> copyTable;
     private static String scope = "";
+    private static String paramScope = "main";
 
     public SymbolTable(){}
 
@@ -69,7 +70,9 @@ public class SymbolTable {
         }
     }
 
-    public static void setValue(String name, Object value){varTable.get(scope).get(name).setValue(value);}
+    public static void changeParamScope(String name){paramScope = name;}
+
+    public static void setValue(String name, Object value){varTable.get(paramScope).get(name).setValue(value);}
 
     public static Object getValue(String name){return varTable.get(scope).get(name).getValue();}
 
