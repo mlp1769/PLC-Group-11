@@ -64,7 +64,6 @@ public class VarDecNode implements JottTree {
 
     @Override
     public Object execute() throws Exception {
-        SymbolTable.addVar(id.getID(), id.getExpressionType());
         return null;
     }
 
