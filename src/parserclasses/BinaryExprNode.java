@@ -129,30 +129,30 @@ public class BinaryExprNode implements ExprNode{
                 NumberNode operand2 = (NumberNode) this.operandTwo;
                 if(operator.isMathOp()){
                     if(operator.execute().equals("+")){
-                        return (double) number.execute() + (double) operand2.execute();
+                        return ((Number) number.execute()).doubleValue() + ((Number) operand2.execute()).doubleValue();
                     }
                     else if(operator.execute().equals("/")){
-                        return (double) number.execute() / (double) operand2.execute();
+                        return ((Number) number.execute()).doubleValue() / ((Number) operand2.execute()).doubleValue();
                     }
                     else if(operator.execute().equals("-")){
-                        return (double) number.execute() - (double) operand2.execute();
+                        return ((Number) number.execute()).doubleValue() - ((Number) operand2.execute()).doubleValue();
                     }
                     else{
-                        return (double) number.execute() * (double) operand2.execute();
+                        return ((Number) number.execute()).doubleValue() * ((Number) operand2.execute()).doubleValue();
                     }  
                 }
                 else{
                     if(operator.execute().equals("<")){
-                        return (double) number.execute() < (double) operand2.execute();
+                        return ((Number) number.execute()).doubleValue() < ((Number) operand2.execute()).doubleValue();
                     }
                     else if(operator.execute().equals(">")){
-                        return (double) number.execute() > (double) operand2.execute();
+                        return ((Number) number.execute()).doubleValue() > ((Number) operand2.execute()).doubleValue();
                     }
                     else if(operator.execute().equals(">=")){
-                        return (double) number.execute() >= (double) operand2.execute();
+                        return ((Number) number.execute()).doubleValue() >= ((Number) operand2.execute()).doubleValue();
                     }
                     else if(operator.execute().equals("<=")){
-                        return (double) number.execute() <= (double) operand2.execute();
+                        return ((Number) number.execute()).doubleValue() <= ((Number) operand2.execute()).doubleValue();
                     }
                 }
                 
@@ -160,7 +160,7 @@ public class BinaryExprNode implements ExprNode{
                 IDNode operand2 = (IDNode) this.operandTwo;
                 if(operator.isMathOp()){
                     if(operator.execute().equals("+")){
-                        return (double) number.execute() + (double) operand2.execute();
+                        return ((Number) number.execute()).doubleValue() + ((Number) operand2.execute()).doubleValue();
                     }
                     else if(operator.execute().equals("/")){
                         if((double)operand2.execute() == 0){
@@ -170,36 +170,36 @@ public class BinaryExprNode implements ExprNode{
                             throw new Exception();
                         }
                         else{
-                            return (double) number.execute() / (double) operand2.execute();
+                            return ((Number) number.execute()).doubleValue() / ((Number) operand2.execute()).doubleValue();
                         }
                 
                     }
                     else if(operator.execute().equals("-")){
-                        return (double) number.execute() - (double) operand2.execute();
+                        return ((Number) number.execute()).doubleValue() - ((Number) operand2.execute()).doubleValue();
                     }
                     else{
-                        return (double) number.execute() * (double) operand2.execute();
+                        return ((Number) number.execute()).doubleValue() * ((Number) operand2.execute()).doubleValue();
                     }  
                 }
                 else{
                     if(operator.execute().equals("<")){
-                        return (double) number.execute() < (double) operand2.execute();
+                        return ((Number) number.execute()).doubleValue() < ((Number) operand2.execute()).doubleValue();
                     }
                     else if(operator.execute().equals(">")){
-                        return (double) number.execute() > (double) operand2.execute();
+                        return ((Number) number.execute()).doubleValue() > ((Number) operand2.execute()).doubleValue();
                     }
                     else if(operator.execute().equals(">=")){
-                        return (double) number.execute() >= (double) operand2.execute();
+                        return ((Number) number.execute()).doubleValue() >= ((Number) operand2.execute()).doubleValue();
                     }
                     else if(operator.execute().equals("<=")){
-                        return (double) number.execute() <= (double) operand2.execute();
+                        return ((Number) number.execute()).doubleValue() <= ((Number) operand2.execute()).doubleValue();
                     }
                 }
             }else if(this.operandTwo instanceof FunctionCallNode){
                 FunctionCallNode operand2 = (FunctionCallNode) this.operandTwo;
                 if(operator.isMathOp()){
                     if(operator.execute().equals("+")){
-                        return (double) number.execute() + (double) operand2.execute();
+                        return ((Number) number.execute()).doubleValue() + ((Number) operand2.execute()).doubleValue();
                     }
                     else if(operator.execute().equals("/")){
                         if((double)operand2.execute() == 0){
@@ -209,28 +209,28 @@ public class BinaryExprNode implements ExprNode{
                             throw new Exception();
                         }
                         else{
-                            return (double) number.execute() / (double) operand2.execute();
+                            return ((Number) number.execute()).doubleValue() / ((Number) operand2.execute()).doubleValue();
                         }
                     }
                     else if(operator.execute().equals("-")){
-                        return (double) number.execute() - (double) operand2.execute();
+                        return ((Number) number.execute()).doubleValue() - ((Number) operand2.execute()).doubleValue();
                     }
                     else{
-                        return (double) number.execute() * (double) operand2.execute();
+                        return ((Number) number.execute()).doubleValue() * ((Number) operand2.execute()).doubleValue();
                     }  
                 }
                 else{
                     if(operator.execute().equals("<")){
-                        return (double) number.execute() < (double) operand2.execute();
+                        return ((Number) number.execute()).doubleValue() < ((Number) operand2.execute()).doubleValue();
                     }
                     else if(operator.execute().equals(">")){
-                        return (double) number.execute() > (double) operand2.execute();
+                        return ((Number) number.execute()).doubleValue() > ((Number) operand2.execute()).doubleValue();
                     }
                     else if(operator.execute().equals(">=")){
-                        return (double) number.execute() >= (double) operand2.execute();
+                        return ((Number) number.execute()).doubleValue() >= ((Number) operand2.execute()).doubleValue();
                     }
                     else if(operator.execute().equals("<=")){
-                        return (double) number.execute() <= (double) operand2.execute();
+                        return ((Number) number.execute()).doubleValue() <= ((Number) operand2.execute()).doubleValue();
                     }
                 }
             }else{
@@ -239,38 +239,51 @@ public class BinaryExprNode implements ExprNode{
 
         } else if(operandOne instanceof  IDNode){
             IDNode id = (IDNode) this.operandOne;
+            if (id.execute() == null){
+                System.err.println("Execution Error");
+                System.err.println("Uninitialized Variable");
+                System.err.println(operandOne.getToken().getFilename()+":"+operandOne.getToken().getLineNum());
+                throw new Exception();
+            }
             if(this.operandTwo instanceof NumberNode){
                 NumberNode operand2 = (NumberNode) this.operandTwo;
                 if(operator.isMathOp()){
                     if(operator.execute().equals("+")){
-                        return (double) id.execute() + (double) operand2.execute();
+                        return ((Number) id.execute()).doubleValue() + ((Number) operand2.execute()).doubleValue();
+
                     }
                     else if(operator.execute().equals("/")){
-                        return (double) id.execute() / (double) operand2.execute();
+                        return ((Number) id.execute()).doubleValue() / ((Number) operand2.execute()).doubleValue();
                     }
                     else if(operator.execute().equals("-")){
-                        return (double) id.execute() - (double) operand2.execute();
+                        return ((Number) id.execute()).doubleValue() - ((Number) operand2.execute()).doubleValue();
                     }
                     else{
-                        return (double) id.execute() * (double) operand2.execute();
+                        return ((Number) id.execute()).doubleValue() * ((Number) operand2.execute()).doubleValue();
                     }  
                 }
                 else{
                     if(operator.execute().equals("<")){
-                        return (double) id.execute() < (double) operand2.execute();
+                        return ((Number) id.execute()).doubleValue() < ((Number) operand2.execute()).doubleValue();
                     }
                     else if(operator.execute().equals(">")){
-                        return (double) id.execute() > (double) operand2.execute();
+                        return ((Number) id.execute()).doubleValue() > ((Number) operand2.execute()).doubleValue();
                     }
                     else if(operator.execute().equals(">=")){
-                        return (double) id.execute() >= (double) operand2.execute();
+                        return ((Number) id.execute()).doubleValue() >= ((Number) operand2.execute()).doubleValue();
                     }
                     else if(operator.execute().equals("<=")){
-                        return (double) id.execute() <= (double) operand2.execute();
+                        return ((Number) id.execute()).doubleValue() <= ((Number) operand2.execute()).doubleValue();
                     }
                 }
             }else if(this.operandTwo instanceof IDNode){
                 IDNode operand2 = (IDNode) this.operandTwo;
+                if(operand2.execute() == null){
+                    System.err.println("Execution Error");
+                    System.err.println("Uninitialized Variable");
+                    System.err.println(operandOne.getToken().getFilename()+":"+operandOne.getToken().getLineNum());
+                    throw new Exception();
+                }
                 if(id.getExpressionType().equals("String")){
                     System.err.println("Execution Error");
                     System.err.println("Can't add or compare two strings");
@@ -288,7 +301,7 @@ public class BinaryExprNode implements ExprNode{
                 else{
                     if(operator.isMathOp()){
                         if(operator.execute().equals("+")){
-                            return (double) id.execute() + (double) operand2.execute();
+                            return ((Number) id.execute()).doubleValue() + ((Number) operand2.execute()).doubleValue();
                         }
                         else if(operator.execute().equals("/")){
                             if((double)operand2.execute() == 0){
@@ -297,29 +310,29 @@ public class BinaryExprNode implements ExprNode{
                             System.err.println(operand2.getToken().getFilename()+":"+operand2.getToken().getLineNum());
                             throw new Exception();
                         }
-                        else{
-                            return (double) id.execute() / (double) operand2.execute();
+                            else{
+                            return ((Number) id.execute()).doubleValue() / ((Number) operand2.execute()).doubleValue();
                         }
                         }
                         else if(operator.execute().equals("-")){
-                            return (double) id.execute() - (double) operand2.execute();
+                            return ((Number) id.execute()).doubleValue() - ((Number) operand2.execute()).doubleValue();
                         }
                         else{
-                            return (double) id.execute() * (double) operand2.execute();
+                            return ((Number) id.execute()).doubleValue() * ((Number) operand2.execute()).doubleValue();
                         }  
                 }
                 else{
                     if(operator.execute().equals("<")){
-                        return (double) id.execute() < (double) operand2.execute();
+                        return ((Number) id.execute()).doubleValue() < ((Number) operand2.execute()).doubleValue();
                     }
                     else if(operator.execute().equals(">")){
-                        return (double) id.execute() > (double) operand2.execute();
+                        return ((Number) id.execute()).doubleValue() > ((Number) operand2.execute()).doubleValue();
                     }
                     else if(operator.execute().equals(">=")){
-                        return (double) id.execute() >= (double) operand2.execute();
+                        return ((Number) id.execute()).doubleValue() >= ((Number) operand2.execute()).doubleValue();
                     }
                     else if(operator.execute().equals("<=")){
-                        return (double) id.execute() <= (double) operand2.execute();
+                        return ((Number) id.execute()).doubleValue() <= ((Number) operand2.execute()).doubleValue();
                     }
 
                 }
@@ -328,7 +341,7 @@ public class BinaryExprNode implements ExprNode{
                 FunctionCallNode operand2 = (FunctionCallNode) this.operandTwo;
                  if(operator.isMathOp()){
                         if(operator.execute().equals("+")){
-                            return (double) id.execute() + (double) operand2.execute();
+                            return ((Number) id.execute()).doubleValue() + ((Number) operand2.execute()).doubleValue();
                         }
                         else if(operator.execute().equals("/")){
                             if((double)operand2.execute() == 0){
@@ -338,28 +351,28 @@ public class BinaryExprNode implements ExprNode{
                             throw new Exception();
                         }
                         else{
-                            return (double) id.execute() / (double) operand2.execute();
+                            return ((Number) id.execute()).doubleValue() / ((Number) operand2.execute()).doubleValue();
                         }
                         }
                         else if(operator.execute().equals("-")){
-                            return (double) id.execute() - (double) operand2.execute();
+                            return ((Number) id.execute()).doubleValue() - ((Number) operand2.execute()).doubleValue();
                         }
                         else{
-                            return (double) id.execute() * (double) operand2.execute();
+                            return ((Number) id.execute()).doubleValue() * ((Number) operand2.execute()).doubleValue();
                         }  
                 }
                 else{
                     if(operator.execute().equals("<")){
-                        return (double) id.execute() < (double) operand2.execute();
+                        return ((Number) id.execute()).doubleValue() < ((Number) operand2.execute()).doubleValue();
                     }
                     else if(operator.execute().equals(">")){
-                        return (double) id.execute() > (double) operand2.execute();
+                        return ((Number) id.execute()).doubleValue() > ((Number) operand2.execute()).doubleValue();
                     }
                     else if(operator.execute().equals(">=")){
-                        return (double) id.execute() >= (double) operand2.execute();
+                        return ((Number) id.execute()).doubleValue() >= ((Number) operand2.execute()).doubleValue();
                     }
                     else if(operator.execute().equals("<=")){
-                        return (double) id.execute() <= (double) operand2.execute();
+                        return ((Number) id.execute()).doubleValue() <= ((Number) operand2.execute()).doubleValue();
                     }
 
                 }
@@ -372,30 +385,30 @@ public class BinaryExprNode implements ExprNode{
                 NumberNode operand2 = (NumberNode) this.operandTwo;
                  if(operator.isMathOp()){
                         if(operator.execute().equals("+")){
-                            return (double) function.execute() + (double) operand2.execute();
+                            return ((Number) function.execute()).doubleValue() + ((Number) operand2.execute()).doubleValue();
                         }
                         else if(operator.execute().equals("/")){
-                            return (double) function.execute() / (double) operand2.execute();
+                            return ((Number) function.execute()).doubleValue() / ((Number) operand2.execute()).doubleValue();
                         }
                         else if(operator.execute().equals("-")){
-                            return (double) function.execute() - (double) operand2.execute();
+                            return ((Number) function.execute()).doubleValue() - ((Number) operand2.execute()).doubleValue();
                         }
                         else{
-                            return (double) function.execute() * (double) operand2.execute();
+                            return ((Number) function.execute()).doubleValue() * ((Number) operand2.execute()).doubleValue();
                         }  
                 }
                 else{
                     if(operator.execute().equals("<")){
-                        return (double) function.execute() < (double) operand2.execute();
+                        return ((Number) function.execute()).doubleValue() < ((Number) operand2.execute()).doubleValue();
                     }
                     else if(operator.execute().equals(">")){
-                        return (double) function.execute() > (double) operand2.execute();
+                        return ((Number) function.execute()).doubleValue() > ((Number) operand2.execute()).doubleValue();
                     }
                     else if(operator.execute().equals(">=")){
-                        return (double) function.execute() >= (double) operand2.execute();
+                        return ((Number) function.execute()).doubleValue() >=((Number) operand2.execute()).doubleValue();
                     }
                     else if(operator.execute().equals("<=")){
-                        return (double) function.execute() <= (double) operand2.execute();
+                        return ((Number) function.execute()).doubleValue() <= ((Number) operand2.execute()).doubleValue();
                     }
 
                 }
@@ -404,7 +417,7 @@ public class BinaryExprNode implements ExprNode{
                 IDNode operand2 = (IDNode) this.operandTwo;
                 if(operator.isMathOp()){
                         if(operator.execute().equals("+")){
-                            return (double) function.execute() + (double) operand2.execute();
+                            return ((Number) function.execute()).doubleValue() + ((Number) operand2.execute()).doubleValue();
                         }
                         else if(operator.execute().equals("/")){
                             if((double)operand2.execute() == 0){
@@ -414,28 +427,28 @@ public class BinaryExprNode implements ExprNode{
                             throw new Exception();
                         }
                         else{
-                            return (double) function.execute() / (double) operand2.execute();
+                            return ((Number) function.execute()).doubleValue() / ((Number) operand2.execute()).doubleValue();
                         }
                         }
                         else if(operator.execute().equals("-")){
-                            return (double) function.execute() - (double) operand2.execute();
+                            return ((Number) function.execute()).doubleValue() - ((Number) operand2.execute()).doubleValue();
                         }
                         else{
-                            return (double) function.execute() * (double) operand2.execute();
+                            return ((Number) function.execute()).doubleValue() * ((Number) operand2.execute()).doubleValue();
                         }  
                 }
                 else{
                     if(operator.execute().equals("<")){
-                        return (double) function.execute() < (double) operand2.execute();
+                        return ((Number) function.execute()).doubleValue() < ((Number) operand2.execute()).doubleValue();
                     }
                     else if(operator.execute().equals(">")){
-                        return (double) function.execute() > (double) operand2.execute();
+                        return ((Number) function.execute()).doubleValue() > ((Number) operand2.execute()).doubleValue();
                     }
                     else if(operator.execute().equals(">=")){
-                        return (double) function.execute() >= (double) operand2.execute();
+                         return ((Number) function.execute()).doubleValue() >= ((Number) operand2.execute()).doubleValue();
                     }
                     else if(operator.execute().equals("<=")){
-                        return (double) function.execute() <= (double) operand2.execute();
+                        return ((Number) function.execute()).doubleValue() <= ((Number) operand2.execute()).doubleValue();
                     }
                 }
 
@@ -443,7 +456,7 @@ public class BinaryExprNode implements ExprNode{
                 FunctionCallNode operand2 = (FunctionCallNode) this.operandTwo;
                 if(operator.isMathOp()){
                         if(operator.execute().equals("+")){
-                            return (double) function.execute() + (double) operand2.execute();
+                            return ((Number) function.execute()).doubleValue() + ((Number) operand2.execute()).doubleValue();
                         }
                         else if(operator.execute().equals("/")){
                             if((double)operand2.execute() == 0){
@@ -453,28 +466,28 @@ public class BinaryExprNode implements ExprNode{
                             throw new Exception();
                         }
                         else{
-                            return (double) function.execute() / (double) operand2.execute();
+                            return ((Number) function.execute()).doubleValue() / ((Number) operand2.execute()).doubleValue();
                         }
                         }
                         else if(operator.execute().equals("-")){
-                            return (double) function.execute() - (double) operand2.execute();
+                            return ((Number) function.execute()).doubleValue() - ((Number) operand2.execute()).doubleValue();
                         }
                         else{
-                            return (double) function.execute() * (double) operand2.execute();
+                            return ((Number) function.execute()).doubleValue() * ((Number) operand2.execute()).doubleValue();
                         }  
                 }
                 else{
                     if(operator.execute().equals("<")){
-                        return (double) function.execute() < (double) operand2.execute();
+                        return ((Number) function.execute()).doubleValue() < ((Number) operand2.execute()).doubleValue();
                     }
                     else if(operator.execute().equals(">")){
-                        return (double) function.execute() > (double) operand2.execute();
+                        return ((Number) function.execute()).doubleValue() > ((Number) operand2.execute()).doubleValue();
                     }
                     else if(operator.execute().equals(">=")){
-                        return (double) function.execute() >= (double) operand2.execute();
+                        return ((Number) function.execute()).doubleValue() >= ((Number) operand2.execute()).doubleValue();
                     }
                     else if(operator.execute().equals("<=")){
-                        return (double) function.execute() <= (double) operand2.execute();
+                        return ((Number) function.execute()).doubleValue() <= ((Number) operand2.execute()).doubleValue();
                     }
                 }
             }else{
