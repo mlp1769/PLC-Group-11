@@ -102,7 +102,7 @@ public Object execute() throws Exception {
         }
     }
     SymbolTable.setValue(id.getID().getToken(), value);
-    return value;
+    return null;
 }
 
 
