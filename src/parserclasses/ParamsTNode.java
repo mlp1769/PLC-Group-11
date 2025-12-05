@@ -65,7 +65,7 @@ public class ParamsTNode implements JottTree {
 
     @Override
     public Object execute() throws Exception {
-        SymbolTable.addVar((Token)expr, expr.getExpressionType());
+        SymbolTable.setValue(SymbolTable.getParamName(), expr.execute());
         return null;
     }
 }
