@@ -133,10 +133,20 @@ public class WhileLoopNode implements BodyStmtNode, JottTree {
     }
 }
 
-    @Override
+@Override
     public Object execute() throws Exception {
-        return null;
+    while (true) {
+        Object cv = cond.execute();
+        if (!(cv instanceof Boolean)) {
+            semErr("While condition must evaluate to Boolean at runtime", lb);
+        }
+        if (!((Boolean) cv)) break;
+        Object r = body.execute();
+        if (r != null) return r;
     }
+    return null;
+    }
+
 
     private static void semErr(String msg, provided.Token loc) {
     System.err.printf("Semantic Error:%n%s%n%s:%d%n",
@@ -144,5 +154,5 @@ public class WhileLoopNode implements BodyStmtNode, JottTree {
             (loc == null ? "<unknown>" : loc.getFilename()),
             (loc == null ? 1 : loc.getLineNum()));
     throw new RuntimeException(msg);
-}
+    }
 }
