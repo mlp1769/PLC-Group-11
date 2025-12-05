@@ -87,29 +87,23 @@ public class AsmtNode implements BodyStmtNode{
         }
     }
 
-    @Override
-    public Object execute() throws Exception {
-    String name = id.getID().getToken();
+@Override
+public Object execute() throws Exception {
     Object value = exp.execute();
-    String lhsType = SymbolTable.getVar(name);
-    if (lhsType == null) {
-        semErr("Use of undeclared variable: " + name, assign);
+    String varType = SymbolTable.getVar(id.getID().getToken());
+    if ("Integer".equals(varType)) {
+        if (value instanceof Double) {
+            value = ((Double) value).intValue();
+        }
     }
-
-    String rhsType =
-            (value == null)               ? "Void"   :
-            (value instanceof Integer)    ? "Integer":
-            (value instanceof Double)     ? "Double" :
-            (value instanceof Boolean)    ? "Boolean":
-            (value instanceof String)     ? "String" : "Unknown";
-
-    if ("Double".equals(lhsType) && "Integer".equals(rhsType)) {
-        value = ((Integer) value).doubleValue();
-        rhsType = "Double";
+    else if ("Double".equals(varType)) {
+        if (value instanceof Integer) {
+            value = ((Integer) value).doubleValue();
+        }
     }
-    SymbolTable.setValue(name, value);
+    SymbolTable.setValue(id.getID().getToken(), value);
     return null;
-    }
+}
 
 
     private static void semErr(String msg, provided.Token loc)
