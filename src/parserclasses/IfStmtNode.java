@@ -171,8 +171,27 @@ public class IfStmtNode implements BodyStmtNode, JottTree {
 
     @Override
     public Object execute() throws Exception {
-        return null;
+    Object cv = cond.execute();
+    if (!(cv instanceof Boolean)) {
+        semErr("If condition must evaluate to Boolean at runtime", lb);
     }
+    if ((Boolean) cv) {
+        return thenBody.execute();
+    }
+
+    if (elseifNodes != null) {
+        for (ElseifNode ef : elseifNodes) {
+            if (ef == null) continue;
+            Object res = ef.execute();
+            if (res != null) return res;
+        }
+    }
+    if (elseNode != null) {
+        return elseNode.execute();
+    }
+    return null;
+}
+
 
     private static void semErr(String msg, provided.Token loc) {
     System.err.printf("Semantic Error:%n%s%n%s:%d%n",
@@ -182,7 +201,7 @@ public class IfStmtNode implements BodyStmtNode, JottTree {
     throw new RuntimeException(msg);
 }
 
-public ArrayList<BodyNode> getBodyNodes() {
+    public ArrayList<BodyNode> getBodyNodes() {
     ArrayList<BodyNode> BodyNodes = new ArrayList<>();
 
     // IF body
@@ -220,5 +239,5 @@ public ArrayList<BodyNode> getBodyNodes() {
     }
 
     return BodyNodes;
-}
+    }
 }
