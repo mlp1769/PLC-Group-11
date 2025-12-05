@@ -113,7 +113,11 @@ public class ParamsNode implements JottTree {
 
     @Override
     public Object execute() throws Exception {
-        SymbolTable.addVar((Token)expr, expr.getExpressionType());
+        SymbolTable.getParamstart(SymbolTable.getScope());
+        SymbolTable.setValue(SymbolTable.getParamName(), expr.execute());
+        for(int i=0; i<paramsT.size(); i++){
+            paramsT.get(i).execute();
+        }
         return null;
     }
 
