@@ -146,6 +146,7 @@ public class SymbolTable {
             SymbolTable.changeScope(concat);
             SymbolTable.addParam(concat,"String");
             SymbolTable.addParam(concat2,"String");
+            SymbolTable.updateReturnType("String");
             SymbolTable.addFunction(lenth);
             SymbolTable.changeScope(lenth);
             SymbolTable.updateReturnType("Integer");
