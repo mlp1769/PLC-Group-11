@@ -133,7 +133,7 @@ public class WhileLoopNode implements BodyStmtNode, JottTree {
     }
 }
 
-@Override
+    @Override
     public Object execute() throws Exception {
     while (true) {
         Object cv = cond.execute();
@@ -149,7 +149,7 @@ public class WhileLoopNode implements BodyStmtNode, JottTree {
 
 
     private static void semErr(String msg, provided.Token loc) {
-    System.err.printf("Semantic Error:%n%s%n%s:%d%n",
+    System.err.printf("Runtime Error:%n%s%n%s:%d%n",
             msg,
             (loc == null ? "<unknown>" : loc.getFilename()),
             (loc == null ? 1 : loc.getLineNum()));
