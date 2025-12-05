@@ -85,7 +85,7 @@ public class FunctionDefParamsNode implements JottTree {
 
     @Override
     public Object execute() throws Exception {
-        return null;
+        return true;
     }
 
 }

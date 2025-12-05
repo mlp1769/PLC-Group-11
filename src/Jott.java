@@ -18,7 +18,11 @@ public class Jott {
 
             ArrayList<Token> tokens = JottTokenizer.tokenize(fileName);
             JottTree root = JottParser.parse(tokens);
+            if(root==null){
+                return;
+            }
             root.validateTree();
+            root.execute();
         }catch(Exception e){
             System.out.println(e);
         }

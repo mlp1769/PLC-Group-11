@@ -60,7 +60,7 @@ public class ProgramNode implements JottTree {
 
     @Override
     public Object execute() throws Exception {
-        return null;
+        return SymbolTable.getFunctionBody().execute();
     }
 
     public static ProgramNode parseProgramNodeProgram(ArrayList<Token> tokens) throws Exception {
