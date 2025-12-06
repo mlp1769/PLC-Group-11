@@ -74,29 +74,36 @@ public class FunctionCallNode implements OperandNode, BodyStmtNode{
     public Object execute() throws Exception {
         String scope = SymbolTable.getScope();
         Token scopeToken = new Token(scope,null,0,null);
+        ArrayList<String[]> copyTable = SymbolTable.getCopyTable();
         SymbolTable.getParamstart(this.id.getID().getToken());
+        String paramScope = SymbolTable.getParamScope();
         SymbolTable.changeParamScope(this.id.getID().getToken());
         this.params.execute();
         SymbolTable.changeScope(this.id.getID());
         if(this.id.getID().getToken().equals("print")){
             System.out.println(SymbolTable.getValue("print"));
             SymbolTable.changeScope(scopeToken);
+            SymbolTable.setCopyTable(copyTable);
             return null;
         }
         if(this.id.getID().getToken().equals("concat")){
             String s1 = (String) SymbolTable.getValue("concat");
             String s2 = (String) SymbolTable.getValue("concat2");
             SymbolTable.changeScope(scopeToken);
+            SymbolTable.setCopyTable(copyTable);
             return s1+s2;
         }
         if(this.id.getID().getToken().equals("length")){
             String s1 = (String) SymbolTable.getValue("length");
             SymbolTable.changeScope(scopeToken);
+            SymbolTable.setCopyTable(copyTable);
             return s1.length();
         }
         FBodyNode body = SymbolTable.getFunctionBody();
         Object val = body.execute();
+        SymbolTable.changeParamScope(paramScope);
         SymbolTable.changeScope(scopeToken);
+        SymbolTable.setCopyTable(copyTable);
         return val;
     }
 
