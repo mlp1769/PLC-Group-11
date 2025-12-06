@@ -72,6 +72,8 @@ public class SymbolTable {
 
     public static void changeParamScope(String name){paramScope = name;}
 
+    public static String getParamScope(){return paramScope;}
+
     public static void setValue(String name, Object value){varTable.get(scope).get(name).setValue(value);}
 
     public static void setParamValue(String name, Object value){varTable.get(paramScope).get(name).setValue(value);}

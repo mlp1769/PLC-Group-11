@@ -66,7 +66,6 @@ public class ParamsNode implements JottTree {
             if(tokens.get(0).getToken().charAt(0)==','){
                 ParamsTNode tokenIndexParamsT = ParamsTNode.parseParamsTNode(tokens);
                 paramsToPass.add(tokenIndexParamsT);
-                tokens.remove(0);
             }else{
                 keepCheckingForParamsT=false;
             }
