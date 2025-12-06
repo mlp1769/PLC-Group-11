@@ -59,7 +59,12 @@ public class SymbolTable {
     }
 
     public static String getFunction(String name){
-        return functionTable.get(name).getType();
+        try {
+            return functionTable.get(name).getType();
+        } catch (Exception e) {
+            return null;
+        }
+
     }
     
     public static String getVar(String name){
