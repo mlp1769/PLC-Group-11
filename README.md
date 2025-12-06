@@ -12,4 +12,4 @@ To test the parser run JottParserTester.java
 
 ## Main
 
-To validate a Jott program, place the test file name as a commandline arguement for Jott.java.
+To run a Jott program, place the test file name as a commandline arguement for Jott.java.
