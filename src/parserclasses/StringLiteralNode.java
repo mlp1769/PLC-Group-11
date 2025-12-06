@@ -24,7 +24,8 @@ public class StringLiteralNode implements ExprNode{
 
     @Override
     public Object execute() throws Exception {
-        return this.literal.getToken();
+
+        return this.literal.getToken().substring(1, this.literal.getToken().length()-1);
     }
 
     public static StringLiteralNode parseStringLiteralNode(ArrayList<Token> tokens) throws Exception{
