@@ -177,7 +177,7 @@ public class IfStmtNode implements BodyStmtNode, JottTree {
     }
     if ((Boolean) cv) {
         return this.thenBody.execute();
-    }else if (this.elseifNodes.size()>0) {
+    }else if (!this.elseifNodes.isEmpty()) {
         for (ElseifNode ef : this.elseifNodes) {
             Object res = ef.execute();
             if(res instanceof ElseifNode){

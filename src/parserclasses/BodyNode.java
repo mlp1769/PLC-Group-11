@@ -94,8 +94,9 @@ public class BodyNode implements JottTree{
                 if(val != null){
                     return val;
                 }
+            }else {
+                stmt.execute();
             }
-            stmt.execute();
         }
         return this.rtn.execute();
     }
