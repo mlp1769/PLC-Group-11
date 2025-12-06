@@ -176,15 +176,20 @@ public class IfStmtNode implements BodyStmtNode, JottTree {
         semErr("If condition must evaluate to Boolean at runtime", lb);
     }
     if ((Boolean) cv) {
-        return thenBody.execute();
-    }else if (elseifNodes != null) {
-        for (ElseifNode ef : elseifNodes) {
-            if (ef == null) continue;
+        return this.thenBody.execute();
+    }else if (this.elseifNodes.size()>0) {
+        for (ElseifNode ef : this.elseifNodes) {
+            if (ef == null){
+                return this.elseNode.execute();
+            };
             Object res = ef.execute();
+            if(res instanceof ElseifNode){
+                return null;
+            }
             if (res != null) return res;
         }
-    }else if (elseNode != null) {
-        return elseNode.execute();
+    }else if (this.elseNode != null) {
+        return this.elseNode.execute();
     }
     return null;
 }
