@@ -24,7 +24,7 @@ public class ElseNode implements JottTree {
         BodyNode bodyToPass;
 
         //todo check if first token is 'else'
-        if(!(tokens.get(0).getToken().toLowerCase().equals("else"))){
+        if(!(tokens.get(0).getToken().equals("Else"))){
             return new ElseNode();
         }
         tokens.remove(0);
