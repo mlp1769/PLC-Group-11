@@ -34,8 +34,15 @@ public class NumberNode implements OperandNode {
 
     @Override
     public Object execute() throws Exception {
-        int num = Integer.parseInt(this.number.getToken());
-        return num;
+        if(this.getExpressionType().equals("Integer")){
+            int num = Integer.parseInt(this.number.getToken());
+            return num;
+        }
+        else{
+            double num = Double.parseDouble(this.number.getToken());
+            return num;
+        }
+        
     }
 
     public boolean isInteger(){
