@@ -81,7 +81,7 @@ public class IfStmtNode implements BodyStmtNode, JottTree {
         ArrayList<ElseifNode> elseifNodes = new ArrayList<>();
         while (!tokens.isEmpty()
                 && tokens.get(0).getTokenType() == TokenType.ID_KEYWORD
-                && "ElseIf".equals(tokens.get(0).getToken())) {
+                && "Elseif".equals(tokens.get(0).getToken())) {
             ElseifNode en = ElseifNode.parseElseifNode(tokens);
             elseifNodes.add(en);
         }
